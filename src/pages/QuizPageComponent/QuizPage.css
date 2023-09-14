@@ -1,0 +1,52 @@
+.QuizPage{
+    background-size: cover;
+    background-image:linear-gradient(to bottom, #074e8c, #00A8FF);
+    height: fit-content;
+}
+
+.biffcontainer svg{
+width: 100%;
+height: 100%;
+color: white;
+}
+
+.CommentHover:hover{
+background-color: white !important;
+}
+.backsvg svg{
+    width: 100%;
+    height: 100%;
+
+}
+.backsvg{
+    width: 1.8rem;
+    height: 1.8rem;
+}
+.NextBtn{
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    width: 9rem;
+    margin-left: 0.3rem;
+}
+.PreviousBtn{
+    background-image: linear-gradient(to bottom, #00A8FF, #00A8FF);
+    border: 1px solid black;
+    width: 9rem;
+    color: white;
+    margin-right: 0.3rem;
+}
+.NextBtn:hover{
+    background-image: linear-gradient(to bottom, #00A8FF, #00A8FF);
+}
+
+.DifficultyIcon svg{
+    width: 100%;
+    height: 100%;
+    color:#00A8FF !important;
+}
+.DifficultyIcon{
+    width: 2rem;
+    height: 2rem;
+    margin-top:0.5rem;
+}

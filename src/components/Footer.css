@@ -1,0 +1,29 @@
+.footerbtn{
+    transition: all 0.2s;
+    z-index: 5;
+}
+.footerbtn:hover{
+    background-color: white !important;
+    color: black !important;
+}
+
+.FooterSocial{
+    transition: all 0.2s;
+}
+.FooterSocial:hover svg{
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
+.FooterSvg svg{
+    width: 100%;
+    height: 100%;
+    color: rgb(28, 171, 252);
+}
+.FooterSvg{
+    width: 1.4rem;
+    height: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

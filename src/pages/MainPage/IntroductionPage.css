@@ -1,0 +1,319 @@
+*{
+    font-family:Arial, Helvetica, sans-serif
+}
+
+.ContainerPage{
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../../public/img/IntroductionPage.png');
+    background-size: cover;
+    position: relative;
+    top: 5rem;
+}
+.StartBtn{
+    transition: all 0.3s ease-in-out;
+}
+.StartBtn:hover{
+    background: #0a91df !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.Cart{
+    background-color: #B1CCDC;
+    height: 28rem;
+    width: 22rem;
+    transform: rotate(-4deg) translateY(100px);
+    flex-shrink: 0;
+    border-radius: 30px;
+    position: absolute;
+    bottom: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-direction: column;
+        transition: all 0.5s ease !important;
+}
+.Cart2 {
+    background-color: #2289C4;
+    height: 28rem;
+    width: 22rem;
+    transform: rotate(-4deg) translateY(100px);
+    flex-shrink: 0;
+    border-radius: 30px;
+    position: relative;
+    left: 8rem;
+    opacity: 0.6;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    justify-content: center;
+    color: white;
+        perspective: 1000px;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.3s ease !important;
+}
+.CartUp{
+        transform: rotate(-4deg) translateY(0px) ;
+}
+.Cart2:hover{
+    transform: translateY(50px);
+    cursor: pointer;
+}
+.Cart{
+    transition: all 0.3s;
+}
+.Cart:hover {
+    transform: translateY(50px);
+    cursor: pointer;
+    z-index: 5;
+}
+
+.Page3{
+    background-image: url('../../../public/img/page3.png');
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+.ShadowCard{
+    width: 50rem;
+    height: 30rem;
+    background-color: #B2C0CF;
+    border-radius: 5px;
+    perspective: 1000px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transform: perspective(1000px)  rotateY(-60deg);
+    transition: all 1s ease;
+}
+.ShadowCardReveal{
+transform: perspective(1000px) rotateX(0deg) rotateY(0deg) !important;
+    cursor: pointer !important;
+}
+
+.CourseNow{
+
+    background-color: #EDF1F6;
+}
+
+.ButtonHover{
+    transition: all 0.1s ease-in;
+}
+.ButtonHover:hover{
+    background-color: #0a91df !important;
+    color: #d5dce5 !important;
+}
+
+.SmallBtnDismiss,.BigBtnDismiss{
+    transition: all 0.1s ease-in;
+}
+.SmallBtnDismiss:hover{
+    background-color: white !important;
+    color:black !important;
+    border:3px solid black !important;
+}
+.BigBtnDismiss:hover {
+    background-color: rgb(0, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
+    border: 1px solid rgb(255, 255, 255) !important;
+}
+
+.miniTitle:hover
+{
+    font-weight: bolder;
+    cursor: pointer;
+}
+.RecommendedChapters{
+    transition: all 0.1s ease;
+}
+.RecommendedChapters:hover{
+    background-color: aliceblue !important;
+    cursor: pointer;
+}
+.carousel-indicators{
+display: none;
+}
+
+.carousel-control-next,
+.carousel-control-prev
+{
+    width: auto !important;
+}
+
+.NewsLetter{
+    background-color: #EDF1F6;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+}
+
+.btnSubscribe{
+    transition: all 0.2s;
+}
+.btnSubscribe:hover{
+    background-color: black !important;
+}
+
+.BlackRow{
+    width: 100vw;
+    height: 20rem;
+    background-size: cover;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-direction: column;
+    background-color: rgb(28, 29, 31);
+    position: relative;
+    overflow: hidden;
+}
+    
+.DjangoTemplate{
+    background-image: url('../../../public/img/dummydatanews.jpg');
+    background-size: cover;
+    
+}
+.BlackRectangle{
+    position: relative;
+    background-image: linear-gradient(#37434f20,#9aaec289);
+    z-index: 1;
+    width: 10rem;
+    height: 200%;
+    transform: rotate(10deg);
+}
+
+
+
+.Video1 svg ,.Video2 svg ,.Video3 svg{
+    width: 100%;
+    height: 100%;
+}
+
+/* Define initial positions for the divs */
+.Video1,
+.Video2,
+.Video3 {
+    position: absolute;
+}
+
+.Video1 {
+    right: 0rem;
+    top: 0rem;
+    width: 10rem;
+    height: 10rem;
+    /* Change the background color or add your video content here */
+    animation: floatUpDown 4s infinite alternate ease-in-out;
+}
+
+.Video2 {
+    right: 4rem;
+    top: 0rem;
+    width: 12rem;
+    height: 12rem;
+    /* Change the background color or add your video content here */
+    animation: floatUpDown 8s infinite alternate ease-in-out;
+}
+
+.Video3 {
+    right: 8rem;
+    top: 0rem;
+    width: 14rem;
+    height: 14rem;
+    /* Change the background color or add your video content here */
+    animation: floatUpDown 4s infinite alternate ease-in-out;
+}
+
+@keyframes floatUpDown {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-30px);
+    }
+}
+.VideoContainer{
+    position: relative;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Sigile svg{
+    width: 5rem;
+    height: 5rem;
+    transition: all 0.1s;
+}
+.Sigile{
+        transform: rotateY(90deg);
+        transition: all 0.3s;
+}
+.SigileRotate{
+    transform: rotateY(0deg) !important;
+}
+
+
+
+
+
+
+
+
+/* For screens with a width of 414 pixels and height of 896 pixels (iPhone 11 Pro, for example) */
+@media screen and (max-width: 767px) {    .me-auto.navbar-nav a {
+            color: white !important;
+            font-size: 1.2rem;
+            position: relative;
+            top: 2rem;
+            z-index: 10;
+        }
+ .TextIntroduction{
+        font-size: 3rem !important;
+        position: relative;
+        bottom: 2rem;
+    }
+    .TextIntroductionDescription , .FinalView{
+        display: none !important;
+    }
+    .PointOfView {
+        font-size: 1rem !important;
+    }
+    .Bif svg{
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    }
+    .Cart,.Cart2{
+      display: none !important;
+    }
+    .Screen2Title{
+        width: 100vw !important;
+    }
+        .Video2,.Video3{
+            display: none;
+        } 
+        .Display3Text
+        {
+            font-size: 1rem  !important;
+            width: 25rem;
+            text-align: center;
+        }
+        .display3Row{
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .Display3{
+            display: none !important;
+        }
+        
+   .Sigiles{
+    margin-bottom: 3rem;
+    text-align: center;
+   }
+   .SigilesText{
+    text-align: center;
+   }
+        
+        
+}

@@ -1,0 +1,10 @@
+.CompilerSvgs svg{
+    width:2.5rem;
+    height:2.5rem;
+    margin-right: 1.8rem;
+}
+
+.CompilerSvgs svg:hover {
+    color: black !important;
+    cursor: pointer;
+}

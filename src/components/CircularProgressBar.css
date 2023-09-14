@@ -1,0 +1,4 @@
+/* CircularProgressBar.css */
+.CircularProgressbar .CircularProgressbar-path {
+    transition: stroke-dashoffset 0.5s ease-out;
+}

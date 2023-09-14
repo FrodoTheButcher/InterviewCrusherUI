@@ -1,0 +1,11 @@
+.icon-approve-cancel svg{
+width: 1rem;
+height: 1rem;
+}
+.SubmissionHover{
+    transition: all 0.3s;
+}
+.SubmissionHover:hover{
+    background-color: rgb(244, 244, 244) !important;
+    color: rgb(0, 0, 0) !important;
+}

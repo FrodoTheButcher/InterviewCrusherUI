@@ -1,0 +1,26 @@
+
+.Publicity{
+    background-image: url('./images/imageup.png');
+    background-size: cover;
+    width: 100vw;
+    height: 30em;
+    color: white;
+    padding: 3rem;
+}
+
+.ComponentIsFocused{
+opacity: 1 !important;
+width: 80vw !important;
+height: 60vh !important;
+transform: translateY(0px) !important;
+filter: blur(0px) !important;
+margin-top: 0em !important;
+margin-left: 1em;
+
+}
+
+.ComponentUnfocused{
+    display: none !important;
+    visibility: none !important;
+}
+

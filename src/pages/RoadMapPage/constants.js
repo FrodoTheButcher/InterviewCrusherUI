@@ -1,0 +1,7 @@
+export const DJANGO = "DJANGO"
+export const REACT = "REACT"
+export const REACTDJANGO = "REACTDJANGO"
+export const REACTCS = "REACTCS"
+export const CS = "CS"
+export const MACHINELEARNING = "MACHINELEARNING"
+export const UNFOCUSED = "UNFOCUSED"

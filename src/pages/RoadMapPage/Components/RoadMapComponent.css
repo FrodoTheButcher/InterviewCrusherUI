@@ -1,0 +1,40 @@
+:root {
+    --main-color: rgb(28, 171, 252);
+}
+
+
+.RoadMapComponent{
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 70px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+}
+
+.Btn-Hover {
+         margin-top:'1.5em';
+         background: white;
+         width: 8.5em;
+         height: 3em;
+         font-weight: bolder;
+         font-size: 1.5em;   
+         text-align: center;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         border-radius: 1em;
+         text-decoration: none;
+         color: black;
+        transition: all 0.3s;
+}
+.Btn-Hover:hover{
+    background-color: var(--main-color) !important;
+    color: white;
+}
+.carousel-indicators{
+    display: none;
+}

@@ -1,0 +1,110 @@
+.signUpContainer{
+    width: 25rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.signUpHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.signUpHeaderText{
+    color: rgb(50, 50, 83);
+    font-family: 'Trebuchet MS';
+    font-weight: 600;
+}
+
+.signUpProgressBtn{
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 0 2rem 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.signUpProgressCircle{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 20rem;
+    background-color: lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 2.5rem 0 2.5rem;
+}
+
+.signUpProgressCircleText{
+    color: white;
+    font-style: normal;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 50%;
+    margin-bottom: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+}
+
+.signUpBtn{
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+    background-color: #4fb1ea;
+    border: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.signUpOrDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.signUpOrIcon{
+    border: 2px solid gray;
+    border-radius: 0.5rem;
+    width: 3rem;
+    color: gray;
+    font-weight: 600;
+    padding: 5px;
+}
+.signUpOrDevider{
+    width: 100%;
+    height: 2px;
+}
+
+.signUpConnectSocialMedia{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.signUpConnectCircle{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 2rem 1rem 2rem 1rem;
+    border-radius: 20rem;
+    background-color: #568efe;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signUpConnectCircleText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+

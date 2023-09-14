@@ -1,0 +1,62 @@
+
+.signIn-container{
+    background-color: white;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh;  
+    width: 70vw;
+    flex: 2;
+}
+
+.signUp-container{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh;  
+    width: 30vw;
+    text-align: center;
+    flex: 1;
+    background-image: url('../../../../public/img/signUpBackground.png');
+    background-size: cover;
+    color:#e6e8eb
+}
+
+.containerLogin {
+    display: flex; 
+}
+
+@media (max-width: 768px) {
+    .containerLogin {
+      flex-direction: column;
+    }
+    .signIn-container, .signUp-container {
+      flex: initial;
+      width: 100vw;
+
+    }
+}
+
+.signIn-title{
+    width: auto;
+    height: auto;
+    padding: 2rem;
+    margin: 3rem 3rem 0 3rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS';
+    font-weight: 600;
+    font-style: normal;  
+    color: #195186;
+    font-size: 3.5rem;
+}
+
+.signIn-btn{
+    color:#e6e8eb;
+    width: 15vw;
+}
+
+
+.signUp-btn{
+    width: 15vw;
+    font-size: 3rem;
+    font-weight: 600;
+}

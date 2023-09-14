@@ -1,0 +1,5 @@
+export const DESCRIPTION = "DESCRIPTION";
+export const OVERVIEW ="OVERVIEW";
+export const SOLUTIONS = "SOLUTIONS"
+export const QUESTIONS ="QUESTIONS"
+export const SUBMISSIONS = "SUBMISSIONS"
