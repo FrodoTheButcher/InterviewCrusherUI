@@ -26,7 +26,7 @@ export const roadmapGetByIdAction = (roadmapId, chapterId) => async(dispatch)=>{
         const { data } = await axios.get(`/api/templates/${roadmapId}/${chapterId}/`)
         dispatch({
             type:ROADMAP_SUCCESS,
-            payload:data
+            payload:data.data
         })
     }
     catch(error)

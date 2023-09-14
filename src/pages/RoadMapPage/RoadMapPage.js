@@ -78,7 +78,7 @@ const RoadMapPage = () => {
             <CourseComponentPopup />
           </div>
           <Container  fluid>
-            {roadmaps.map((roadmap, index) => (
+            {roadmaps && roadmaps.map((roadmap, index) => (
               <Row key={index} >
                 <Col style={isFocused !== UNFOCUSED ? seenPair1 : textReveal ? seenPair1 : unseen}>
                   <div className={isFocused === (roadmap[0].id) ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>

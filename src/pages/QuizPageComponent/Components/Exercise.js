@@ -56,7 +56,7 @@ function Exercise({ setStep }) {
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
                 <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Previous</Button>
-                <Button onClick={() => setStep(prev => prev + 1)} className='NextBtn' >Nexta</Button>
+                <Button onClick={() => setStep(prev => prev + 1)} className='NextBtn' >Next</Button>
             </Card.Body>
         </Card>
 

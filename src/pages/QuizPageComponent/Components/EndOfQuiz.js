@@ -30,7 +30,7 @@ console.log('end of quiz')
     const quiz = JSON.parse(localStorage.getItem('quiz'));
 
 
-    const { roadmap,roadmapId, chapterId, contentId } = useParams();
+    const { roadmapName,roadmapId, chapterId, contentId } = useParams();
 
     const percentage = 66;
     const [comments,setComments]=useState([])
@@ -127,7 +127,7 @@ console.log('end of quiz')
                 </ListGroup>
                 <div fluid className='d-flex align-items-center' style={{ flexDirection: 'column', overflowY: 'scroll', justifyContent: 'space-between', height: '15em' }}>
                     {
-                    comments?.length===0 ? <Spinner/> : 
+                    comments?.length === 0 ? <Spinner/> : 
                     comments?.map(comment =>
                         <Comment comment={comment} />
                     )}
@@ -136,7 +136,7 @@ console.log('end of quiz')
             <Card.Body className='d-flex align-items-center justify-content-center'>
                 {failed ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
                     :
-                    <Button onClick={() => { setContent("course"); navigate(`/${roadmap}/${roadmapId}/${chapterId}/`) }} className='NextBtn' >Submit</Button>
+                    <Button onClick={() => {setContent("course"); navigate(`/${roadmapName}/${roadmapId}/${chapterId}/course/1`) }} className='NextBtn' >Submit</Button>
                 }
             </Card.Body>
         </Card>
