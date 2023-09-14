@@ -39,7 +39,9 @@ console.log('end of quiz')
 
     const [liked,setLiked] = useState(undefined)
 
-    const {  setContent } = useContext(CustomContext)
+    const [content, setContent] = useState(
+        localStorage.getItem('content') || 'course'
+      );
 
     const addPoints = async () => {
         const user = localStorage.getItem("user");
@@ -99,7 +101,7 @@ console.log('end of quiz')
     return (
       
         <Card style={{ background: 'white', width: '30%', height: '80%', borderRadius: '10px' }} className='d-flex align-items-center justify-content-center'>
-            {failed === false ? <Message variant={'danger'}>Fail</Message> : <Message variant={'success'}>Success</Message> }
+            {failed !== false ? <Message variant={'danger'}>Fail</Message> : <Message variant={'success'}>Success</Message> }
             <Container style={{ width: '100%', height: '10%' }} className='d-flex flex-column align-items-center justify-content-center'>
                 <Card.Title style={{ padding: '1em', fontSize: '1em', fontWeight: 'bolder', display: 'flex', flexDirection: '', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ position: 'absolute', left: '3rem', margin: '0' }} className='backsvg'>
@@ -132,7 +134,7 @@ console.log('end of quiz')
                 </div>
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
-                {!failed ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
+                {failed ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
                     :
                     <Button onClick={() => { setContent("course"); navigate(`/${roadmap}/${roadmapId}/${chapterId}/`) }} className='NextBtn' >Submit</Button>
                 }
