@@ -64,7 +64,9 @@ export const CustomAuthProvider = ({children})=>{
         }
         
         try {
+            console.log('datele bolovanului', data)
             const response = await axios.post(`http://127.0.0.1:8000/api/users/token/`,data)
+            console.log('response',response)
             localStorage.setItem('refresh',response.data.refresh);
             localStorage.setItem('access',response.data.access)
             var decoded = jwt_decode(response.data.access);

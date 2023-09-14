@@ -21,7 +21,7 @@ import Loader from '../../../components/Spinner'
 import Answer from './Answer';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
-function AnswersQuiz({ setStep, setFailed,failed }) {
+function AnswersQuiz({ setStep, setFailed }) {
     const percentage = 66;
     const quiz = JSON.parse(localStorage.getItem('quiz'));
 
@@ -35,10 +35,10 @@ function AnswersQuiz({ setStep, setFailed,failed }) {
         const timeout = setTimeout(()=>{
             setFailed(true)
             setStep(prev=>prev+1)
-        },quiz?.time * 1000)
+        },quiz?.time ? quiz.time * 1000 : 1000000)
         return () => clearTimeout(timeout);
 
-    },[])
+    },[quiz])
 
     return (
 
@@ -76,7 +76,7 @@ function AnswersQuiz({ setStep, setFailed,failed }) {
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
                 <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Previous</Button>
-                <Button onClick={() => { setFailed(true) ;setStep(prev => prev + 1)  }} className='NextBtn' >Next</Button>
+                <Button onClick={() => { console.log('test'); setFailed(false) ;setStep(prev => prev + 1)  }} className='NextBtn' >Next</Button>
             </Card.Body>
         </Card>
     );

@@ -8,7 +8,6 @@ import {ContextProvider} from './Context/ContextProvider';
 import AlgoritmPage from './pages/AlgoritmPage/AlgoritmPage';
 import RoadMapPage from './pages/RoadMapPage/RoadMapPage';
 import SignUp from './pages/SignUpPage/SignUp'
-import Test from './pages/SerbanLearn/serbancomp/Test'
 import QuizPage from './pages/QuizPageComponent/QuizPage';
 import { CustomAuth, CustomAuthProvider } from './Context/LoginContext';
 import Course from './pages/VideoRoadMapPage/Course';
@@ -23,7 +22,6 @@ function App() {
           <Route path='/RoadMapPage' Component={RoadMapPage} src />
           <Route path='/login' Component={LoginPage} src />
           <Route path='/login/signUp/' Component={SignUp} src />
-          <Route path='/test' Component={Test} />
             <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
         </Routes>
       </BrowserRouter>

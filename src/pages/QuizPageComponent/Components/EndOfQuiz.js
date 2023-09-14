@@ -25,8 +25,8 @@ import CustomContext from '../../../Context/ContextProvider';
 import Message from '../../../components/Message';
 import axios from 'axios';
 
-function EndOfQuiz({ setStep ,failed}) {
-
+function EndOfQuiz({setStep ,failed}) {
+console.log('end of quiz')
     const quiz = JSON.parse(localStorage.getItem('quiz'));
 
 
@@ -52,11 +52,11 @@ function EndOfQuiz({ setStep ,failed}) {
         };
         const data = {
             "points": quiz?.pointsEarned
-}
+        }
 
         console.log(localStorage.getItem("access"));
         try {
-            const response = await axios.put("http://127.0.0.1:8000/api/users/addPoints/", data, config,user);
+            const response = await axios.put("/api/users/addPoints/", data, config,user);
             console.log("response", response);
         } catch (error) {
             console.error("An error occurred:", error);
@@ -86,7 +86,7 @@ function EndOfQuiz({ setStep ,failed}) {
 
 
   useEffect(()=>{
-      if (failed) {
+      if (!failed) {
           addPoints()
       }
       else
