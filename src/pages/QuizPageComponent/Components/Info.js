@@ -58,8 +58,7 @@ function Info({setStep }) {
                     </ListGroup>
                     </Container>                     
                 <Card.Body className='d-flex align-items-center justify-content-center'>
-                    <Button onClick={() => setStep(prev => prev > 0 ?  prev - 1 : prev)} className='PreviousBtn'>Previous</Button>
-                <Button onClick={() => setStep(prev => prev<4 ? prev + 1 : prev)} className='NextBtn' >Next</Button>
+                    <Button onClick={() => setStep(prev => prev<3 ? prev + 1 : prev)} className='NextBtn' >Nexta</Button>
                 </Card.Body>
             </Card>
        
