@@ -3,7 +3,7 @@ import React from 'react'
 const SignUpProgress = (pk) => {
   return (
     <div className='signUpProgressBtn'>
-        <div className='signUpProgressCircle' style={{backgroundColor:(pk==='1') ? '#4FB1EA' : (pk > '1' ? '#32CB78' : 'lightgray')}}>
+        <div className='signUpProgressCircle' style={{backgroundColor:(pk==='1') ? '#4FB1EA' : '#32CB78'}}>
             <p className='signUpProgressCircleText' style={{display:pk==='1' ? '' : 'none'}}>1</p>
         </div>
         <div className='signUpProgressCircle' style={{backgroundColor:(pk==='2') ? '#4FB1EA' : (pk > '2' ? '#32CB78' : 'lightgray')}}>
