@@ -32,6 +32,7 @@ export const CustomAuthProvider = ({children})=>{
     }
 
     const register = async (email,password,password2)=>{
+        console.log('apelare')
         const data ={
             "username":email,
             "email":email,
