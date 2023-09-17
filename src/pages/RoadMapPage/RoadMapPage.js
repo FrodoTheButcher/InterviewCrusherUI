@@ -9,8 +9,8 @@ import { CS, DJANGO, MACHINELEARNING, REACT, REACTCS, REACTDJANGO, UNFOCUSED } f
 import './RoadMapChaptersPage.css'
 import { useEffect } from 'react'
 import { useRef } from 'react'
-import { useContext } from 'react'
-import CustomContext from '../../Context/ContextProvider'
+
+import { useNavbar } from '../../Context/ContextProvider'
 import { useDispatch } from 'react-redux'
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
 import { roadmapGetAllAction } from '../../actions/roadmapGetAllAction'
@@ -59,7 +59,7 @@ const RoadMapPage = () => {
   }
 
   
-  const { mainPageContainerProvenience, setMainPageContainerProvenience } = useContext(CustomContext)
+  const { mainPageContainerProvenience, setMainPageContainerProvenience } = useNavbar();
   useEffect(() => {
     console.log(roadmaps)
   }, [roadmaps])

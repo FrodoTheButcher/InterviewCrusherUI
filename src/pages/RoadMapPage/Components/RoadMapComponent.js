@@ -10,7 +10,6 @@ import reactdj from '../images/reactdjango.png'
 import { CS, DJANGO, MACHINELEARNING, REACT, REACTCS, REACTDJANGO, UNFOCUSED } from '../constants'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
-import CustomContext from '../../../Context/ContextProvider'
 import ReusableVideoComp from '../../../components/ReusableVideoComponent'
 import { useNavigate } from 'react-router-dom'
 const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageContainerProvenience,setIsFocused,img, MainParagraph, SecondParagraph, ButtonText, SmallText, span }) => {

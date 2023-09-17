@@ -13,7 +13,6 @@ import VideoCourse from './Components/VideoCourse'
 import QuizPage from '../QuizPageComponent/QuizPage'
 import AlgoritmPage from '../AlgoritmPage/AlgoritmPage'
 import { useNavigate } from 'react-router-dom'
-import CustomContext from '../../Context/ContextProvider'
 const Course = () => {
 
   const navigate = useNavigate()

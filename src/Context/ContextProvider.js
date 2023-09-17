@@ -1,19 +1,18 @@
+import React, { useContext } from "react";
 import { useState } from "react";
-import React from "react";
 import { createContext } from "react";
 import { DESCRIPTION } from "../Constants/AlgoritmPage";
 import { UNFOCUSED } from "../pages/RoadMapPage/constants";
-const CustomContext = React.createContext();
+
+const CustomContext = createContext();
+
+export const useNavbar =() => useContext(CustomContext);
 
 export const ContextProvider = ({ children }) => {
-
-  
     const [navbarClicked,setNavbarClicked]  = useState(false)
-
     const [projectViewScreen,setProjectViewScreen] = useState(DESCRIPTION)
-
-
     const [mainPageContainerProvenience, setMainPageContainerProvenience] = useState(UNFOCUSED)
+
     const value={
         navbarClicked:navbarClicked,
         setNavbarClicked:setNavbarClicked,

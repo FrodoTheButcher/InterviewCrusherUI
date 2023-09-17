@@ -1,16 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter ,Route, Routes } from 'react-router-dom';
+import {ContextProvider} from './Context/ContextProvider';
+import {CustomAuthProvider } from './Context/LoginContext';
 import IntroductionPage from './pages/MainPage/IntroductionPage';
 import Header from './components/Navbar';
 import LoginPage from './pages/LoginSigninPage/LoginPage';
-import {ContextProvider} from './Context/ContextProvider';
-import AlgoritmPage from './pages/AlgoritmPage/AlgoritmPage';
 import RoadMapPage from './pages/RoadMapPage/RoadMapPage';
 import SignUp from './pages/SignUpPage/SignUp'
-import QuizPage from './pages/QuizPageComponent/QuizPage';
-import { CustomAuth, CustomAuthProvider } from './Context/LoginContext';
 import Course from './pages/VideoRoadMapPage/Course';
+
 function App() {
   return (
     <CustomAuthProvider>

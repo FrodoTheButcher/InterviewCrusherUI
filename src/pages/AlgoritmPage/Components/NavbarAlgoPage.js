@@ -1,12 +1,12 @@
 import React from 'react'
 import { Row,Col } from 'react-bootstrap'
-import { useState,useContext } from 'react'
-import CustomContext from '../../../Context/ContextProvider'
+import { useState } from 'react'
+import { useNavbar } from '../../../Context/ContextProvider'
 import { DESCRIPTION, QUESTIONS, SOLUTIONS, SUBMISSIONS } from '../../../Constants/AlgoritmPage'
 import { OVERVIEW } from '../../../Constants/AlgoritmPage'
 const NavbarAlgoPage = () => {
     const [sectionActive, setSectionActive] = useState(1)
-    const { projectViewScreen ,setProjectViewScreen} = useContext(CustomContext)
+    const { projectViewScreen ,setProjectViewScreen} = useNavbar();
 
   return (
       <Row style={{ borderBottom: '1px solid #000a200d', paddingLeft: '1rem', paddingTop: '1rem', marginTop: '0.5rem', marginBottom: '0.5rem' }} className='algoheader' >

@@ -20,8 +20,6 @@ import Comment from './Comment'
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReactComponent as Like } from '../../../svg/Like.svg'
 import { ReactComponent as Dislike } from '../../../svg/Dislike.svg'
-
-import CustomContext from '../../../Context/ContextProvider';
 import Message from '../../../components/Message';
 import axios from 'axios';
 

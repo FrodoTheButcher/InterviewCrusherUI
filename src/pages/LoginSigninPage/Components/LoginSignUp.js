@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import './Login.css'
-import { Link, useFetcher } from 'react-router-dom';
-
-import { useContext } from 'react';
-import { CustomAuth, CustomAuthProvider } from '../../../Context/LoginContext';
+import { Link} from 'react-router-dom';
+import {useAuth } from '../../../Context/LoginContext';
 import { useNavigate } from 'react-router-dom';
 const LoginSignUp = () => {
 
-  const {user}=useContext(CustomAuth)
+  const {user}= useAuth()
   const navigate = useNavigate();
 
   useEffect(()=>{

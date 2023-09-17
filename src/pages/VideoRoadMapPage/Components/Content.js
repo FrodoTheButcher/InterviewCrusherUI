@@ -3,7 +3,6 @@ import { Col, Dropdown, ListGroup, ListGroupItem, NavDropdown, Row } from 'react
 import {DropdownButton} from 'react-bootstrap'
 import '../Course.css'
 import { Link, useParams } from 'react-router-dom'
-import CustomContext from '../../../Context/ContextProvider'
 const Content = ({ courseContent,text, type, roadmap }) => {
   const { roadmapName, roadmapId } = useParams()
   return (

@@ -2,11 +2,11 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Login.css'
-import { useContext } from 'react';
-import { CustomAuth } from '../../../Context/LoginContext';
+
+import {useAuth } from '../../../Context/LoginContext';
 const LoginSignIn = () => {
 
-    const {login}=useContext(CustomAuth);
+    const {login}=useAuth();
     const handleSubmit = (e)=>{
         e.preventDefault();
        

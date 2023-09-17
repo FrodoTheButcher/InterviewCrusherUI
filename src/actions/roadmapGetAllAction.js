@@ -1,7 +1,8 @@
 import axios from "axios"
-import { ROADMAP_FAIL, ROADMAP_GETALL_FAIL, ROADMAP_GETALL_REQUEST, ROADMAP_GETALL_RESET, ROADMAP_GETALL_SUCCESS, ROADMAP_REQUEST, ROADMAP_SUCCESS } from "../Constants/roadmap"
-import { Dispatch } from "react"
-export const roadmapGetAllAction = () => async(dispatch) =>{
+import { ROADMAP_FAIL, ROADMAP_GETALL_FAIL, ROADMAP_GETALL_REQUEST, ROADMAP_GETALL_RESET, ROADMAP_GETALL_SUCCESS, ROADMAP_REQUEST, ROADMAP_SUCCESS } from "../Constants/Roadmap"
+
+
+export const roadmapGetAllAction = () => async (dispatch) =>{
     try{
         dispatch({type:ROADMAP_GETALL_REQUEST})
         const { data } = await axios.get('/api/templates/');
@@ -11,16 +12,16 @@ export const roadmapGetAllAction = () => async(dispatch) =>{
             payload:data.data
         })
     }
-    catch(e)
+    catch(error)
     {
         dispatch({
             type:ROADMAP_GETALL_FAIL,
-            payload:e
+            payload:error
         })
     }
 }
 
-export const roadmapGetByIdAction = (roadmapId, chapterId) => async(dispatch)=>{
+export const roadmapGetByIdAction = (roadmapId, chapterId) => async (dispatch)=>{
     try{
         dispatch({type:ROADMAP_REQUEST})
         const { data } = await axios.get(`/api/templates/${roadmapId}/${chapterId}/`)

@@ -2,21 +2,18 @@ import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import CustomContext from '../Context/ContextProvider';
-import { useContext } from 'react';
+import { useNavbar } from '../Context/ContextProvider';
 import { Link } from 'react-router-dom';
-import { CustomAuth } from '../Context/LoginContext';
+import {useAuth } from '../Context/LoginContext';
 function Header() {
-
-    const { setNavbarClicked } = useContext(CustomContext);
-    const { navbarClicked } = useContext(CustomContext);
-
     const [selected,setSelected]=useState("home")
-    const {user,logout}=useContext(CustomAuth);
+    const { setNavbarClicked, navbarClicked } = useNavbar();
+    const {user,logout}=useAuth()
+
     useEffect(()=>{
         console.log("user",user)
     },[user])
+
     return (
         <Navbar  style={{ position: 'absolute',left:'0',right:'0',top:'0' ,width: '100vw', height: '5rem', zIndex: '20' }} expand="lg" className="navbar ScreenNavbar bg-body-tertiary ">
             <Container>
