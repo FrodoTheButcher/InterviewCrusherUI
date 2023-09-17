@@ -38,7 +38,7 @@ const SignUpUserData = (pk,setPk) => {
                 </Form.Group>
             </div>
             <p style={{textAlign:'center', fontWeight:'600', fontFamily:'sans-serif', color:"#A6A5A5", display:pk > 1 ? "none" : ''}}>Must be 8 or more characters and contain at least 1 number and 1 special character</p>
-            <Button variant="primary" type="submit" className='signUpBtn' onClick={() => pk < '3' && handleIncrease()}>
+            <Button variant="primary" type="submit" className='signUpBtn' onClick={(e) => pk < '3' && handleIncrease(e)}>
                 Next
             </Button>
         </Form>
