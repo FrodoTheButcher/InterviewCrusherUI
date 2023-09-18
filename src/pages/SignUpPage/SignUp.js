@@ -7,15 +7,15 @@ import SignUpHeader from './components/SignUpHeader';
 import { useParams } from 'react-router-dom';
 
 const SignUp = () => {
-  const [pk, setPk]=useState('1')
+  const [progress, setProgress]=useState(0)
 
   return (
     <div className='signUpContainer'>
         <div className='signUpComponent'>
-            {SignUpHeader(pk)}
-            {SignUpProgress(pk)}
-            {SignUpUserData(pk,setPk)}
-            {SignUpSocialMedia(pk,setPk)}
+            {SignUpHeader(progress)}
+            {SignUpProgress(progress)}
+            {SignUpUserData(progress,setProgress)}
+            {SignUpSocialMedia(progress,setProgress)}
         </div>
     </div>
   )

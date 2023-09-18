@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const SignUpProgress = (pk) => {
+const SignUpProgress = (progressParam) => {
+const [progress, setProgress] = useState(0)
+  useEffect(() => {
+    setProgress(progressParam)
+  }, [progressParam])
+  
   return (
     <div className='signUpProgressBtn'>
-        <div className='signUpProgressCircle' style={{backgroundColor:(pk==='1') ? '#4FB1EA' : '#32CB78'}}>
-            <p className='signUpProgressCircleText' style={{display:pk==='1' ? '' : 'none'}}>1</p>
+        <div className='signUpProgressCircle' style={{backgroundColor:(progress===0) ? '#4FB1EA' : '#32CB78'}}>
+            <p className='signUpProgressCircleText'>1</p>
         </div>
-        <div className='signUpProgressCircle' style={{backgroundColor:(pk==='2') ? '#4FB1EA' : (pk > '2' ? '#32CB78' : 'lightgray')}}>
-            <p className='signUpProgressCircleText' style={{display:pk<='2' ? '' : 'none'}}>2</p>
+        <div className='signUpProgressCircle' style={{backgroundColor:(progress===1) ? '#4FB1EA' : (progress > 1 ? '#32CB78' : 'lightgray')}}>
+            <p className='signUpProgressCircleText'>2</p>
         </div>
-        <div className='signUpProgressCircle' style={{backgroundColor:(pk==='3') ? '#4FB1EA' : (pk > '3' ? '#32CB78' : 'lightgray')}}>
-            <p className='signUpProgressCircleText' style={{display:pk<='3' ? '' : 'none'}}>3</p>
+        <div className='signUpProgressCircle' style={{backgroundColor:(progress===2) ? '#4FB1EA' : (progress > 2 ? '#32CB78' : 'lightgray')}}>
+            <p className='signUpProgressCircleText' >3</p>
         </div>
     </div>
   )
