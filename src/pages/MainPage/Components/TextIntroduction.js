@@ -3,7 +3,7 @@ import { Container ,Button,Row,Col} from 'react-bootstrap'
 import '../IntroductionPage.css'
 import {ReactComponent as Biff} from '../../../svg/biff.svg'
 import { Link } from 'react-router-dom'
-import ButtonTs from '../Components/ButtonTs'
+
 const TextIntroduction = () => {
   return (
     <Container>
@@ -20,10 +20,7 @@ const TextIntroduction = () => {
                           <Button className='StartBtn' style={{ width: '13rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem', backgroundColor: "#1CABFC", borderRadius: "120px" }}><Link style={{textDecoration:'none',color:'white',fontWeight:'bolder',fontSize:'1.5em'}}to={'/RoadMapPage'} >Get Started</Link ></Button>
 
                     </Row>
-                    <Row>
-                          <ButtonTs text={'test'} onClick={()=>console.log('fodorica')} className='StartBtn' style={{ width: '13rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem', backgroundColor: "#1CABFC", borderRadius: "120px" }}><Link style={{textDecoration:'none',color:'white',fontWeight:'bolder',fontSize:'1.5em'}}to={'/RoadMapPage'} >Get Started</Link ></ButtonTs>
-
-                    </Row>
+                  
       </Container>
        <Container style={{marginBottom:'5rem'}}>
 
