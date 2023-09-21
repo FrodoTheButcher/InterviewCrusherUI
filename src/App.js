@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginSigninPage/LoginPage';
 import RoadMapPage from './pages/RoadMapPage/RoadMapPage';
 import SignUp from './pages/SignUpPage/SignUp'
 import Course from './pages/VideoRoadMapPage/Course';
+import Interpreter from './pages/Interpreter/Interpreter';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           <Route path='/RoadMapPage' Component={RoadMapPage} src />
           <Route path='/login' Component={LoginPage} src />
           <Route path='/login/signUp/' Component={SignUp} src />
-            <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
+          <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
+          <Route path='/interpreter' Component={Interpreter} />
         </Routes>
       </BrowserRouter>
     </ContextProvider>
