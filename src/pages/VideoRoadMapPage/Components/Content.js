@@ -14,7 +14,7 @@ const Content = ({ courseContent,text, type, roadmap }) => {
         menuVariant="white"> 
           <ListGroup>
           {courseContent?.map((course ,index)=>
-                <ListGroup.Item >
+                <ListGroup.Item variant={index%2===0 ? 'primary' : ''} >
               <Link to={`/${roadmapName}/${roadmapId}/1/${type}/${course?.id}/`}  style={{ textDecoration: 'none', color: 'black' }} >
                     <Col>
                       <Row><strong> Section {index}:{course.name}</strong></Row>

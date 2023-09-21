@@ -13,7 +13,7 @@ const Submissions = () => {
             <ListGroup>
                 {submissions.map(e =>
                     <Link  style={{textDecoration: 'none' }}>
-                        <ListGroup.Item className='SubmissionHover'>
+                        <ListGroup.Item variant={e?.success ? 'primary' : 'secondary'} className='SubmissionHover'>
                             <Row className='p-1 mt-2'>
                                 <Col md={2}>
                                     <h7>#1432</h7>

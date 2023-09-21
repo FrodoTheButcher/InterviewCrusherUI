@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import { Container } from 'react-bootstrap';
+import { Container, FormGroup, ListGroupItem } from 'react-bootstrap';
 import Tips from './Tips';
 import './Submission.css'
 
@@ -9,10 +9,10 @@ const Overview = () => {
 
     return (
         <Container style={{ borderLeft: '1rem solid rgb(240, 240, 240)', height: '100vh', background: 'white' }}>
-            {tips.map(e =>
-                <Accordion className='SubmissionHover'  style={{ border: '0.2rem solid rgb(240, 240, 240)'}} defaultActiveKey={e.toString()} key={e.toString()}>
-                    <Tips  tipNumber={e} />
-                </Accordion>
+            {tips.map((e,index) =>
+                    <Accordion className='SubmissionHover' style={{ border: '0.2rem solid rgb(240, 240, 240)' }} defaultActiveKey={e.toString()} key={e.toString()}>
+                        <Tips tipNumber={e} />
+                    </Accordion>                
             )}
         </Container>
     );

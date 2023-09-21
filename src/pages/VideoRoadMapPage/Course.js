@@ -13,6 +13,7 @@ import VideoCourse from './Components/VideoCourse'
 import QuizPage from '../QuizPageComponent/QuizPage'
 import AlgoritmPage from '../AlgoritmPage/AlgoritmPage'
 import { useNavigate } from 'react-router-dom'
+import './courseNavBar.css'
 const Course = () => {
 
   const navigate = useNavigate()
@@ -52,20 +53,20 @@ const Course = () => {
             :
               <AlgoritmPage />
           }
-        <Col md={2} style={{ height: '90vh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Col className='right-nav-course' md={2} style={{ height: '90vh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-          <ListGroup style={{ width: '100%' }}>
-            <ListGroupItem>
+          <ListGroup   style={{ width: '100%' }}>
+              <ListGroupItem variant={type === "course" ? 'primary' : ''}>
                 <div>
                   <Content courseContent={roadmap?.videoArrayData} roadmap={roadmap} type={"course"} text={"Course Content"} />
               </div>
             </ListGroupItem>
-            <ListGroupItem>
+              <ListGroupItem variant={type === "quiz" ? 'primary' : ''}>
               <div>
                   <Content  courseContent={roadmap?.quizArrayData} roadmap={roadmap} type={"quiz"} text={"Quiz Content"} />
               </div>
             </ListGroupItem>
-            <ListGroupItem>
+              <ListGroupItem variant={type === "algo" ? 'primary' : ''}>
               <div>
                   <Content  courseContent={roadmap?.algoArrayData} roadmap={roadmap} type={"algo"} text={"Algo Content"} />
               </div>
