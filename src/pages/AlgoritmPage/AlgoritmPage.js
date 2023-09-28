@@ -11,23 +11,40 @@ import Solutions from './Components/Solutions'
 import Question from './Components/Question'
 import Submissions from './Components/Submissions'
 import { HARD } from '../../Constants/DifficultyConstants'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 const AlgoritmPage = () => {
+  const [projectViewScreen,setProjectViewScreen]=useState(DESCRIPTION)
 
-  const [sectionActive, setSectionActive] = useState(1)
-  const { projectViewScreen } = useNavbar()
+  const roadMapItem = useSelector(state=>state.roadmapItem)
+  const { roadmap } = roadMapItem
+  const getCurrentAlgo = ()=>{
+      const currentAlgo = roadmap?.algoArrayData.find(e=>e.id===parseInt(contentId));
+      setCurrentAlgo(currentAlgo);
+      console.log(currentAlgo)
+  }
+  const [currentAlgo,setCurrentAlgo] = useState(null)
+  const { contentId } = useParams();
 
  
+  useEffect(()=>{
+      if(contentId)
+      {
+          getCurrentAlgo();
+      }
+  }, [contentId])
+
 
   return (
       <div style={{position: 'relative', top: '5rem', width: '100vw', height: '100vh', background: 'rgb(240 240 240)'}} >
         <Row>
           <Col style={{borderLeft:'2rem white',overflowY:'scroll',height:'100vh'}}>
-          <NavbarAlgoPage/>
-          {projectViewScreen === DESCRIPTION  ? <Description difficulty={HARD} /> : "" }
-          {projectViewScreen === OVERVIEW ? <Overview /> : ""}
+          <NavbarAlgoPage setProjectViewScreen={setProjectViewScreen}/>
+          {projectViewScreen === DESCRIPTION  ? <Description currentAlgo={currentAlgo} difficulty={HARD} /> : "" }
+          {projectViewScreen === OVERVIEW ? <Overview tips={currentAlgo?.tips} /> : ""}
           {projectViewScreen === SOLUTIONS ? <Solutions /> : ""}
-          {projectViewScreen === QUESTIONS ? <Question /> : ""}
+          {projectViewScreen === QUESTIONS ? <Question  questions={currentAlgo?.questions}  /> : ""}
           {projectViewScreen === SUBMISSIONS ? <Submissions /> : ""}
           </Col>
             <Col>

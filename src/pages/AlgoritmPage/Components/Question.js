@@ -6,24 +6,23 @@ import { Link } from 'react-router-dom';
 import {ReactComponent as FullStar} from '../../../svg/fullStar.svg'
 import { primaryBlue } from '../../../Static/Colors';
 import './Question.css'
-const   Question = () => {
-   const [question,setQuestions]=useState([1,2,3,4,5,6,7])
+const   Question = ({questions}) => {
     return (
         <Container style={{width:'100%',height:'100vh'}}>
             <ListGroup className=''>
-                {question.map(e => 
+                {questions.map(e => 
                 <div >
                         <ListGroup.Item style={{textAlign:'center'}}>
-                            <Row className='p-1 mt-2'>
+                            <Row className=' mt-2'>
                                 
                                 <Col className='d-flex align-items-center justify-content-center' md={2}>
-                                    <img style={{ width: '4rem' }} src={`${Placeholder}`} />
+                                    <img style={{ width: '4rem',borderRadius:'3px' }} src={e.userProfile.image} />
                                 </Col>
                                 <Col className='d-flex align-items-center justify-content-center' md={2}>
-                                    <h5>UserName</h5>
+                                    <small>{e.userProfile.email}</small>
                                 </Col>
                                 <Col className='d-flex align-items-center justify-content-center' md={4}>
-                                    <Link style={{ textDecoration: 'none', fontWeight: '700', color: primaryBlue }} >Question Title</Link>
+                                    <Link style={{ textDecoration: 'none', fontWeight: '700', color: primaryBlue }} >{e.name}</Link>
                                 </Col>
                                 <Col md={4}>
                                     <Link style={{textDecoration:'none'}}>
