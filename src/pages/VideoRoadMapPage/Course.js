@@ -53,7 +53,7 @@ const Course = () => {
             :
               <AlgoritmPage />
           }
-        <Col className='right-nav-course' md={2} style={{ height: '90vh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Col className='' md={2} style={{ height: '90vh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
           <ListGroup   style={{ width: '100%' }}>
               <ListGroupItem variant={type === "course" ? 'primary' : ''}>

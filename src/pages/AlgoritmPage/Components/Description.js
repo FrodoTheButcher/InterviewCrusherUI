@@ -10,30 +10,12 @@ import { HARD } from '../../../Constants/DifficultyConstants'
 import Difficulty from '../../../components/Difficulty'
 import { useSelector } from 'react-redux'
 import Loader from '../../../components/Spinner'
-const Description = ({difficulty}) => {
+const Description = ({currentAlgo}) => {
 
     const [sectionActive,setSectionActive]=useState(1)
     const [like,setLike]=useState(false)
     const [dislike, setDislike] = useState(false)
-    const [currentAlgo,setCurrentAlgo] = useState(null)
-    const { contentId } = useParams();
 
-    const roadMapItem = useSelector(state=>state.roadmapItem)
-    const { roadmap } = roadMapItem
-    const getCurrentQuiz = ()=>{
-        const currentAlgo = roadmap?.algoArrayData.find(e=>e.id===parseInt(contentId));
-        setCurrentAlgo(currentAlgo);
-        console.log("alo",roadmap?.algoArrayData)
-        console.log(currentAlgo)
-        console.log(currentAlgo?.difficulty)
-    }
-
-    useEffect(()=>{
-        if(contentId)
-        {
-            getCurrentQuiz();
-        }
-    }, [contentId])
   
 
     //1 yes 0 no 0 default
