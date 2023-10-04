@@ -22,7 +22,7 @@ function App() {
           <Route path='/login' Component={LoginPage} src />
           <Route path='/login/signUp/' Component={SignUp} src />
           <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
-          <Route path='/interpreter' Component={Interpreter} />
+          <Route path='/interpreter' Component={Interpreter} /> {/* Use 'component' instead of 'Component' */}
         </Routes>
       </BrowserRouter>
     </ContextProvider>
