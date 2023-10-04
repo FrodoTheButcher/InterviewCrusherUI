@@ -3,7 +3,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-eclipse";
 import axios from "axios";
-
+import {useParams} from 'react-router-dom'
 function Interpreter() {
   const apiKey = "0b06570eb3msh45a1cc27f932daep1873a1jsn772d9f62a13a";
   const [code, setCode] = useState(""); // State to store the code
@@ -11,10 +11,13 @@ function Interpreter() {
   const [compileError, setCompileError] = useState(""); // State to store compilation error
   const [isLoading, setIsLoading] = useState(false); // State to track loading state
   const [programOutput,setProgramOutput] = useState("")
+  const [language,setLanguage] = useState(76)
   const handleCodeChange = (newCode) => {
     setCode(newCode); // Update the code state when the user enters code
   };
 
+
+  const {contentId} = useParams()
   const getResult = async (submissionToken) => {
     setIsLoading(true);
   
@@ -62,11 +65,26 @@ function Interpreter() {
   };
 
   const handleSubmit = async () => {
-    const data ={
-      "data":code
+    try{
+      const data ={
+        "code":btoa(code),
+        "language":language
+      }
+      const access = localStorage.getItem('access')
+      const config = {
+          headers: {
+              'Content-type': 'application/json',
+              Authorization: `Bearer ${access}`
+          }
+      }
+      const response = await axios.post(`http://localhost:8000/api/submission/${contentId}/`,data,config)
+      console.log(response);
     }
-    const response = await axios.post("http://localhost:8000/api/submission/",data)
-    console.log(response);
+    catch(e)
+    {
+      console.log("error",e)
+    }
+    
   }
   
 
