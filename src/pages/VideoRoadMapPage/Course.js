@@ -35,7 +35,7 @@ const Course = () => {
   );
   useEffect(() => {
     if (contentId === "undefinedContentId") {
-      //pe viitor redirectionezi unde a ramas 
+      //pe viitor redirectionezi unde a ramas
       //test prettier
 
       const contentId = roadmap?.videoArrayData[0].id;
@@ -49,21 +49,33 @@ const Course = () => {
   }, [dispatch, roadmapId, chapterId, contentId, type]);
 
   return (
-    <section style={{width:'100vw',display:'flex',marginTop:'5rem'}}>
-      {loading ? <Loader/> : error? <Message variant={'danger'}>{error}</Message> :
-      <>
-          {type === "course" ? 
-            <VideoCourse/>
-            :
-             type ==="quiz"?
-              <QuizPage />
-            :
-              <AlgoritmPage />
-          }
-        <Col className='' md={2} style={{ height: '90vh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-          <ListGroup   style={{ width: '100%' }}>
-              <ListGroupItem variant={type === "course" ? 'primary' : ''}>
+    <section style={{ width: "100vw", display: "flex", marginTop: "5rem" }}>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant={"danger"}>{error}</Message>
+      ) : (
+        <>
+          {type === "course" ? (
+            <VideoCourse />
+          ) : type === "quiz" ? (
+            <QuizPage />
+          ) : (
+            <AlgoritmPage />
+          )}
+          <Col
+            className=""
+            md={2}
+            style={{
+              height: "90vh",
+              overflowY: "scroll",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <ListGroup style={{ width: "100%" }}>
+              <ListGroupItem variant={type === "course" ? "primary" : ""}>
                 <div>
                   <Content
                     courseContent={roadmap?.videoArrayData}
