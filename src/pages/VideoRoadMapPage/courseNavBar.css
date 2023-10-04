@@ -1,6 +1,6 @@
 .right-nav-course{
     transition: all 0.4s ease-in-out;
-    transform: translateX(20em);
+    transform: translateX(2em);
 }
 .right-nav-course:hover{
     transform: translateX(0em) !important;
