@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./SignUp.css";
+import { useAuth } from "../../../Context/LoginContext";
 
 const SignUpUserData = (progressParam, setProgressParam) => {
   const [progress, setProgress] = useState(0);
@@ -10,10 +11,15 @@ const SignUpUserData = (progressParam, setProgressParam) => {
     password: "",
     password2: "",
   });
+  const { register } = useAuth();
 
   const handleIncrease = (e) => {
     e.preventDefault();
     setProgressParam((prev) => prev + 1);
+  };
+
+  const onRegister = async () => {
+    register(value.email, value.password, value.password2);
   };
 
   useEffect(() => {
@@ -121,7 +127,11 @@ const SignUpUserData = (progressParam, setProgressParam) => {
             className="signUpBtn"
             onClick={(e) => {
               e.preventDefault();
-              console.log("submit");
+              // console.log("submit");
+              if (value.email.length > 0 && value.password.length > 0) {
+                console.log("submit");
+                onRegister();
+              }
             }}
           >
             Sign Up
