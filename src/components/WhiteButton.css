@@ -16,5 +16,5 @@
 
 .Btn-Hover:hover {
     background-color: var(--main-color) !important;
-    color: white;
+    color: white !important;
 }

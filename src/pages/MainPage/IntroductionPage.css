@@ -8,7 +8,6 @@
     background-image: url('../../../public/img/IntroductionPage.png');
     background-size: cover;
     position: relative;
-    top: 5rem;
 }
 .StartBtn{
     transition: all 0.3s ease-in-out;
@@ -20,8 +19,8 @@
 
 .Cart{
     background-color: #B1CCDC;
-    height: 28rem;
-    width: 22rem;
+    height: 28em;
+    width: 22em;
     transform: rotate(-4deg) translateY(100px);
     flex-shrink: 0;
     border-radius: 30px;
@@ -37,8 +36,8 @@
 }
 .Cart2 {
     background-color: #2289C4;
-    height: 28rem;
-    width: 22rem;
+    height: 28em;
+    width: 22em;
     transform: rotate(-4deg) translateY(100px);
     flex-shrink: 0;
     border-radius: 30px;
@@ -314,6 +313,21 @@ display: none;
    .SigilesText{
     text-align: center;
    }
-        
+    
         
 }
+
+
+@media screen and (max-width: 1500px) {    
+.Cart2{
+    display: none;
+}
+
+}
+
+@media screen and (max-width: 1000px) {    
+    .Cart{
+        display: none;
+    }
+    
+    }

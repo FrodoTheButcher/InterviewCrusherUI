@@ -8,14 +8,14 @@ import { useParams } from 'react-router-dom';
 
 const SignUp = () => {
   const [progress, setProgress]=useState(0)
+  
 
   return (
     <div className='signUpContainer'>
         <div className='signUpComponent'>
-            {SignUpHeader(progress)}
-            {SignUpProgress(progress)}
-            {SignUpUserData(progress,setProgress)}
-            {SignUpSocialMedia(progress,setProgress)}
+            <SignUpProgress progressParam={progress} />
+            <SignUpUserData progressParam={progress} setProgressParam={setProgress} />
+            <SignUpSocialMedia progressParam={progress} setProgressParam={setProgress} />
         </div>
     </div>
   )

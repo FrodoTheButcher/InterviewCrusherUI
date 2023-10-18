@@ -3,6 +3,8 @@ import { Col, Dropdown, ListGroup, ListGroupItem, NavDropdown, Row } from 'react
 import {DropdownButton} from 'react-bootstrap'
 import '../Course.css'
 import { Link, useParams } from 'react-router-dom'
+import CheckMark from '../../../components/CheckMark'
+import Unchecked from '../../../components/Unchecked'
 const Content = ({ courseContent,text, type, roadmap }) => {
   const { roadmapName, roadmapId } = useParams()
   return (
@@ -22,9 +24,10 @@ const Content = ({ courseContent,text, type, roadmap }) => {
                     </Col>
                     <Col>
                       <small>{course.description}</small>
+                      <CheckMark/>
+                  <Unchecked/>
                     </Col>
                   </Link>
-                  
                 </ListGroup.Item>
               )}
         </ListGroup>

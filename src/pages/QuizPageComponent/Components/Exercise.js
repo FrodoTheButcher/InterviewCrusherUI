@@ -18,10 +18,11 @@ import { useState } from 'react';
 import RedCircularProgressBar from '../../../components/RedCircularProgressBar';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
-function Exercise({ setStep }) {
-    const percentage = 66;
-    const quiz = JSON.parse(localStorage.getItem('quiz'));
-    const [answer,setAnswer] = useState(1);
+function Exercise({ setStep,quiz }) {
+  
+    //TINE MINTE ! 
+    //SUCCES -> CATE AU FOST SUCCESS 
+    //FAIL -> CATE AU FOST FAIL , POATE PCII DE 5 ORI UNUL FFS
     return (
         <Card style={{ background: 'white', width: '30%', height: '80%', borderRadius: '10px' }} className='d-flex align-items-center justify-content-center'>
             <Container style={{ width: '100%', height: '10%' }} className='d-flex flex-column align-items-center justify-content-center'>
@@ -44,7 +45,7 @@ function Exercise({ setStep }) {
                         </div>
                         <div className='d-flex align-items-center justify-content-center flex-column' style={{ width: '6rem', height: '6rem', textAlign: 'center' }}>
                                 <p className='DifficultyIcon' style={{ color: primaryBlue, fontWeight: 'bolder', fontSize: '' }}><Happy /></p>
-                             <CircularProgressBar percentage={quiz?.failRate} />
+                            <CircularProgressBar percentage={100-quiz?.successRate} />
                         </div>
                      
                     </Row>

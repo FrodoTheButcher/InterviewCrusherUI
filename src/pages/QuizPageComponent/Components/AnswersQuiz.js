@@ -12,28 +12,14 @@ import { ReactComponent as Coin } from '../../../svg/Coin.svg'
 import { ReactComponent as Success } from '../../../svg/Success.svg'
 import { ReactComponent as Happy } from '../../../svg/Happy.svg'
 import { ReactComponent as Sad } from '../../../svg/sad.svg'
-
-import CircularProgressBar from '../../../components/CircularProgressBar';
 import { useEffect, useState } from 'react';
-import RedCircularProgressBar from '../../../components/RedCircularProgressBar';
-import Comment from './Comment'
-import Loader from '../../../components/Spinner'
 import Answer from './Answer';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-
-function AnswersQuiz({ setStep, setFailed }) {
-    const percentage = 66;
-    const quiz = JSON.parse(localStorage.getItem('quiz'));
-
+import '../QuizPage.css'
+function AnswersQuiz({ setStep, quiz, setAnswerChoosed, answerChoosed }) {
     const [comments, setComments] = useState(quiz?.quizAnswers)
-
-    const [answer, setAnswer] = useState(1);
-
-    const [liked, setLiked] = useState(undefined)
-
     useEffect(()=>{
         const timeout = setTimeout(()=>{
-            setFailed(true)
             setStep(prev=>prev+1)
         },quiz?.time ? quiz.time * 1000 : 1000000)
         return () => clearTimeout(timeout);
@@ -67,16 +53,16 @@ function AnswersQuiz({ setStep, setFailed }) {
                 </ListGroup>
                 <div fluid className='d-flex align-items-center' style={{ flexDirection: 'column', overflowY: 'scroll', justifyContent: 'space-between', height: '20em',width:'100%' }}>
                     {
-                    comments?.length == 0 ? <Spinner/>
+                    comments?.length === 0 ? <Spinner/>
                         :
                     comments?.map(answer =>
-                       <Answer answer={answer} />
+                        <Answer setAnswerChoosed={setAnswerChoosed} answerChoosed={answerChoosed} answer={answer} />
                     )}
                 </div>
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
                 <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Previous</Button>
-                <Button onClick={() => { console.log('test'); setFailed(false) ;setStep(prev => prev + 1)  }} className='NextBtn' >Next</Button>
+                <Button onClick={() => { console.log('test');setStep(prev => prev + 1)  }} className='NextBtn' >Next</Button>
             </Card.Body>
         </Card>
     );

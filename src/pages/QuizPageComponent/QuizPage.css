@@ -9,7 +9,12 @@ width: 100%;
 height: 100%;
 color: white;
 }
-
+.focus-link .row-link .link-link{
+    color: white ;
+}
+.focus-link:hover .row-link .link-link{
+    color: black !important;
+}
 .CommentHover:hover{
 background-color: white !important;
 }

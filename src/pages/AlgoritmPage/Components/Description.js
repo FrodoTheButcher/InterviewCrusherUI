@@ -34,11 +34,11 @@ const Description = ({currentAlgo}) => {
         return (<Loader/>)
     }
   return (
-      <Container style={{ borderLeft:'1rem solid rgb(240, 240, 240)',background: 'white',height:'100%',overflowY:'scroll'}}>
+      <Container style={{overflow:'scroll',height:'100%'}}>
           <Row style={{ borderBottom: '2px solid #000a200d' }}>
-              <Container style={{ marginTop: '1rem', marginBottom: '1rem', padding:'1.5rem', borderTop: '2px solid #000a200d' }} fluid>
-                  <Row style={{ marginTop: '1rem', color: ' rgb(38 ,38 ,38,1)' }}> <Link style={{ textDecoration: 'none', color: 'black', fontWeight: '600', color: 'rgb(38, 38, 38,1)', fontSize: '1.5rem'}}>{currentAlgo?.id } {currentAlgo?.name}</Link></Row>
-                  <Row style={{ marginTop: '1rem' }}>
+              <Container style={{  padding:'1.5rem', borderTop: '2px solid #000a200d' }} fluid>
+                  <Row style={{  color: ' rgb(38 ,38 ,38,1)' }}> <Link style={{ textDecoration: 'none', color: 'black', fontWeight: '600', color: 'rgb(38, 38, 38,1)', fontSize: '1.5rem'}}>{currentAlgo?.id } {currentAlgo?.name}</Link></Row>
+                  <Row style={{  }}>
                       <Col >
                           <Difficulty Fontsize={'1.5em'} Difficulty={currentAlgo?.difficulty} />
                       </Col>

@@ -13,7 +13,7 @@ const Solutions = () => {
                       <strong className="me-auto">Attention!</strong>
                       <small>11 mins ago</small>
                   </Toast.Header>
-                  <Toast.Body>Hello , if you get stuck, you can send us your problem and we can contact you with the solution explained!</Toast.Body>
+                  <Toast.Body>Hello , if you get stuck, encounter an error or a bug , contact us!</Toast.Body>
               </Toast>
           </Container>
          

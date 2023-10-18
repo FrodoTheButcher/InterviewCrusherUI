@@ -1,21 +1,11 @@
-import React from 'react'
-import { Spinner } from 'react-bootstrap'
-const Loader = () => {
+import * as React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
+export default function Loader() {
     return (
-        <Spinner
-            animation='border'
-            role='status'
-            style={{
-                height: '100px',
-                width: '100px',
-                margin: 'auto',
-                display: 'block'
-            }}
-        >
-
-
-        </Spinner>
-    )
+        <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+        </Box>
+    );
 }
-
-export default Loader

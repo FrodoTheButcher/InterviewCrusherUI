@@ -4,7 +4,9 @@ import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-eclipse";
 import axios from "axios";
 import {useParams} from 'react-router-dom'
-function Interpreter() {
+import SubmissionTable from "../AlgoritmPage/Components/SubmissionTable";
+function Interpreter({selectedLang,setSelectedLang}) {
+
   const apiKey = "0b06570eb3msh45a1cc27f932daep1873a1jsn772d9f62a13a";
   const [code, setCode] = useState(""); // State to store the code
   const [submissionResult, setSubmissionResult] = useState(null); // State to store the submission result
@@ -68,7 +70,7 @@ function Interpreter() {
     try{
       const data ={
         "code":btoa(code),
-        "language":language
+        "language":selectedLang
       }
       const access = localStorage.getItem('access')
       const config = {
@@ -77,7 +79,7 @@ function Interpreter() {
               Authorization: `Bearer ${access}`
           }
       }
-      const response = await axios.post(`http://localhost:8000/api/submission/${contentId}/`,data,config)
+      const response = await axios.post(`http://localhost:8000/api/submission/algo/${contentId}/`,data,config)
       console.log(response);
     }
     catch(e)
@@ -87,58 +89,27 @@ function Interpreter() {
     
   }
   
+  useEffect(()=>{
 
-  /*const handleSubmit = async () => {
-    // Encode the source_code as Base64
-    console.log(code)
-    const base64EncodedSourceCode = btoa(code);
-    console.log(base64EncodedSourceCode)
-
-    const options = {
-      method: "POST",
-      url: "https://judge0-ce.p.rapidapi.com/submissions",
-      params: {
-        base64_encoded: "true",
-        fields: "*",
-      },
-      headers: {
-        "content-type": "application/json",
-        "Content-Type": "application/json",
-        "X-RapidAPI-Key": "95803f70a3mshfeee61cf8b53fe0p185f63jsn51a8dda17fe8",
-        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-      },
-      data: {
-        language_id: 76,
-        source_code: base64EncodedSourceCode, // Use the Base64-encoded source code
-        stdin: btoa("5\n7"), // Encode "5\n7" as a Base64 string and provide it as input
-        expected_output: btoa("12"), // Encode the expected output as a Base64 string
-      },
-    };
-
-    try {
-      setIsLoading(true);
-      const response = await axios.request(options);
-      console.log(response.data);
-      getResult(response.data.token);
-     
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
-  };*/
+  },[selectedLang])
 
   useEffect(() => {
     setIsLoading(false); // Reset loading state when code changes
   }, [code]);
 
   return (
-    <div>
+    <div style={{width:'100%',height:'100%'}}>
       <AceEditor
         mode="c_cpp"
         theme="eclipse"
         editorProps={{ $blockScrolling: true }}
         onChange={handleCodeChange}
         value={code}
+        highlightActiveLine={true}
+        width="100%"
+        enableBasicAutocompletion={true}
+        focus={true}
+        fontSize={"1rem"}
       />
       <button onClick={handleSubmit}>Submit Code</button>
       {isLoading && <p>Loading...</p>}
@@ -148,12 +119,7 @@ function Interpreter() {
           <pre>{compileError}</pre>
         </div>
       )}
-    {programOutput && (
-        <div>
-          <h2>Program Output</h2>
-          <pre>{programOutput}</pre>
-        </div>
-      )}
+      <SubmissionTable />
     </div>
   );
 }

@@ -14,6 +14,7 @@ import QuizPage from '../QuizPageComponent/QuizPage'
 import AlgoritmPage from '../AlgoritmPage/AlgoritmPage'
 import { useNavigate } from 'react-router-dom'
 import './courseNavBar.css'
+import RightPopUp from './Components/RightPopUp'
 const Course = () => {
 
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ const Course = () => {
   );
   useEffect(() => {
     
-    if (contentId === "undefinedContentId")
+    if (contentId === "undefinedContentId" || contentId === "undefined")
     {
       //pe viitor redirectionezi unde a ramas
 
@@ -39,40 +40,22 @@ const Course = () => {
     }
    
     dispatch(roadmapGetByIdAction(roadmapId, chapterId));
-  }, [dispatch, roadmapId,chapterId, contentId, type]);
+  }, [dispatch, roadmapId,chapterId, contentId, type,contentId]);
  
   return (
-    <section style={{width:'100vw',display:'flex',marginTop:'5rem'}}>
+    <section style={{width:'100vw',display:'flex'}}>
       {loading ? <Loader/> : error? <Message variant={'danger'}>{error}</Message> :
+      roadmap && 
       <>
           {type === "course" ? 
-            <VideoCourse/>
+            <VideoCourse videos = {roadmap.videoArrayData}/>
             :
              type ==="quiz"?
-              <QuizPage />
+              <QuizPage quizes = {roadmap.quizArrayData} />
             :
               <AlgoritmPage />
           }
-        <Col className='' md={2} style={{ height: '90vh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-          <ListGroup   style={{ width: '100%' }}>
-              <ListGroupItem variant={type === "course" ? 'primary' : ''}>
-                <div>
-                  <Content courseContent={roadmap?.videoArrayData} roadmap={roadmap} type={"course"} text={"Course Content"} />
-              </div>
-            </ListGroupItem>
-              <ListGroupItem variant={type === "quiz" ? 'primary' : ''}>
-              <div>
-                  <Content  courseContent={roadmap?.quizArrayData} roadmap={roadmap} type={"quiz"} text={"Quiz Content"} />
-              </div>
-            </ListGroupItem>
-              <ListGroupItem variant={type === "algo" ? 'primary' : ''}>
-              <div>
-                  <Content  courseContent={roadmap?.algoArrayData} roadmap={roadmap} type={"algo"} text={"Algo Content"} />
-              </div>
-            </ListGroupItem>
-          </ListGroup>
-        </Col>
+            <RightPopUp type={type} roadmap={roadmap}/>
       </>
       }
     

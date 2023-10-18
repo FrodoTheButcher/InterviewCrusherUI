@@ -1,11 +1,19 @@
-import React from 'react'
-import { Container,Row,Col, Button } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Container,Row,Col, Button, FormControl } from 'react-bootstrap'
 import './Footer.css'
 import {ReactComponent as Information} from '../svg/Information.svg'
 import { ReactComponent as Explore } from '../svg/Explore.svg'
 import { ReactComponent as Resources } from '../svg/Resources.svg'
+import { Input, InputAdornment, InputLabel, TextField } from '@mui/material'
+import { AccountCircle } from '@mui/icons-material'
+import EmailPopup from './EmailPopup'
 
 const Footer = () => {
+
+    
+
+    const [emailPopup,setEmailPopup]=useState(false)
+
   return (
       <Container fluid style={{ width: '100vw', height: '50vh', padding:'20px',background:'rgb(28, 29, 31)'}}>
       <Row >
@@ -14,8 +22,10 @@ const Footer = () => {
         <Row><h5 style={{color:'white'}}> Create an online video course, reach students across the globe, and earn respect and money</h5></Row>
         </Col>
         <Col className='d-flex align-items-center justify-content-center'>
-        <Button className='footerbtn' style={{background:'none',border:'1px solid white',color:'white',fontWeight:'bold'}}>Teach with us</Button>
+        <Button className='footerbtn' style={{background:'none',border:'1px solid white',color:'white',fontWeight:'bold',marginRight:'0.5em'}}>Teach along with us</Button>
+        <EmailPopup />
         </Col>
+           
       </Row>
          
 
@@ -109,9 +119,7 @@ const Footer = () => {
                           @ 2023 InterviewCrusher
                       </div>
                         </Row>
-                       
-
-                    </Col>            
+                    </Col>          
           </Row>
     </Container>
   )

@@ -22,9 +22,7 @@ const IntroductionPage = () => {
       </Container>
       <Screen2/>
       <Screen3/>
-    
-      <Container fluid className='CourseNow'>      
-      </Container>    </>
+    </>
   
   )
 }

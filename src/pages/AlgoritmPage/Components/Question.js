@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Placeholder from '../../../images/placeholder.png'
-import { Col, Container, ListGroup ,ListGroupItem,Row} from 'react-bootstrap';
+import { Col, Container, ListGroup ,ListGroupItem,Row, Spinner} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {ReactComponent as FullStar} from '../../../svg/fullStar.svg'
 import { primaryBlue } from '../../../Static/Colors';
 import './Question.css'
 const   Question = ({questions}) => {
+    console.log("question",questions)
+    if(questions === undefined)
+    {
+        return (
+            <Spinner/>
+        )
+    }
     return (
         <Container style={{width:'100%',height:'100vh'}}>
             <ListGroup className=''>
-                {questions.map(e => 
+                {questions?.map(e => 
                 <div >
                         <ListGroup.Item style={{textAlign:'center'}}>
                             <Row className=' mt-2'>

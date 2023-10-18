@@ -8,9 +8,7 @@ const MiniNavbar = () => {
     const handleFocusChange = (value) => {
         setHandleFocus(value);
     };
-    useEffect(() => {
-        console.log(handleFocus)
-    }, [handleFocus])
+  
     return (
         <>
             <Row
@@ -24,6 +22,7 @@ const MiniNavbar = () => {
                     height: '5rem',
                     width: '100vw',
                     position: 'relative',
+                    marginTop:'5em'
                 }}
             >        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
                     <p className="miniTitle" style={{ margin: '0' }} onMouseEnter={() => setNavData(WorkToOurCompany)}>Work to our company</p>
@@ -53,7 +52,7 @@ const MiniNavbar = () => {
                     <p className="miniTitle" style={{ margin: '0' }} onMouseEnter={() => setNavData(WorkWithUs)}>Work with Us</p>
                 </Col>
             </Row>
-            <Row fluid style={{ opacity: handleFocus ? '1' : '0', border: '1px solid black', backgroundColor: 'rgba(28, 29, 31)', zIndex: '20', width: '100vw', position: 'relative' }}>
+            <Row fluid style={{ opacity: handleFocus ? '1' : '0',display:!handleFocus && 'none', border: '1px solid black', backgroundColor: 'rgba(28, 29, 31)', zIndex: '20', width: '100vw', position: 'relative' }}>
                 {
                     navData.map(e => <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
                         <p className="miniTitle" style={{ margin: '0', color: 'white' }}>{e}</p>

@@ -16,7 +16,12 @@ import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
 import { roadmapGetAllAction } from '../../actions/roadmapGetAllAction'
 import Loader from '../../components/Spinner'
 import Message from '../../components/Message'
+import DateCalendarServerRequest from '../../components/Calendar'
 const RoadMapPage = () => {
+
+  const [openSchedule,setOpenSchedule] = useState(false)
+  const [schedule,setSchedule] = useState(null)
+
   const dispatch = useDispatch()
 
  
@@ -64,8 +69,6 @@ const RoadMapPage = () => {
     console.log(roadmaps)
   }, [roadmaps])
 
-
-
   return (
     <div  style={{ position: 'relative', top: '7rem', width: '100vw' }}>
       {loading ? <Loader/> : error? <p>error</p>  :<>
@@ -75,7 +78,8 @@ const RoadMapPage = () => {
         </div>
         <Container style={isFocused != UNFOCUSED ? { width: '100vw', margin: '0' } : { width: '100vw' }}>
           <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <CourseComponentPopup />
+            {openSchedule && <DateCalendarServerRequest setSchedule={setSchedule} />}
+            <CourseComponentPopup openSchedule={openSchedule} setOpenSchedule={setOpenSchedule} />
           </div>
           <Container  fluid>
             {roadmaps && roadmaps.map((roadmap, index) => (

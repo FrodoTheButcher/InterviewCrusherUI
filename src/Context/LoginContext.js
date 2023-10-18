@@ -18,7 +18,8 @@ export const CustomAuthProvider = ({children})=>{
             const updatedUser = {
                 email: decoded?.username,
                 name: decoded?.name,
-                userId: decoded?.user_id
+                userId: decoded?.user_id,
+                image:decoded?.image
             };
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -29,27 +30,6 @@ export const CustomAuthProvider = ({children})=>{
         {
             console.error(error)
         }
-    }
-
-    const register = async (email,password,password2)=>{
-        console.log('apelare')
-        const data ={
-            "username":email,
-            "email":email,
-            "password":password,
-            "password2":password2
-        }
-        try{
-            const response = await axios.post("/api/users/",data);
-            if(response.status===200)
-            {
-                login(email,password);
-            }
-        }
-        catch(error){
-            console.error(error);
-        }
-
     }
 
     const login = async (email,password)=>{
@@ -85,11 +65,12 @@ export const CustomAuthProvider = ({children})=>{
     }   
 
     useEffect(()=>{
+
+        if(firstLogin)
+            getNewToken();
+
         const interval = setInterval(()=>{
-            if(firstLogin===false)
-            {
                 getNewToken();
-            }
         }, 14400)
         setFirstLogin(false)
         return ()=>{
@@ -101,7 +82,6 @@ export const CustomAuthProvider = ({children})=>{
         login: login,
         logout:logout,
         user:user,
-        register: register,
     }
 
     return (

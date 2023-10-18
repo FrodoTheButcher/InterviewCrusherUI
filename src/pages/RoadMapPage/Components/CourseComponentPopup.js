@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container,Row,Col ,Button} from 'react-bootstrap'
 
-const CourseComponentPopup = () => {
+const CourseComponentPopup = ({ setOpenSchedule,openSchedule }) => {
   return (
     <Row style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',background: 'white', borderRadius: '20px', width: '30rem', border: '1px solid #B2C0CF', height: '13rem', padding:'1rem',position: 'relative', left: '' }} className='CourseComponentContainer d-flex align-items-center justify-content-center'>
         <Col style={{ position: 'relative' }}>
@@ -10,7 +10,7 @@ const CourseComponentPopup = () => {
           <Row><h4>Schedule time to learn</h4></Row>
           <p style={{ color: '', fontWeight: '', lineHeight: '' }}>Aim everyday to get better <br /> and never give up!</p>
 
-        <Row><Button className='ButtonHover' style={{ background: 'none', width: '10rem', fontWeight: 'bold', borderColor: '#B2C0CF', color: '#1CABFC' }}>Start now!</Button></Row>
+        <Row><Button onClick={() => setOpenSchedule(state => !state)} className='ButtonHover' style={{ background: 'none', width: '10rem', fontWeight: 'bold', borderColor: '#B2C0CF', color: '#1CABFC' }}>{!openSchedule ? 'Start now!' : 'Save!'}</Button></Row>
         </Col>
       </Row>
   )

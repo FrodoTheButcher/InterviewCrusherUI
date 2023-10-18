@@ -57,7 +57,8 @@ const Screen2 = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: '#EDF1F6',
-                height:'100vh'
+                height:'100vh',
+                width:'100vw',
             }}
             fluid
         >

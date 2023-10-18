@@ -2,104 +2,87 @@ import { Button, CardGroup, Col, Container, ListGroupItem, Row, Spinner } from '
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { primaryBlue, primaryGray, secondaryGray } from '../../../Static/Colors';
-import WhiteButton from '../../../components/WhiteButton';
-import Difficulty from '../../../components/Difficulty';
-import { HARD } from '../../../Constants/DifficultyConstants';
-import { Image } from 'react-bootstrap';
 import { ReactComponent as Back } from '../../../svg/back.svg'
-import { ReactComponent as DifficultyIcon } from '../../../svg/fullStar.svg'
-import { ReactComponent as Coin } from '../../../svg/Coin.svg'
-import { ReactComponent as Success } from '../../../svg/Success.svg'
-import { ReactComponent as Happy } from '../../../svg/Happy.svg'
-import { ReactComponent as Sad } from '../../../svg/sad.svg'
-
-import CircularProgressBar from '../../../components/CircularProgressBar';
-import { useContext, useEffect, useState } from 'react';
-import RedCircularProgressBar from '../../../components/RedCircularProgressBar';
 import Comment from './Comment'
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReactComponent as Like } from '../../../svg/Like.svg'
 import { ReactComponent as Dislike } from '../../../svg/Dislike.svg'
 import Message from '../../../components/Message';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPointsAction, removePointsAction } from '../../../actions/quizActions';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
+import SuccessScale from '../../../components/SuccessScale';
+import RatingMUI from '../../../components/Rating';
 
-function EndOfQuiz({setStep ,failed}) {
-console.log('end of quiz')
-    const quiz = JSON.parse(localStorage.getItem('quiz'));
+function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose }) {
 
 
     const { roadmapName,roadmapId, chapterId, contentId } = useParams();
-
-    const percentage = 66;
+    const [failed,setFailed]=useState(false)
+    const [open,setOpen] = useState(false)
     const [comments,setComments]=useState([])
-
     const navigate = useNavigate()
-
     const [liked,setLiked] = useState(undefined)
+    const [content, setContent] = useState("");
+    const dispatch = useDispatch()
+    
 
-    const [content, setContent] = useState(
-        localStorage.getItem('content') || 'course'
-      );
+    const pointsAdded = useSelector(select => select.addPointsReducer)
+    const {loading:loadingAddPoints,error:errorAddPoints,data:messageAddPoints}= pointsAdded
+
+    const pointsRemoved = useSelector(select => select.removePointsReducer)
+    const { loading: loadingRemovePoints, error: errorRemovePoints, data: messageRemovePoints } = pointsRemoved
 
     const addPoints = async () => {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("access")
-        const config = {
-            headers: {
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${token}`
-            }
-        };
         const data = {
-            "points": quiz?.pointsEarned
-        }
+            "points": quiz?.pointsEarned,
+            "quizId": contentId,
 
-        console.log(localStorage.getItem("access"));
-        try {
-            const response = await axios.put("/api/users/addPoints/", data, config,user);
-            console.log("response", response);
-        } catch (error) {
-            console.error("An error occurred:", error);
         }
+        dispatch(addPointsAction(data))
     };
     const removePoints = async () => {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("access")
-        const config = {
-            headers: {
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${token}`
-            }
-        };
         const data = {
-            "points": quiz?.pointsEarned/2
+            "points": quiz?.pointsEarned/2,
+            "quizId":contentId,
         }
-
-        console.log(localStorage.getItem("access"));
-        try {
-            const response = await axios.put("http://127.0.0.1:8000/api/users/addPoints/", data, config, user);
-            console.log("response", response);
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
+        dispatch(removePointsAction(data))
     };
 
 
   useEffect(()=>{
-      if (!failed) {
-          addPoints()
+
+    if(loadingAddPoints === undefined && loadingRemovePoints === undefined && errorAddPoints === undefined && errorRemovePoints === undefined && messageAddPoints === undefined && messageRemovePoints === undefined)
+      {if (!answerChoose?.isCorrect) {
+         setFailed(false)
+          removePoints()
       }
       else
       {
-          removePoints()
+          setFailed(true)
+          addPoints()
       }
       setComments(quiz?.quizComments)
-  },[])
+      setOpen(true)
+    }
+  }, [loadingAddPoints, loadingRemovePoints, errorAddPoints, errorRemovePoints, messageAddPoints, messageRemovePoints, dispatch, answerChoose?.isCorrect, quiz?.quizComments, removePoints, addPoints])
+
 
     return (
-      
         <Card style={{ background: 'white', width: '30%', height: '80%', borderRadius: '10px' }} className='d-flex align-items-center justify-content-center'>
-            {failed !== false ? <Message variant={'danger'}>Fail</Message> : <Message variant={'success'}>Success</Message> }
+            {loadingAddPoints || loadingRemovePoints ? <Spinner/>
+            :
+                errorAddPoints || errorRemovePoints 
+                ?
+                    <CustomizedSnackbars severity={"error"} message={errorRemovePoints ? errorRemovePoints : errorAddPoints} open={open} setOpen={setOpen} />
+            :
+                    messageAddPoints || messageRemovePoints ?
+                        <CustomizedSnackbars severity={messageAddPoints ? "success" : "warning"} message={messageAddPoints ? "You are correct, Congrats! " : "You have failed..."} open={open} setOpen={setOpen} />
+            :
+            <CustomizedSnackbars severity={"error"} message={"unknown error occured"} open={open} setOpen={setOpen} />
+            }
             <Container style={{ width: '100%', height: '10%' }} className='d-flex flex-column align-items-center justify-content-center'>
                 <Card.Title style={{ padding: '1em', fontSize: '1em', fontWeight: 'bolder', display: 'flex', flexDirection: '', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ position: 'absolute', left: '3rem', margin: '0' }} className='backsvg'>
@@ -109,15 +92,11 @@ console.log('end of quiz')
                 </Card.Title>
             </Container>
             <Container style={{ width: '90%' }} className='d-flex flex-column align-items-center justify-content-center'>
-                <Row style={{ color: primaryGray }}><strong>Rate the quiz</strong></Row>
-               <Row>
-                    <Col style={{ opacity: `${liked == true ? '1' : '0.4'}`, cursor: 'pointer' }} onClick={() => setLiked(true)}>
-                        <Like /> 
-                    </Col>
-                    <Col style={{ opacity: `${liked == false ? '1' : '0.4'}`, cursor: 'pointer' }} onClick={() => setLiked(false)}>
-                        <Dislike />
-                    </Col>
-               </Row>
+                <Row style={{ color: primaryGray }}><strong>Give us a feedback</strong></Row>
+                <RatingMUI editable={true} />
+                <br/>
+                <Row style={{ color: primaryGray }}><strong>Rate the dificulty</strong></Row>
+                <SuccessScale />
                 <ListGroup style={{ padding: '1.5em' }}>
                     <ListGroupItem>
                         <textarea style={{ width: '100%', height: '100%', padding: '1em', outline: 'none', border: 'none' }} placeholder='Add a comment' />
@@ -132,12 +111,13 @@ console.log('end of quiz')
                 </div>
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
-                {failed ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
+                {open ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
                     :
                     <Button onClick={() => {setContent("course"); navigate(`/${roadmapName}/${roadmapId}/${chapterId}/course/1`) }} className='NextBtn' >Submit</Button>
                 }
             </Card.Body>
         </Card>
+        
     );
 }
 

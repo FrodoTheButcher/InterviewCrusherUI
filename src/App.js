@@ -9,6 +9,7 @@ import RoadMapPage from './pages/RoadMapPage/RoadMapPage';
 import SignUp from './pages/SignUpPage/SignUp'
 import Course from './pages/VideoRoadMapPage/Course';
 import Interpreter from './pages/Interpreter/Interpreter';
+import MiniNavbar from './components/miniNavbar';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path='/login' Component={LoginPage} src />
           <Route path='/login/signUp/' Component={SignUp} src />
           <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
-          <Route path='/interpreter' Component={Interpreter} /> {/* Use 'component' instead of 'Component' */}
+          <Route path='/interpreter' Component={Interpreter} />
         </Routes>
       </BrowserRouter>
     </ContextProvider>
