@@ -161,7 +161,7 @@ const SignUpUserData = ({ progressParam, setProgressParam }) => {
               </h4>
               <Form.Group
                 className="mb-3"
-                controlId="formBasicPassword"
+                controlId="formBasicPassword2"
                 style={{ paddingBottom: "1rem" }}
               >
                 <Form.Control
