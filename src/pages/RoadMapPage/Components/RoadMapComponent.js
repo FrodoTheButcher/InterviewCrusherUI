@@ -12,42 +12,29 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import ReusableVideoComp from '../../../components/ReusableVideoComponent'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { roadmapGetCurrentChapter } from '../../../actions/roadmapGetAllAction'
 const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageContainerProvenience,setIsFocused,img, MainParagraph, SecondParagraph, ButtonText, SmallText, span }) => {
   const [path,setPath]=useState(`${roadmap?.image}`)
   const [containerProvenience,setContainerProvenience]=useState("")
   const navigate = useNavigate();
-  useEffect(()=>{
-   switch(img)
-    {
-      case REACT:
-        setContainerProvenience(REACT)
-        break;
-      case CS:
-        setContainerProvenience(CS)
-        break;
-
-      case DJANGO:
-        setContainerProvenience(DJANGO)
-        break;
-
-      case MACHINELEARNING:
-        setContainerProvenience(MACHINELEARNING)
-        break;
-
-      case REACTCS:
-        setContainerProvenience(REACTCS)
-        break;
-
-      case REACTDJANGO:
-        setContainerProvenience(REACTDJANGO)
-        break;
-       default:
-        setContainerProvenience("")
-        break;
-    }
-  },[mainPageContainerProvenience])
-
  
+  const dispatch = useDispatch()
+  const handleRoadmapLoading = async ()=>{
+    dispatch(roadmapGetCurrentChapter(roadmap.id))
+  }
+  const roadmapItem = useSelector(state=>state.roadmapItem)
+  const {loading,error,roadmap : currentChapter}=roadmapItem
+
+  useEffect(()=>{
+ 
+    if(currentChapter?.id==roadmap?.id  && currentChapter)
+    {
+      setIsFocused(UNFOCUSED)
+      setMainPageContainerProvenience(UNFOCUSED)
+      navigate(`/${roadmap.title}/${roadmap.id}/${currentChapter?.chapter?.chapterId}/${currentChapter?.chapter?.contentType}/${currentChapter?.chapter?.currentId}`)
+    }
+  },[loading,error,currentChapter])
   return (
     <div className='RoadMapComponent' style={{ backgroundImage: `url(${path})` }}>
           <div style={{marginLeft:'1em'}}>
@@ -69,7 +56,7 @@ const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageCon
                 <source src={roadmap.video} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-            <Button onClick={() => navigate(`/${roadmap.title}/${roadmap.id}/1/course/undefinedContentId`)} className='ButtonHover' style={{ marginTop:'1em',background: 'white', width: '10rem', fontWeight: 'bold', borderColor: '#B2C0CF', color: 'black' }}>Continue</Button>
+            <Button onClick={() => handleRoadmapLoading()} className='ButtonHover' style={{ marginTop:'1em',background: 'white', width: '10rem', fontWeight: 'bold', borderColor: '#B2C0CF', color: 'black' }}>Continue</Button>
              
         </ListGroupItem>
         :

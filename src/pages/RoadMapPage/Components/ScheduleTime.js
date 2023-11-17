@@ -6,7 +6,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
-
+import SelectRoadmaps from './SelectRoadmap'
+import { Row } from 'react-bootstrap';
 function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
@@ -46,13 +47,14 @@ function ServerDay(props) {
     );
 }
 
-export default function DateCalendarServerRequest({ setSchedule }) {
+export default function ScheduleTimeToLearnCalendar({ setSchedule }) {
     const requestAbortController = React.useRef(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
 
     const fetchHighlightedDays = (date) => {
         const controller = new AbortController();
+        
         fakeFetch(date, {
             signal: controller.signal,
         })
@@ -89,19 +91,17 @@ export default function DateCalendarServerRequest({ setSchedule }) {
     };
 
     const handleChange = (e)=>{
-        const year = e.$y; // 2018
-        const month = e.$M; // 3 (Note: Months are 0-indexed, so add 1 if needed)
-        const week = e.$W; // Week number
-        const day = e.$D; // 21
-        setSchedule({
-            "day":day,
-            "week":week,
-            "month":month,
-            "year":year,
-        })
+        const year = e.$y; 
+        const month = e.$M;
+        const week = e.$W; 
+        const day = e.$D; 
+        setSchedule((prev)=>({...prev,"date":`${year}-${month}-${day}`}))
     }
+ 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Row>
+        
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
             onChange={(e)=>handleChange(e)}
                 defaultValue={initialValue}
@@ -118,5 +118,8 @@ export default function DateCalendarServerRequest({ setSchedule }) {
                 }}
             />
         </LocalizationProvider>
+        <SelectRoadmaps setSchedule={setSchedule}/>
+        </Row>
+      
     );
 }

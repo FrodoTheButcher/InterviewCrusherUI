@@ -3,23 +3,33 @@ import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore } from "@reduxjs/toolkit";
-import { roadmapGetAllAction } from "./actions/roadmapGetAllAction";
-import { roadmapGetAllReducer, roadmapGetByIdReducer } from "./reducers/roadmap";
-import { getLanguagesReducer, getSubmissionsReducer } from "./reducers/algorithm";
-import { userReducer } from "./reducers/userReducer";
+import { roadmapGetAllAction, scheduleTimeToLearn } from "./actions/roadmapGetAllAction";
+import { ScheduleTimeToLearnReducer, getAvaialableRoadmapsReducer, roadmapGetAllReducer, roadmapGetChapterReducer } from "./reducers/roadmap";
+import { createNewSubmissionReducer, getAlgoQuestionsReducer, getBasicTestCasesReducer, getLanguagesReducer, getSubmissionsReducer, getTestCasesReducer, getTipsReducer } from "./reducers/algorithm";
+import { sendEmailReducer, userReducer, userSubscribeToNewsLetterReducer } from "./reducers/userReducer";
 import { courseVideoCommentsReducer, createCourseVideoCommentsReducer } from "./reducers/courseVideoReducer";
-import { addPointsReducer, removePointsReducer } from "./reducers/quizReducer";
-
+import { addPointsReducer as checkQuizReducer, removePointsReducer } from "./reducers/quizReducer";
+import { registerVideoSubmissionReducer } from "./reducers/videoReducer";
 const reducer = combineReducers({
     roadmapList:roadmapGetAllReducer,
-    roadmapItem: roadmapGetByIdReducer,
+    roadmapItem: roadmapGetChapterReducer,
     getLanguages : getLanguagesReducer,
     userReducer : userReducer,
     courseVideoCommentsReducer: courseVideoCommentsReducer,
     createCourseVideoCommentsReducer: createCourseVideoCommentsReducer,
     removePointsReducer:removePointsReducer,
-    addPointsReducer:addPointsReducer,
+    checkQuizReducer:checkQuizReducer,
     getSubmissionsReducer: getSubmissionsReducer,
+    getTestCasesReducer: getTestCasesReducer,
+    createNewSubmissionReducer: createNewSubmissionReducer,
+    scheduleTimeToLearnReducer : ScheduleTimeToLearnReducer,
+    getAvaialableRoadmapsReducer:getAvaialableRoadmapsReducer,
+    userSubscribeToNewsLetterReducer:userSubscribeToNewsLetterReducer,
+    sendEmailReducer:sendEmailReducer,
+    registerVideoSubmissionReducer: registerVideoSubmissionReducer,
+    getBasicTestCasesReducer: getBasicTestCasesReducer,
+    getAlgoQuestionsReducer : getAlgoQuestionsReducer,
+    getTipsReducer: getTipsReducer,
 })
 
 const userQuizFromStorage = localStorage.getItem("quiz") ? JSON.parse(localStorage.getItem('quiz')) : []

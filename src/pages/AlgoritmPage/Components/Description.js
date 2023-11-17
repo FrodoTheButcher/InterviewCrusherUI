@@ -44,7 +44,7 @@ const Description = ({currentAlgo}) => {
                       </Col>
                       <Col>
                       <div style={{display:'flex'}}>
-                              <h4 style={{ color: 'rgb(140, 140 ,140,1)' }}>{currentAlgo?.likes}K</h4>
+                              <h4 style={{ color: 'rgb(140, 140 ,140,1)' }}>{currentAlgo?.likes}</h4>
                               <div onClick={() => handleLike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${!like ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
                                   <Like />    
                               </div>
@@ -53,7 +53,7 @@ const Description = ({currentAlgo}) => {
                       </Col>
                       <Col>
                           <div style={{ display: 'flex' }}>
-                              <h4 style={{ cursor: 'pointer', color: 'rgb(140, 140 ,140,1)' }}>{currentAlgo?.dislikes}K</h4>
+                              <h4 style={{ cursor: 'pointer', color: 'rgb(140, 140 ,140,1)' }}>{currentAlgo?.dislikes}</h4>
                               <div onClick={()=>handleDislike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${!dislike ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
                                   <Dislike />
                               </div>
@@ -69,12 +69,9 @@ const Description = ({currentAlgo}) => {
           </Row>
         
          <Container>
-              <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example /></Row>
-              <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example /></Row>
-              <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example /></Row>
-              <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example /></Row>
-              <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example /></Row>
-              <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example /></Row>
+            {currentAlgo.examples.map((e,index)=>
+                    <Row style={{ borderBottom: '1px solid #000a200d', marginTop: '1.5rem' }}><Example example={e} number={index} /></Row>
+                )}
          </Container>
         
 

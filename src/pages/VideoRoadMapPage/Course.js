@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { secondaryGray } from '../../Static/Colors'
 import WhiteButton from '../../components/WhiteButton'
 import { useParams } from 'react-router-dom'
-import { roadmapGetByIdAction } from '../../actions/roadmapGetAllAction'
+import { roadmapGetCurrentChapter } from '../../actions/roadmapGetAllAction'
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
 import Loader from '../../components/Spinner'
 import Message from '../../components/Message'
@@ -16,6 +16,9 @@ import { useNavigate } from 'react-router-dom'
 import './courseNavBar.css'
 import RightPopUp from './Components/RightPopUp'
 const Course = () => {
+
+  const roadmapItem = useSelector(state=>state.roadmapItem)
+  const {roadmap : currentChapter}=roadmapItem
 
   const navigate = useNavigate()
   const { roadmapId, chapterId, contentId, type, roadmapName }  = useParams();
@@ -29,31 +32,21 @@ const Course = () => {
     localStorage.getItem('content') || 'course'
   );
   useEffect(() => {
-    
-    if (contentId === "undefinedContentId" || contentId === "undefined")
-    {
-      //pe viitor redirectionezi unde a ramas
-
-      const contentId = roadmap?.videoArrayData[0].id;
-
-      navigate(`/${roadmapName}/${roadmapId}/${chapterId}/${type}/${contentId}`)
-    }
-   
-    dispatch(roadmapGetByIdAction(roadmapId, chapterId));
-  }, [dispatch, roadmapId,chapterId, contentId, type,contentId]);
+    dispatch(roadmapGetCurrentChapter(roadmapId));
+  }, [roadmapId,chapterId, contentId, type]);
  
   return (
     <section style={{width:'100vw',display:'flex'}}>
       {loading ? <Loader/> : error? <Message variant={'danger'}>{error}</Message> :
       roadmap && 
       <>
-          {type === "course" ? 
-            <VideoCourse videos = {roadmap.videoArrayData}/>
+          {type === "Video" ? 
+            <VideoCourse videos = {roadmap?.chapter?.videos}/>
             :
-             type ==="quiz"?
-              <QuizPage quizes = {roadmap.quizArrayData} />
+             type ==="Quiz"?
+              <QuizPage quizes = {roadmap?.chapter?.quizez} />
             :
-              <AlgoritmPage />
+              <AlgoritmPage algorithms = {roadmap?.chapter?.algorithms} />
           }
             <RightPopUp type={type} roadmap={roadmap}/>
       </>

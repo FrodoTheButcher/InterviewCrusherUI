@@ -1,23 +1,28 @@
-import React, { useState } from 'react'
-import { Button, Col, Container, FormControl, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
+import React, { useRef, useState } from 'react'
+import {  Col, Container, FormControl, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
 import WhiteButton from '../../../components/WhiteButton'
-import { primaryGray, secondaryGray } from '../../../Static/Colors'
+import {  secondaryGray } from '../../../Static/Colors'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Loader from '../../../components/Spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import { createVideoCommentsAction } from '../../../actions/courseVideoAction'
-import Message from '../../../components/Message'
 import { ErrorPrinter } from '../../../actions/errorPrinter'
 import { Avatar } from '@mui/material'
-import Comments from '../../../components/Comments'
 import { CalculateTimeAgo } from '../../../components/CalculateTime'
-
+import { registerVideoSubmissionAction } from '../../../actions/videoAction'
 const VideoCourse = ({videos}) => {
-    const [video,setVideo] = useState(null)
+    const [finishedVideos,setFinishedVideos] = useState([])
+    const [unfinishedVideos, setUnFinishedVideos] = useState([])
+    const [video,setVideo]=useState(null)
     const [comments,setComments] = useState([])
 
-    const { contentId } = useParams()
+    const [currentTime, setCurrentTime] = useState(0);
+    const videoRef = useRef(null);
+
+   
+
+    const { contentId, roadmapId } = useParams()
     const dispatch = useDispatch()
 
     const [commentData,setCommentData] = useState("")
@@ -31,27 +36,39 @@ const VideoCourse = ({videos}) => {
     useEffect(()=>{
         if(videos)
         {
-            const videoData = videos.find(video => video.id.toString() === contentId)
+            console.log(videos)
+            let videoData = videos.finished?.find(video => video.id.toString() === contentId)
+            if(!videoData)
+            videoData = videos.unfinished?.find(video => video.id.toString() === contentId)
             setComments(videoData?.comments)
             setVideo(videoData)
-        }
-    },[videos,contentId])
+            setFinishedVideos()
+            setFinishedVideos(videos.finishedVideos)
+            setUnFinishedVideos(videos.unfinishedVideos)
 
-    useEffect(()=>{
-        if (newCommentId && !loadingCommentCreate && !errorCommentCreate)
-        {
-            const user = JSON.parse(localStorage.getItem("user"));
-            const newComments = [...comments,{
-                "id":newCommentId,
-                "description":commentData,
-                "userImage": user.image,
-                "userName":user.name.length === 0 ? user.email : user.image,
-                "userId":user.userId,
-                "videoId":contentId
-            }]
-            setComments(newComments)
         }
-    }, [newCommentId,dispatch,loadingCommentCreate,errorCommentCreate])
+        return () => {
+            const videoElement = videoRef?.current;
+            if (videoElement) {
+
+              const currentTime = videoElement?.currentTime;
+
+              setCurrentTime(currentTime);
+             // if(currentTime > video?.videoLength - 1)
+            //  {
+                const data ={
+                    "videoId":contentId,
+                    "templateId": roadmapId
+                }
+                dispatch(registerVideoSubmissionAction(data))
+              //}
+            }
+          };
+
+    },[dispatch,videos,contentId])
+
+    
+
     if(video === null)
     {
         return (
@@ -63,12 +80,11 @@ const VideoCourse = ({videos}) => {
       <Col style={{ background: `${secondaryGray}`, height: '', width: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Container style={{ width: '100%', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} fluid>
               <Row md={12} style={{ width: '100%' }}>
-                  <video controls width="100%">
-                      <source src={video?.url} type="video/mp4" />
+                  <video controls width="100%"      ref={videoRef} >
+                      <source src={video?.videoFile} type="video/mp4" />
                       Your browser does not support the video tag.
                   </video>
               </Row>
-
               <Row md={2} style={{ width: '100%' }}>
                   <ListGroup style={{ width: '100%', overflowY: 'scroll', height: '' }}>
                       {comments?.map(comment =>
@@ -101,7 +117,6 @@ const VideoCourse = ({videos}) => {
               <ListGroup style={{ width: '100%' }}>
                   <ListGroupItem>
                     {loadingCommentCreate && <Loader/>}
-                      <ErrorPrinter error={errorCommentCreate} />
                       <FormControl 
                       onChange={(e)=>setCommentData(e.target.value)}
                       placeholder='Leave a comment' style={{ width: '90%', height: '90%' }} />

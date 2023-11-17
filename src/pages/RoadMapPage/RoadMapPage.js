@@ -16,7 +16,7 @@ import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
 import { roadmapGetAllAction } from '../../actions/roadmapGetAllAction'
 import Loader from '../../components/Spinner'
 import Message from '../../components/Message'
-import DateCalendarServerRequest from '../../components/Calendar'
+import ScheduleTimeToLearnCalendar from './Components/ScheduleTime'
 const RoadMapPage = () => {
 
   const [openSchedule,setOpenSchedule] = useState(false)
@@ -29,7 +29,6 @@ const RoadMapPage = () => {
     dispatch(roadmapGetAllAction())
   },[dispatch])
 
-  
 
   const targetRefs = useRef([]);
   const [textReveal, settextReveal] = useState(true);
@@ -42,7 +41,7 @@ const RoadMapPage = () => {
   };
   const roadmapList = useSelector(state => state.roadmapList)
   const { loading, error, roadmaps } = roadmapList;
-  
+
 
   const unseen = {
     transform:'translateY(10em)',
@@ -62,12 +61,14 @@ const RoadMapPage = () => {
     filter: 'blur(0px)',
     transition: 'all 0.5s ease-in-out',
   }
-
   
   const { mainPageContainerProvenience, setMainPageContainerProvenience } = useNavbar();
-  useEffect(() => {
-    console.log(roadmaps)
-  }, [roadmaps])
+ if(loading)
+ {
+  return (
+    <Loader/>
+  )
+ }
 
   return (
     <div  style={{ position: 'relative', top: '7rem', width: '100vw' }}>
@@ -78,14 +79,14 @@ const RoadMapPage = () => {
         </div>
         <Container style={isFocused != UNFOCUSED ? { width: '100vw', margin: '0' } : { width: '100vw' }}>
           <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {openSchedule && <DateCalendarServerRequest setSchedule={setSchedule} />}
-            <CourseComponentPopup openSchedule={openSchedule} setOpenSchedule={setOpenSchedule} />
+            {openSchedule && <ScheduleTimeToLearnCalendar setSchedule={setSchedule} />}
+            <CourseComponentPopup  schedule={schedule} openSchedule={openSchedule} setOpenSchedule={setOpenSchedule} />
           </div>
           <Container  fluid>
             {roadmaps && roadmaps.map((roadmap, index) => (
-              <Row key={index} >
+              <Row key={roadmap[0].id} >
                 <Col style={isFocused !== UNFOCUSED ? seenPair1 : textReveal ? seenPair1 : unseen}>
-                  <div className={isFocused === (roadmap[0].id) ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>
+                  <div className={isFocused === (roadmap[0]?.id) ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>
                     <RoadMapComponent
                       roadmap={roadmap[0]}
                       mainPageContainerProvenience={mainPageContainerProvenience}
@@ -100,7 +101,7 @@ const RoadMapPage = () => {
                   </div>
                 </Col>
                 {roadmap.length >= 1 && (
-                  <Col style={isFocused !== UNFOCUSED ? seenPair1 : textReveal ? seenPair1 : unseen}>
+                  <Col key={roadmap[1]?.id} style={isFocused !== UNFOCUSED ? seenPair1 : textReveal ? seenPair1 : unseen}>
                     <div className={isFocused === roadmap[1].id ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>
                       <RoadMapComponent
                         roadmap={roadmap[1]}

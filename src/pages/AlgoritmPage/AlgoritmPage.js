@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import {Col,Row, Spinner} from 'react-bootstrap'
+import {Col,Container,Row, Spinner} from 'react-bootstrap'
 import Description from './Components/Description'
 import Compiler from './Components/Compiler'
 import { useNavbar } from '../../Context/ContextProvider'
@@ -16,12 +16,15 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import FloatingActionButtonZoom from './Components/TableContent'
 import { getSubmissionsAction } from '../../actions/algorithmAction'
+import Interpreter from '../Interpreter/Interpreter'
 
-const AlgoritmPage = () => {
-  const roadMapItem = useSelector(state=>state.roadmapItem)
-  const { roadmap } = roadMapItem
+const AlgoritmPage = ({ algorithms }) => {
   const getCurrentAlgo = ()=>{
-      const currentAlgo = roadmap?.algoArrayData.find(e=>e.id===parseInt(contentId));
+    let currentAlgo = algorithms?.finished.find(e=>e.id===parseInt(contentId));
+      if(!currentAlgo)
+      {
+        currentAlgo = algorithms?.unfinished.find(e => e.id === parseInt(contentId));
+      }
       setCurrentAlgo(currentAlgo);
   }
   const [currentAlgo,setCurrentAlgo] = useState(null)
@@ -31,18 +34,28 @@ const AlgoritmPage = () => {
           getCurrentAlgo();
    }, [contentId])
 
-
+   const [expand,setExpand]=useState(false)
+   const nonExpanded ={
+     width:"100%",
+     height:"100%"
+   }
+ 
+   const Expanded = {
+     width: "100vw",
+     height: "100vh",
+     position:"absolute",
+     left:"0",
+     zIndex:10
+   }
   return (
-    <Row style={{ position: 'relative', width: '100vw', height: 'calc(100vh - 10rem)', background: 'rgb(240 240 240)' }}>
-          <Col style={{height:'100%'}}>
-        
-          <FloatingActionButtonZoom  currentAlgo={currentAlgo} />
-        
+    <Row style={{ position: 'relative', width: '100vw', height: '100vh', background: 'rgb(240 240 240)' }}>
+          <Col style={{height:'100%'}}> 
+              <FloatingActionButtonZoom  currentAlgo={currentAlgo} />
           </Col>
-      <Col style={{ height: '100%' }}>
-                  <Compiler  />
-            </Col>
-        </Row>
+          <Col style={{ height: '100%' }}>
+              <Interpreter setExpand={setExpand}  />
+          </Col>
+     </Row>
   )
 }
 

@@ -188,13 +188,13 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
                     <Description label="Item One" {...a11yProps(0)} currentAlgo={currentAlgo} difficulty={HARD} />
                 </TabPanel>
                 <TabPanel style={{ height: '100%' }} value={value} index={1} dir={theme.direction}>
-                    <Overview tips={currentAlgo?.tips} />
+                    <Overview  />
                 </TabPanel>
                 <TabPanel style={{ height: '100%' }} value={value} index={2} dir={theme.direction}>
                     <Solutions />
                 </TabPanel>
                 <TabPanel style={{ height: '100%' }} value={value} index={3} dir={theme.direction}>
-                    <Question questions={currentAlgo?.questions} />
+                    <Question />
                 </TabPanel>
                 <TabPanel style={{ height: '100%' }} value={value} index={4} dir={theme.direction}>
                     <Submissions   />

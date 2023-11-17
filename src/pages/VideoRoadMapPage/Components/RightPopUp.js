@@ -39,19 +39,19 @@ export default function RightPopUp({type,roadmap}) {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <ListGroup style={{ width: '100%' }}>
-                <ListGroupItem variant={type === "course" ? 'primary' : ''}>
+                <ListGroupItem variant={type === "Video" ? 'primary' : ''}>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <Content courseContent={roadmap?.videoArrayData} roadmap={roadmap} type={"course"} text={"Course Content"} />
+                        <Content courseContent={roadmap?.chapter?.videos} roadmap={roadmap} type={"Video"} text={"Course Content"} />
                     </div>
                 </ListGroupItem>
-                <ListGroupItem variant={type === "quiz" ? 'primary' : ''}>
+                <ListGroupItem variant={type === "Quiz" ? 'primary' : ''}>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <Content courseContent={roadmap?.quizArrayData} roadmap={roadmap} type={"quiz"} text={"Quiz Content"} />
+                        <Content courseContent={roadmap?.chapter?.quizez} roadmap={roadmap} type={"Quiz"} text={"Quiz Content"} />
                     </div>
                 </ListGroupItem>
-                <ListGroupItem variant={type === "algo" ? 'primary' : ''}>
+                <ListGroupItem variant={type === "Algorithm" ? 'primary' : ''}>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <Content courseContent={roadmap?.algoArrayData} roadmap={roadmap} type={"algo"} text={"Algo Content"} />
+                        <Content courseContent={roadmap?.chapter?.algorithms} roadmap={roadmap} type={"Algorithm"} text={"Algo Content"} />
                     </div>
                 </ListGroupItem>
             </ListGroup>

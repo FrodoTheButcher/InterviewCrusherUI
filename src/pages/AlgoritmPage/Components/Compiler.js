@@ -6,28 +6,27 @@ import { ReactComponent as Expand } from '../../../svg/Expand.svg'
 import './AlgoritmComp.css'
 import Interpreter from '../../Interpreter/Interpreter'
 import Languages from './Languages'
-
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 const Compiler = () => {
-  const [selectedLang,setSelectedLang] = useState(null)
-  useEffect(()=>{
-    console.log(selectedLang)
-  },[selectedLang ])
+
+  const [expand,setExpand]=useState(false)
+  const nonExpanded ={
+    width:"100%",
+    height:"100%"
+  }
+
+  const Expanded = {
+    width: "100vw",
+    height: "100vh",
+    position:"absolute",
+    left:"0",
+    zIndex:10
+  }
 
   return (
-    <Container fluid style={{width:'100%',height:'100%'}}>
-        <Row style={{ width: '100%',height:'10%' }}>
-          <Col  style={{paddingTop:'0.5em'}} md={4}>
-            <Languages selectedLang={selectedLang} setSelectedLang={setSelectedLang} />
-            <small>Paste your code</small>
-          </Col>
-          <Col style={{ marginLeft: 'auto',paddingTop:'0.5em' }} className='CompilerSvgs' md={4}>
-            <Restart />
-            <Save />
-            <Expand />
-          </Col>
-        </Row>   
-        <Row style={{height:'90%'}}>
-        <Interpreter selectedLang={selectedLang} setSelectedLang={setSelectedLang} />
+    <Container fluid style={expand ? Expanded : nonExpanded}> 
+        <Row style={{height:'100%'}}>
+        <Interpreter setExpand={setExpand}  />
         </Row>
     </Container>
   )

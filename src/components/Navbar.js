@@ -9,15 +9,13 @@ import { Avatar, Box } from '@mui/material';
 import { primaryBlue, primaryGray, secondaryGray } from '../Static/Colors';
 import MiniNavbar from './miniNavbar';
 import ExpandCircleDownRoundedIcon from '@mui/icons-material/ExpandCircleDownRounded'; 
-import { Button, Row } from 'react-bootstrap';
+import { Button, NavDropdown, Row } from 'react-bootstrap';
  function Header() {
     const [selected,setSelected]=useState("home")
     const { setNavbarClicked, navbarClicked } = useNavbar();
     const {user,logout}=useAuth()
 
-    useEffect(()=>{
-        console.log("user",user)
-    },[user])
+
 
    
     return (
@@ -27,8 +25,17 @@ import { Button, Row } from 'react-bootstrap';
                     <Navbar.Brand href="#home" style={{ color: 'black', fontWeight: 'bolder' }}>InterviewCrusher </Navbar.Brand>
                     <Navbar.Toggle onClick={() => { setNavbarClicked(!navbarClicked) }} aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav style={{ position: 'relative', marginLeft: 'auto' }} className="me-auto">
-                          
+                        <Nav style={{ position: 'relative', marginLeft: 'auto' }} className="me-auto">   
+                        {
+                            user &&
+                            user.isPremium &&
+                            <NavDropdown style={{zIndex:"30",color:'black'}} title="admin" id="basic-nav-dropdown">
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/quiz" >quiz</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/algo" >algo</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/video" >video</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/template" >template</Link>
+                          </NavDropdown>
+                        }
                             <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "home" ? "#1CABFC" : "black" }} onClick={() => setSelected("home")} to="/" >Home</Link>
                             <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "profile" ? "#1CABFC" : "black" }} onClick={() => setSelected("profile")} href="#home">Profile</Link>
                             <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "explore" ? "#1CABFC" : "black" }} onClick={() => setSelected("explore")} href="#link">Explore</Link>

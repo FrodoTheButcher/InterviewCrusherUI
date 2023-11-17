@@ -17,7 +17,7 @@ const MiniNavbar = () => {
                 fluid
                 style={{
                     border: '1px solid black',
-                    zIndex: '20',
+                    zIndex: '2',
                     background: 'white',
                     height: '5rem',
                     width: '100vw',
@@ -52,7 +52,7 @@ const MiniNavbar = () => {
                     <p className="miniTitle" style={{ margin: '0' }} onMouseEnter={() => setNavData(WorkWithUs)}>Work with Us</p>
                 </Col>
             </Row>
-            <Row fluid style={{ opacity: handleFocus ? '1' : '0',display:!handleFocus && 'none', border: '1px solid black', backgroundColor: 'rgba(28, 29, 31)', zIndex: '20', width: '100vw', position: 'relative' }}>
+            <Row fluid style={{ opacity: handleFocus ? '1' : '0',display:!handleFocus && 'none', border: '1px solid black', backgroundColor: 'rgba(28, 29, 31)', zIndex: '2', width: '100vw', position: 'relative' }}>
                 {
                     navData.map(e => <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
                         <p className="miniTitle" style={{ margin: '0', color: 'white' }}>{e}</p>

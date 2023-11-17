@@ -14,6 +14,14 @@ import UpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { green } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBasicTestCaseAction, getTestCaseAction } from '../../../actions/algorithmAction';
+import { ErrorPrinter } from '../../../actions/errorPrinter';
+import { Col, Container, Row, Spinner } from 'react-bootstrap';
+import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -59,11 +67,18 @@ const fabGreenStyle = {
     },
 };
 
-export default function SubmissionTable({showTestCase}) {
+export default function SubmissionTable({ setSubmitSampleData }) {
 
+    const {contentId} = useParams()
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
+    const dispatch = useDispatch()
 
+    const getTestCases = useSelector(state => state.getBasicTestCasesReducer)
+    const {loading,error,testcases} = getTestCases
+    const createNewSubmission = useSelector(state => state.createNewSubmissionReducer)
+    const [open,setOpen]=useState(false)
+    const { loading: loadingTestCases, error: errorTestCases, data: submissionResult } = createNewSubmission
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -98,15 +113,58 @@ export default function SubmissionTable({showTestCase}) {
         },
     ];
 
+  
+    function formatTextWithLineBreaks(text) {
+
+        const lines = text.split('\\n');
+        return lines.map((line, index) => (
+            <React.Fragment key={index}>
+                {line}
+                {index < lines.length - 1 && <br />}
+            </React.Fragment>
+        ));
+    }
+    function base64ToString(base64) {
+        try {
+            // Use the atob function to decode the Base64 string
+            const decodedString = atob(base64);
+            console.log(decodedString)
+            return decodedString;
+        } catch (error) {
+            console.error("Invalid Base64 string:", error);
+            return null;
+        }
+    }
+
+   
+    useEffect(()=>{
+        dispatch(getBasicTestCaseAction(contentId))
+     
+    },contentId)
+
+    useEffect(()=>{
+        if (submissionResult !== undefined)
+        {
+            setOpen(true)
+            if (submissionResult ==="success")  
+            {
+                setSubmitSampleData(false)
+            }
+        } 
+    },[submissionResult])
+
+    console.log(testcases)
+
     return (
         <Box
             sx={{
                 bgcolor: 'background.paper',
                 width: "100%",
                 position: 'relative',
-                minHeight: 200,
+                height:"100%",
+                margin:'0',
             }}
-        >
+        >        
             <AppBar position="static" color="default">
                 <Tabs
                     value={value}
@@ -116,8 +174,8 @@ export default function SubmissionTable({showTestCase}) {
                     variant="fullWidth"
                     aria-label="action tabs example"
                 >
-                    <Tab label={showTestCase ? "Basic TestCases" : "Wrong answer"} {...a11yProps(0)} />
-                    <Tab label={showTestCase ? "TestCases Tips" : "TestCase Tip"} {...a11yProps(1)} />
+                    <Tab  label={submissionResult !== "success" && submissionResult !== undefined ? "Wrong answer" : "Basic TestCases" } {...a11yProps(0)} />
+                    <Tab  label={submissionResult !== "success" && submissionResult !== undefined ? "TestCases Tips" : "TestCase Tip"} {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -126,25 +184,81 @@ export default function SubmissionTable({showTestCase}) {
                 onChangeIndex={handleChangeIndex}
             >
                 {
-                    showTestCase ?
-                    <>
-                            <TabPanel value={value} index={0} dir={theme.direction}>
-                                Wrong answer
-                            </TabPanel>
-                            <TabPanel value={value} index={1} dir={theme.direction}>
-                                TestCase tip
-                            </TabPanel>
-                    </>
+                    loading || loadingTestCases ? <Spinner/> : error ? <ErrorPrinter error={error}/> :
+                    errorTestCases ? <ErrorPrinter error={errorTestCases}/>
                     :
+                            submissionResult !== "success" && submissionResult !== undefined ?
                     <>
-                            <TabPanel value={value} index={0} dir={theme.direction}>
-                                Wrong answer
+                            <TabPanel value={0} index={0} dir={theme.direction}>
+                                <Row>
+                                    <Col>
+                                          <strong>input:</strong>
+                                          <Row>
+                                              <p style={{ whiteSpace: 'pre-line' }} >{formatTextWithLineBreaks(submissionResult.input_data)}</p>
+                                          </Row>
+
+                                          <strong>expected output:</strong>
+                                          <Row>
+                                              <p style={{ whiteSpace: 'pre-line' }}>{formatTextWithLineBreaks(submissionResult.expected_output)}</p>
+                                          </Row>
+                                    </Col>
+                                    <Col>
+                                          <strong>Your output:</strong>
+                                                <Row><p style={{ whiteSpace: 'pre-line' }}>{submissionResult?.reasonForFail === "Compilation Error" ? "Compilation Error" : submissionResult?.reasonForFail === "Runtime Error (NZEC)" ? "RunTime Error" : formatTextWithLineBreaks(base64ToString(submissionResult?.reasonForFail))}</p></Row>
+                                    </Col>
+                                    
+                                </Row>
                             </TabPanel>
-                            <TabPanel value={value} index={1} dir={theme.direction}>
-                                TestCase tip
+                            <TabPanel value={1} index={1} dir={theme.direction}>
+                                Sample input tip:
                             </TabPanel>
                     </>
+                    : submissionResult === undefined 
+                    ?
+                    <>
+                            <TabPanel  value={0} index={0} dir={theme.direction}>
+                            <Row style={{overflowY:'scroll',height:'10em'}} > 
+                               {testcases?.testcases?.map ((test,index)=>
+                               <Container fluid key={test?.id}>
+                               
+                                <strong>input Nr.{index}</strong>
+                                       <Row>
+                                           <p style={{ whiteSpace: 'pre-line' }} >{formatTextWithLineBreaks(test?.input_data)}</p>
+                                       </Row>
+
+                                       <strong>expected output:</strong>
+                                       <Row>
+                                           <p style={{ whiteSpace: 'pre-line' }}> { formatTextWithLineBreaks(test?.expected_output)}</p>
+                                       </Row>
+                               </Container>
+                                )}
+                             </Row>                            
+                            </TabPanel>
+                          
+                    </>
+                    
+                    :
+                    <p>Now you can run the other testcases</p>
                 }
+                  <TabPanel value={1} index={1} dir={theme.direction}>
+                            <Row style={{overflowY:'scroll',height:'10em'}} > 
+                            {submissionResult && submissionResult?.tip ?
+                            <Row>
+                                <p style={{ whiteSpace: 'pre-line' }} >{submissionResult?.tip}</p>
+                            </Row>
+                            :
+                        
+                               testcases?.tips?.map ((tip,index)=>
+                               <Container fluid key={index}>
+                                <strong>tip Nr.{index}</strong>
+                                       <Row>
+                                           <p style={{ whiteSpace: 'pre-line' }} >{tip}</p>
+                                       </Row>
+                               </Container>
+                                )
+                            }
+                             </Row>                  
+                    </TabPanel>
                
 
             </SwipeableViews>

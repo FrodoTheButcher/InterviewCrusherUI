@@ -9,79 +9,54 @@ import { ReactComponent as Like } from '../../../svg/Like.svg'
 import { ReactComponent as Dislike } from '../../../svg/Dislike.svg'
 import Message from '../../../components/Message';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPointsAction, removePointsAction } from '../../../actions/quizActions';
+import { addPointsAction, checkQuizAction, removePointsAction } from '../../../actions/quizActions';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
 import SuccessScale from '../../../components/SuccessScale';
 import RatingMUI from '../../../components/Rating';
 
-function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose }) {
+function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose, userAnswers }) {
 
 
     const { roadmapName,roadmapId, chapterId, contentId } = useParams();
-    const [failed,setFailed]=useState(false)
     const [open,setOpen] = useState(false)
     const [comments,setComments]=useState([])
     const navigate = useNavigate()
-    const [liked,setLiked] = useState(undefined)
     const [content, setContent] = useState("");
     const dispatch = useDispatch()
     
 
-    const pointsAdded = useSelector(select => select.addPointsReducer)
-    const {loading:loadingAddPoints,error:errorAddPoints,data:messageAddPoints}= pointsAdded
+    const checkQuizAnswer = useSelector(select => select.checkQuizReducer)
+    const { loading, error, data } = checkQuizAnswer
 
-    const pointsRemoved = useSelector(select => select.removePointsReducer)
-    const { loading: loadingRemovePoints, error: errorRemovePoints, data: messageRemovePoints } = pointsRemoved
+  
 
-    const addPoints = async () => {
+    useEffect(() => {
         const data = {
-            "points": quiz?.pointsEarned,
             "quizId": contentId,
-
+            "answerIds": userAnswers,
+            "templateId":roadmapId
         }
-        dispatch(addPointsAction(data))
-    };
-    const removePoints = async () => {
-        const data = {
-            "points": quiz?.pointsEarned/2,
-            "quizId":contentId,
-        }
-        dispatch(removePointsAction(data))
-    };
-
-
-  useEffect(()=>{
-
-    if(loadingAddPoints === undefined && loadingRemovePoints === undefined && errorAddPoints === undefined && errorRemovePoints === undefined && messageAddPoints === undefined && messageRemovePoints === undefined)
-      {if (!answerChoose?.isCorrect) {
-         setFailed(false)
-          removePoints()
-      }
-      else
-      {
-          setFailed(true)
-          addPoints()
-      }
-      setComments(quiz?.quizComments)
-      setOpen(true)
-    }
-  }, [loadingAddPoints, loadingRemovePoints, errorAddPoints, errorRemovePoints, messageAddPoints, messageRemovePoints, dispatch, answerChoose?.isCorrect, quiz?.quizComments, removePoints, addPoints])
-
+        dispatch(checkQuizAction(data))
+    }, [])
 
     return (
         <Card style={{ background: 'white', width: '30%', height: '80%', borderRadius: '10px' }} className='d-flex align-items-center justify-content-center'>
-            {loadingAddPoints || loadingRemovePoints ? <Spinner/>
+            {loading  ? <p>mata</p>
             :
-                errorAddPoints || errorRemovePoints 
+                error  
                 ?
-                    <CustomizedSnackbars severity={"error"} message={errorRemovePoints ? errorRemovePoints : errorAddPoints} open={open} setOpen={setOpen} />
+                    <CustomizedSnackbars severity={"error"} message={error} isOpen={true} />
             :
-                    messageAddPoints || messageRemovePoints ?
-                        <CustomizedSnackbars severity={messageAddPoints ? "success" : "warning"} message={messageAddPoints ? "You are correct, Congrats! " : "You have failed..."} open={open} setOpen={setOpen} />
+            data ? 
+            <CustomizedSnackbars severity={"info"} message={"success"} isOpen={true}  />
             :
-            <CustomizedSnackbars severity={"error"} message={"unknown error occured"} open={open} setOpen={setOpen} />
+            !data ? 
+                            <CustomizedSnackbars severity={"error"} message={"false"} isOpen={true} />
+                :
+                            <CustomizedSnackbars severity={"error"} message={"unknown error occured"} isOpen={true} />
+
             }
             <Container style={{ width: '100%', height: '10%' }} className='d-flex flex-column align-items-center justify-content-center'>
                 <Card.Title style={{ padding: '1em', fontSize: '1em', fontWeight: 'bolder', display: 'flex', flexDirection: '', justifyContent: 'center', alignItems: 'center' }}>
@@ -104,7 +79,6 @@ function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose }) {
                 </ListGroup>
                 <div fluid className='d-flex align-items-center' style={{ flexDirection: 'column', overflowY: 'scroll', justifyContent: 'space-between', height: '15em' }}>
                     {
-                    comments?.length === 0 ? <Spinner/> : 
                     comments?.map(comment =>
                         <Comment comment={comment} />
                     )}

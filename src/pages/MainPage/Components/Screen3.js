@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container,Row,Col } from 'react-bootstrap'
+import { Container,Row,Col, Button } from 'react-bootstrap'
 import '../IntroductionPage.css'
 import { useRef } from 'react'
 import {ReactComponent as Video} from '../../../images/video.svg'
@@ -10,14 +10,21 @@ import { ReactComponent as Sigile3 } from '../../../svg/Component 53v2.svg'
 import { ReactComponent as Sigile4 } from '../../../svg/Component 58.svg'
 import { ReactComponent as Sigile5 } from '../../../svg/intrebare2.svg'
 import { ReactComponent as Sigile6 } from '../../../svg/user.svg'
-
+import LaptopWindowsIcon from '@mui/icons-material/LaptopWindows';
 import { useState } from 'react'
+import WhiteButton from '../../../components/WhiteButton'
+import { primaryBlue } from '../../../Static/Colors'
+import { useDispatch } from 'react-redux'
+import { ROADMAP_RESET } from '../../../Constants/roadmap'
+import { useNavbar } from '../../../Context/ContextProvider'
+import { useNavigate } from 'react-router-dom'
 const Screen3 = ({ isIntersecting }) => {
 
 
     const targetRefs = useRef([]);
     const [textReveal, settextReveal] = useState(false);
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     useEffect(() => {
         console.log(textReveal)
     }, [textReveal])
@@ -53,6 +60,12 @@ const Screen3 = ({ isIntersecting }) => {
             });
         };
     }, []);
+
+
+    const handleListingTemplates = async ()=>{
+        dispatch({type:ROADMAP_RESET})
+        navigate("/RoadMapPage")
+    }
   return (
       <Container fluid className='Page3 d-flex align-items-center justify-content-center' style={{ zIndex: '5', position: 'relative' }}>
           <Row  >
@@ -123,6 +136,10 @@ const Screen3 = ({ isIntersecting }) => {
                       <h5 style={{ fontWeight: 'bold', color: "#56636F" }}>Access a wide range of resources and hands-on exercises for all levels</h5>
                       <h5 style={{ fontWeight: 'bold', color: "#56636F" }}>Personalized learning paths, expert support , and gamified</h5>
                       <h5 style={{ fontWeight: 'bold', color: "#56636F" }}>Stay up-to-date with the latest trends and gain career-ready skills</h5>
+                    <Row className='align-items-center justify-content-center flex-column'>
+                    <LaptopWindowsIcon sx={{width:100,height:100,marginTop:10}}/>
+                    <Button style={{background:primaryBlue,width:'20%'}} onClick={handleListingTemplates} >Start a new journey</Button>
+                    </Row>
                   </Col>
                   <Col className='Display3'>
                       <div   className={`ShadowCard ${textReveal ? "ShadowCardReveal" : ""} `} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
@@ -138,6 +155,7 @@ const Screen3 = ({ isIntersecting }) => {
                       </div>
                   </Col>
               </Row>
+              
           </Row>
           </Container>
            

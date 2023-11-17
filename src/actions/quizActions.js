@@ -1,6 +1,6 @@
 import axios from "axios"
 import { ADD_POINTS_FAIL, ADD_POINTS_REQUEST, ADD_POINTS_SUCCESS, REMOVE_POINTS_FAIL, REMOVE_POINTS_REQUEST, REMOVE_POINTS_SUCCESS } from "../Constants/quizConstants"
-import { ErrorPrinter } from "./errorPrinter"
+import { DecodeError } from "./errorHandling"
 
 export const removePointsAction = (data) => async (dispatch) => {
     try{
@@ -25,12 +25,12 @@ export const removePointsAction = (data) => async (dispatch) => {
     {
         dispatch({
             type:REMOVE_POINTS_FAIL,
-            payload: ErrorPrinter(e)
+            payload: DecodeError(e)
         })
     }
 }
 
-export const addPointsAction = (data) => async (dispatch) => {
+export const checkQuizAction = (data) => async (dispatch) => {
     try {
         const token = localStorage.getItem("access")
         const config = {
@@ -43,7 +43,7 @@ export const addPointsAction = (data) => async (dispatch) => {
         dispatch({
             type: ADD_POINTS_REQUEST
         })
-        const response = await axios.put("/api/submission/quiz/addPoints/", data,config)
+        const response = await axios.put("/api/submission/quiz/checkPoints/", data,config)
 
         dispatch({
             type: ADD_POINTS_SUCCESS,
@@ -53,7 +53,7 @@ export const addPointsAction = (data) => async (dispatch) => {
     catch (e) {
         dispatch({
             type: ADD_POINTS_FAIL,
-            payload: ErrorPrinter(e)
+            payload: DecodeError(e)
         })
     }
 }

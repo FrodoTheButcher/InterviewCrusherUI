@@ -1,13 +1,10 @@
 import React from 'react'
 import Accordion from 'react-bootstrap/Accordion';
 import './Submission.css'
-const Tips = ({ tipNumber,description,name }) => {
+const Tips = ({ name , index }) => {
   return (
     <div className='SubmissionHover'>
-          <Accordion.Header>#{tipNumber} {name}</Accordion.Header>
-          <Accordion.Body>
-              {description}
-          </Accordion.Body>
+      <Accordion.Header>#{index} {name}</Accordion.Header>
     </div>
     
   )

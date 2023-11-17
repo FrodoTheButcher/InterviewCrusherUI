@@ -1,14 +1,21 @@
 import Message from "../components/Message";
 
-export const ErrorPrinter = ({ error }) => {
+export const ErrorPrinter = ( error ) => {
+    console.log("error",error)
     return (
         <div>
-            {error &&
+            {typeof error === 'string' ? (
+                <p>{error}</p>
+            ) : (
+                error &&
                 Object.entries(error).map(([key, value]) => (
-                    <Message key={key} variant={"danger"}>
+                    <p>
                         {key}: {value}
-                    </Message>
-                ))}
+                    </p>
+                ))
+            )}
         </div>
     );
 };
+
+export default ErrorPrinter;

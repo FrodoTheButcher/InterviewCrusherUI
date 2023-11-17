@@ -5,8 +5,8 @@ import '../Course.css'
 import { Link, useParams } from 'react-router-dom'
 import CheckMark from '../../../components/CheckMark'
 import Unchecked from '../../../components/Unchecked'
-const Content = ({ courseContent,text, type, roadmap }) => {
-  const { roadmapName, roadmapId } = useParams()
+const Content = ({ courseContent,text, type }) => {
+  const { roadmapName, roadmapId ,chapterId} = useParams()
   return (
     
     <ListGroup>
@@ -15,9 +15,9 @@ const Content = ({ courseContent,text, type, roadmap }) => {
         title="Sections"
         menuVariant="white"> 
           <ListGroup>
-          {courseContent?.map((course ,index)=>
-                <ListGroup.Item variant={index%2===0 ? 'primary' : ''} >
-              <Link to={`/${roadmapName}/${roadmapId}/1/${type}/${course?.id}/`}  style={{ textDecoration: 'none', color: 'black' }} >
+          {courseContent?.finished?.map((course ,index)=>
+                <ListGroup.Item variant={'primary'} >
+              <Link to={`/${roadmapName}/${roadmapId}/${chapterId}/${type}/${course?.id}/`}  style={{ textDecoration: 'none', color: 'black' }} >
                     <Col>
                       <Row><strong> Section {index}:{course.name}</strong></Row>
                       <Row><small> {course?.time}</small></Row>
@@ -25,10 +25,23 @@ const Content = ({ courseContent,text, type, roadmap }) => {
                     <Col>
                       <small>{course.description}</small>
                       <CheckMark/>
-                  <Unchecked/>
                     </Col>
                   </Link>
                 </ListGroup.Item>
+              )}
+          {courseContent?.unfinished?.map((course ,index)=>
+          <ListGroup.Item variant='secondary' >
+              <Link to={`/${roadmapName}/${roadmapId}/${chapterId}/${type}/${course?.id}/`} style={{ textDecoration: 'none', color: 'black' }} >
+              <Col>
+                <Row><strong> Section {index}:{course.name}</strong></Row>
+                <Row><small> {course?.time}</small></Row>
+              </Col>
+              <Col>
+                <small>{course.description}</small>
+                <Unchecked />
+              </Col>
+            </Link>
+          </ListGroup.Item>
               )}
         </ListGroup>
 

@@ -19,7 +19,8 @@ export const CustomAuthProvider = ({children})=>{
                 email: decoded?.username,
                 name: decoded?.name,
                 userId: decoded?.user_id,
-                image:decoded?.image
+                image:decoded?.image,
+                isPremium:decoded?.isPremium
             };
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -47,7 +48,8 @@ export const CustomAuthProvider = ({children})=>{
             const updatedUser = {
                 email: decoded?.username,
                 name: decoded?.name,
-                userId: decoded?.user_id
+                userId: decoded?.user_id,
+                isPremium:decoded?.isPremium
             };
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));

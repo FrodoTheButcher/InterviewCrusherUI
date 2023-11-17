@@ -9,7 +9,7 @@ import RoadMapPage from './pages/RoadMapPage/RoadMapPage';
 import SignUp from './pages/SignUpPage/SignUp'
 import Course from './pages/VideoRoadMapPage/Course';
 import Interpreter from './pages/Interpreter/Interpreter';
-import MiniNavbar from './components/miniNavbar';
+import TemplatePage from './pages/AdminPage/Template/Components/TemplatePage';
 
 function App() {
   return (
@@ -24,6 +24,11 @@ function App() {
           <Route path='/login/signUp/' Component={SignUp} src />
           <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
           <Route path='/interpreter' Component={Interpreter} />
+          <Route path='/admin/template' Component={TemplatePage} />
+          <Route path='/admin/algo' Component={TemplatePage} />
+          <Route path='/admin/video' Component={TemplatePage} />
+          <Route path='/admin/quiz' Component={TemplatePage} />
+
         </Routes>
       </BrowserRouter>
     </ContextProvider>

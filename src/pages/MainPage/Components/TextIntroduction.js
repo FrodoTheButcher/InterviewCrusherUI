@@ -3,8 +3,16 @@ import { Container ,Button,Row,Col} from 'react-bootstrap'
 import '../IntroductionPage.css'
 import {ReactComponent as Biff} from '../../../svg/biff.svg'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import { primaryBlue } from '../../../Static/Colors'
 
 const TextIntroduction = () => {
+
+  const roadmapItem = useSelector(state=>state.roadmapItem)
+  const {roadmap} = roadmapItem
+
+
   return (
     <Container>
       <Container style={{marginBottom:'2rem'}}>
@@ -17,7 +25,7 @@ const TextIntroduction = () => {
                     </Row>
 
                     <Row>
-                          <Button className='StartBtn' style={{ width: '13rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem', backgroundColor: "#1CABFC", borderRadius: "120px" }}><Link style={{textDecoration:'none',color:'white',fontWeight:'bolder',fontSize:'1.5em'}}to={'/RoadMapPage'} >Get Started</Link ></Button>
+                          <Button className='StartBtn' style={{ width: '13rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem', backgroundColor: "#1CABFC", borderRadius: "120px" }}><Link style={{textDecoration:'none',color:'white',fontWeight:'bolder',fontSize:'1.5em'}}to={'/RoadMapPage'} >{roadmap ? "Continue" : "Get started"}</Link ></Button>
 
                     </Row>
                   
@@ -25,6 +33,8 @@ const TextIntroduction = () => {
        <Container style={{marginBottom:'5rem'}}>
 
                     <Row>
+                    <Row><h3 className='FinalView' style={{ opacity: '0.8',color:primaryBlue }}> Our courses offer in-depth knowledge and practical implementation.</h3></Row>
+
                           <Container style={{ color: 'white' }}>
                              
                                 <Row><p className='TextIntroductionDescription'>
@@ -36,13 +46,13 @@ const TextIntroduction = () => {
                                 <Container>
                                       <Row>
                                             <Col className='Bif' md={1}>
-                                                  <Biff />
+                                                  <CheckBoxOutlinedIcon sx={{fontSize:30}} />
                                             </Col>
                                             <Col> <h5 className='PointOfView' style={{ opacity: '0.8' }}>Includes free content and free courses just for you</h5></Col>
                                       </Row>
                                       <Row>
                                             <Col className='Bif' md={1}>
-                                                  <Biff />
+                                                  <CheckBoxOutlinedIcon  sx={{fontSize:30}} />
                                             </Col>
                                             <Col >
                                                   <h5 className='PointOfView' style={{ opacity: '0.8' }}>
@@ -53,7 +63,7 @@ const TextIntroduction = () => {
                                       </Row>
                                       <Row>
                                             <Col className='Bif' md={1}>
-                                                  <Biff />
+                                                  <CheckBoxOutlinedIcon   sx={{fontSize:30}}/>
                                             </Col>
                                             <Col>
                                                   <h5 className='PointOfView' style={{ opacity: '0.8' }}>
@@ -61,7 +71,6 @@ const TextIntroduction = () => {
                                                   </h5>
                                             </Col>
                                       </Row>
-                                      <Row><h3 className='FinalView' style={{ opacity: '0.8' }}> Our courses offer in-depth knowledge and practical implementation.</h3></Row>
 
                                 </Container>
 

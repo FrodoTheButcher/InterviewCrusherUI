@@ -16,8 +16,8 @@ import { useEffect, useState } from 'react';
 import Answer from './Answer';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import '../QuizPage.css'
-function AnswersQuiz({ setStep, quiz, setAnswerChoosed, answerChoosed }) {
-    const [comments, setComments] = useState(quiz?.quizAnswers)
+function AnswersQuiz({ setStep, quiz, setUserAnswers }) {
+    const [quizAnswers, setQuizAnswers] = useState(quiz?.quizAnswers)
     useEffect(()=>{
         const timeout = setTimeout(()=>{
             setStep(prev=>prev+1)
@@ -53,10 +53,10 @@ function AnswersQuiz({ setStep, quiz, setAnswerChoosed, answerChoosed }) {
                 </ListGroup>
                 <div fluid className='d-flex align-items-center' style={{ flexDirection: 'column', overflowY: 'scroll', justifyContent: 'space-between', height: '20em',width:'100%' }}>
                     {
-                    comments?.length === 0 ? <Spinner/>
+                    quizAnswers?.length === 0 ? <Spinner/>
                         :
-                    comments?.map(answer =>
-                        <Answer setAnswerChoosed={setAnswerChoosed} answerChoosed={answerChoosed} answer={answer} />
+                    quizAnswers?.map(answer =>
+                        <Answer setUserAnswers={setUserAnswers} answer={answer}  />
                     )}
                 </div>
             </Container>
