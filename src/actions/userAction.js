@@ -4,7 +4,6 @@ import { DecodeError } from "./errorHandling"
 import { AccessConfig } from "./AccessConfig"
 
 
-
 export const userRegisterAction =  (userData)=> async (dispatch) =>{
     try{
         const config = AccessConfig()
@@ -18,6 +17,7 @@ export const userRegisterAction =  (userData)=> async (dispatch) =>{
         dispatch({type:USER_REGISTER_FAIL,payload:DecodeError(e)})
     }
 }
+  
 
 
 export const registerToNewsLetter = (data) => async (dispatch) => {
@@ -47,3 +47,4 @@ export const sendEmail = (data) => async (dispatch) => {
     }
 
 }
+  

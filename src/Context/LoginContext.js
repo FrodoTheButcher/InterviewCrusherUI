@@ -1,15 +1,18 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { USER_LOGOUT_SUCCESS } from "../Constants/userConstants";
 
 const CustomAuth = createContext();
 
-export const useAuth = () => useContext(CustomAuth)
+export const useAuth = () => useContext(CustomAuth);
 
-export const CustomAuthProvider = ({children})=>{
-    const userFromLocalStorage = JSON.parse(localStorage.getItem("user") || null);
-    const [user, setUser] = useState(userFromLocalStorage);
-    const [firstLogin,setFirstLogin]=useState(true)
+export const CustomAuthProvider = ({ children }) => {
+  const userFromLocalStorage = JSON.parse(localStorage.getItem("user") || null);
+  const [user, setUser] = useState(userFromLocalStorage);
+  const [firstLogin, setFirstLogin] = useState(true);
+  const dispatch = useDispatch();
 
     const getNewToken = async ()=>{
         try{
@@ -31,15 +34,14 @@ export const CustomAuthProvider = ({children})=>{
         {
             console.error(error)
         }
-    }
 
+      }
     const login = async (email,password)=>{
         const data={
             "username":email,
             "password":password
         }
         try {
-            console.log('datele bolovanului', data)
             const response = await axios.post(`/api/users/token/`,data)
             console.log('response',response)
             localStorage.setItem('refresh',response.data.refresh);
@@ -57,38 +59,35 @@ export const CustomAuthProvider = ({children})=>{
         catch (error) {
             console.error(error);
         }
-    }
+      }
 
-    const logout = ()=>{
-        localStorage.removeItem('user');
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
-        setUser(null)
-    }   
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    setUser(null);
+    dispatch({ type: USER_LOGOUT_SUCCESS });
+  };
 
-    useEffect(()=>{
 
-        if(firstLogin)
-            getNewToken();
+  useEffect(() => {
+    if (firstLogin) getNewToken();
 
-        const interval = setInterval(()=>{
-                getNewToken();
-        }, 14400)
-        setFirstLogin(false)
-        return ()=>{
-            clearInterval(interval)
-        }
-    },[])
+    const interval = setInterval(() => {
+      getNewToken();
+    }, 14400);
+    setFirstLogin(false);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
-    const value = {
-        login: login,
-        logout:logout,
-        user:user,
-    }
+  const value = {
+    login: login,
+    logout: logout,
+    user: user,
+  };
 
-    return (
-        <CustomAuth.Provider value={value}>
-            {children}
-        </CustomAuth.Provider>
-    )
-}
+
+  return <CustomAuth.Provider value={value}>{children}</CustomAuth.Provider>;
+};
