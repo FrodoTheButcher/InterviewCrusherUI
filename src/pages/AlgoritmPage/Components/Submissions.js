@@ -55,7 +55,10 @@ const Submissions = () => {
                                     <h7>{e?.id}#</h7>
                                 </Col>
                                 <Col md={2}>
-                                    <h7>{e.submissionResult?.percentage}%</h7>
+                                    <h7>{(e.submissionResult?.percentage)?.toString().slice(0,3)}%</h7>
+                                </Col>
+                                <Col>
+                                <h7>{e?.avarageTime?.toString().slice(0,3)} time</h7>
                                 </Col>
                                 <Col>
                                         {e.submissionResult?.percentage === 100 ?
@@ -72,8 +75,11 @@ const Submissions = () => {
                                   {e?.submissionResult?.percentage === 100 ? 
                                         <p>Beats {Math.round(e?.submissionResult?.performance / 1000)} users</p>
                                         :  
-                                        < p >{e?.submissionResult?.approved / e?.submissionResult?.total} approved</p>     
+                                        < p >{e?.submissionResult?.approved} approved</p>     
                                      }
+                                </Col>
+                                <Col>
+                                
                                 </Col>
                               
                            </Row>

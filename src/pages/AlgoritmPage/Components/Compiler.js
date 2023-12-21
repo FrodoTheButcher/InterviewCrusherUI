@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Container, Row ,Col} from 'react-bootstrap'
-import {ReactComponent as Restart} from '../../../svg/Restart.svg'
-import { ReactComponent as Save } from '../../../svg/Save.svg'
-import { ReactComponent as Expand } from '../../../svg/Expand.svg'
+import React, {  useState } from 'react'
+import {  Container, Row } from 'react-bootstrap'
+
 import './AlgoritmComp.css'
 import Interpreter from '../../Interpreter/Interpreter'
-import Languages from './Languages'
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+
 const Compiler = () => {
 
   const [expand,setExpand]=useState(false)

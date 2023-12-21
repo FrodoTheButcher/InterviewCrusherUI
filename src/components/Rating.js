@@ -1,18 +1,14 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
 
-export default function RatingMUI({ value, setValue, editable }) {
+export default function RatingMUI({ value=5, editable ,onClick }) {
+
     return (
         <>
             {editable ? <Rating
+            onChange={(event,newValue)=>{onClick(newValue)}}
                 editable
                 name="simple-controlled"
-                value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                }}
             />
                 :
                 
@@ -20,9 +16,6 @@ export default function RatingMUI({ value, setValue, editable }) {
                 readOnly
                     name="simple-controlled"
                     value={value}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
                 />}
         </>
             

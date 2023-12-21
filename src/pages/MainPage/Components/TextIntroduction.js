@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container ,Button,Row,Col} from 'react-bootstrap'
 import '../IntroductionPage.css'
 import {ReactComponent as Biff} from '../../../svg/biff.svg'
@@ -11,7 +11,16 @@ const TextIntroduction = () => {
 
   const roadmapItem = useSelector(state=>state.roadmapItem)
   const {roadmap} = roadmapItem
+  const [lastRoadmapSeen,setLastRoadmapSeen] = useState(null)
 
+  useEffect(()=>{
+      const roadmapFromLocalStorage = localStorage.getItem('roadmapId')
+      if(roadmapFromLocalStorage)
+      {
+        setLastRoadmapSeen(roadmapFromLocalStorage)
+      }
+  },[])
+ 
 
   return (
     <Container>
@@ -25,7 +34,7 @@ const TextIntroduction = () => {
                     </Row>
 
                     <Row>
-                          <Button className='StartBtn' style={{ width: '13rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem', backgroundColor: "#1CABFC", borderRadius: "120px" }}><Link style={{textDecoration:'none',color:'white',fontWeight:'bolder',fontSize:'1.5em'}}to={'/RoadMapPage'} >{roadmap ? "Continue" : "Get started"}</Link ></Button>
+                          <Button className='StartBtn' style={{ width: '13rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '2rem', backgroundColor: "#1CABFC", borderRadius: "120px" }}><Link style={{textDecoration:'none',color:'white',fontWeight:'bolder',fontSize:'1.5em'}}to={'/RoadMapPage'} >{lastRoadmapSeen ? "Continue" : "Get started"}</Link ></Button>
 
                     </Row>
                   

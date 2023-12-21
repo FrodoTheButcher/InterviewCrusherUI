@@ -8,8 +8,12 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
  import Content from './Content';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
+import { primaryBlue, primaryGray } from '../../../Static/Colors';
+import WhiteButton from '../../../components/WhiteButton';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function RightPopUp({type,roadmap}) {
+export default function RightPopUp({type,roadmap,setUserAcceptsToSkipContentData}) {
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -17,6 +21,8 @@ export default function RightPopUp({type,roadmap}) {
         right: false,
     });
 
+    const {roadmapName,roadmapId,chapterId} = useParams()
+    const navigate =useNavigate()
     const [hide,setHide] = useState(false)
     const hiddenStyle ={
         position:"fixed",
@@ -41,17 +47,23 @@ export default function RightPopUp({type,roadmap}) {
             <ListGroup style={{ width: '100%' }}>
                 <ListGroupItem variant={type === "Video" ? 'primary' : ''}>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <Content courseContent={roadmap?.chapter?.videos} roadmap={roadmap} type={"Video"} text={"Course Content"} />
+                        <Content setUserAcceptsToSkipContentData={setUserAcceptsToSkipContentData} isMainCourseContent={type === "Video"} courseContent={roadmap?.chapter?.videos} roadmap={roadmap} type={"Video"} text={"Course Content"} />
                     </div>
                 </ListGroupItem>
                 <ListGroupItem variant={type === "Quiz" ? 'primary' : ''}>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <Content courseContent={roadmap?.chapter?.quizez} roadmap={roadmap} type={"Quiz"} text={"Quiz Content"} />
+                        <Content setUserAcceptsToSkipContentData={setUserAcceptsToSkipContentData} isMainCourseContent={type === "Quiz"} courseContent={roadmap?.chapter?.quizez} roadmap={roadmap} type={"Quiz"} text={"Quiz Content"} />
                     </div>
                 </ListGroupItem>
                 <ListGroupItem variant={type === "Algorithm" ? 'primary' : ''}>
                     <div onClick={(e) => e.stopPropagation()}>
-                        <Content courseContent={roadmap?.chapter?.algorithms} roadmap={roadmap} type={"Algorithm"} text={"Algo Content"} />
+                        <Content setUserAcceptsToSkipContentData={setUserAcceptsToSkipContentData} isMainCourseContent={type === "Algorithm"} courseContent={roadmap?.chapter?.algorithms} roadmap={roadmap} type={"Algorithm"} text={"Algo Content"} />
+                    </div>
+                </ListGroupItem>
+                <ListGroupItem style={{bottom:'0',position:'absolute'}} variant={type === "Algorithm" ? 'primary' : ''}>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <p style={{color:primaryGray}}>Expand your knowledge with the <span style={{color:primaryBlue}}>Written</span> Course!</p>
+                        <WhiteButton extraSmall={true} text={"Start"} onClick={()=>navigate(`/writtenCourse/${roadmapName}/${roadmapId}/${chapterId}/`)} />
                     </div>
                 </ListGroupItem>
             </ListGroup>

@@ -1,4 +1,4 @@
-import { GET_AVAILABLE_ROADMAPS_FAIL, GET_AVAILABLE_ROADMAPS_REQUEST, GET_AVAILABLE_ROADMAPS_SUCCESS, ROADMAP_FAIL, ROADMAP_GETALL_FAIL,ROADMAP_GETALL_REQUEST,ROADMAP_GETALL_RESET,ROADMAP_GETALL_SUCCESS, ROADMAP_REQUEST, ROADMAP_RESET, ROADMAP_SUCCESS, SCHEDULE_TIME_FAIL, SCHEDULE_TIME_REQUEST, SCHEDULE_TIME_SUCCESS } from "../Constants/roadmap"
+import { GET_AVAILABLE_ROADMAPS_FAIL, GET_AVAILABLE_ROADMAPS_REQUEST, GET_AVAILABLE_ROADMAPS_SUCCESS, GET_COINS_YOU_MISS_TO_SKIP, HANDLE_DELETING_COINS_YOU_MISS_TO_SKIP, ROADMAP_FAIL, ROADMAP_GETALL_FAIL,ROADMAP_GETALL_REQUEST,ROADMAP_GETALL_RESET,ROADMAP_GETALL_SUCCESS, ROADMAP_REQUEST, ROADMAP_RESET, ROADMAP_SUCCESS, SCHEDULE_TIME_FAIL, SCHEDULE_TIME_REQUEST, SCHEDULE_TIME_SUCCESS } from "../Constants/roadmap"
 
 export const roadmapGetAllReducer = (state = { roadmaps:[],loading:true,error:false},action) =>{
     switch(action.type)
@@ -61,7 +61,7 @@ export const roadmapGetChapterReducer = (state = { roadmap:null, loading: false,
             };
 
         case ROADMAP_RESET:
-            return { roadMap: null }
+            return { roadmap: null }
         case ROADMAP_FAIL:
             return { loading: false, error: action.payload }
         default:
@@ -85,5 +85,33 @@ export const getAvaialableRoadmapsReducer = (state = { roadmaps: [], loading: fa
             return { loading: false, error: action.payload }
         default:
             return state;
+    }
+}
+
+export const getPointsYouLoseSkippingContentReducer = (state={},action) =>{
+    switch(action.type)
+    {
+        case GET_COINS_YOU_MISS_TO_SKIP.REQUEST:
+            return {loading:true,error:false}
+        case GET_COINS_YOU_MISS_TO_SKIP.SUCCESS:
+            return {loading:false,error:false,data:action.payload}
+        case GET_COINS_YOU_MISS_TO_SKIP.FAIL:
+            return {loading:false,error:action.payload}
+        default:
+            return {}
+    }
+}
+
+export const handleDeletingCoinsYouMissToSkipReducer = (state={},action) =>{
+    switch(action.type)
+    {
+        case HANDLE_DELETING_COINS_YOU_MISS_TO_SKIP.REQUEST:
+            return {loading:true,error:false}
+        case HANDLE_DELETING_COINS_YOU_MISS_TO_SKIP.SUCCESS:
+            return {loading:false,error:false,data:action.payload}
+        case HANDLE_DELETING_COINS_YOU_MISS_TO_SKIP.FAIL:
+            return {loading:false,error:action.payload}
+        default:
+            return {}
     }
 }

@@ -10,6 +10,8 @@ import SignUp from './pages/SignUpPage/SignUp'
 import Course from './pages/VideoRoadMapPage/Course';
 import Interpreter from './pages/Interpreter/Interpreter';
 import TemplatePage from './pages/AdminPage/Template/Components/TemplatePage';
+import WrittenCourse from './pages/WrittenCoursePage/WrittenCourse';
+import ContentPage from './pages/WrittenCoursePage/Components/ContentPage';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path='/admin/algo' Component={TemplatePage} />
           <Route path='/admin/video' Component={TemplatePage} />
           <Route path='/admin/quiz' Component={TemplatePage} />
+          <Route path="/writtenCourse/:roadmapName/:roadmap/:chapter/" Component={WrittenCourse} />
+          <Route path="/writtenCourseLecture/:roadmap/:chapter/:coursePk/:page?" Component={ContentPage} />
 
         </Routes>
       </BrowserRouter>

@@ -8,32 +8,55 @@ import { Link, useParams } from 'react-router-dom'
 import { primaryBlue } from '../../../Static/Colors'
 import { HARD } from '../../../Constants/DifficultyConstants'
 import Difficulty from '../../../components/Difficulty'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../components/Spinner'
+import { userDislikeAction, userLikeAction } from '../../../actions/userAction'
+import CustomizedSnackbars from '../../../components/CustomizedSnackbars'
 const Description = ({currentAlgo}) => {
 
+  
     const [sectionActive,setSectionActive]=useState(1)
     const [like,setLike]=useState(false)
     const [dislike, setDislike] = useState(false)
+    const dispatch = useDispatch()
+    const {type} = useParams()
+    const [numberLikes,setNumberOfLikes]=useState(currentAlgo?.likes ? currentAlgo.likes : 0)
+    const [numberDislikes,setNumberOfDislikes]=useState(currentAlgo?.dislikes ? currentAlgo.dislikes : 0)
 
-  
-
-    //1 yes 0 no 0 default
     const [buttonClicked,setButtonClicked]=useState(0)
 
+    useEffect(()=>{
+        setNumberOfLikes(currentAlgo?.likes)
+      },[currentAlgo])
+    
     const handleDislike = ()=>{
         setLike(false)
         setDislike(true)
+        dispatch(userDislikeAction({id:currentAlgo.id}))
+        setNumberOfDislikes(prev=>prev+1);
     }
+
+    const [snackbar,setSnackbar]=useState(false)
+    const [snackbarMessage,setSnackbarMessage]=useState("")
     const handleLike = ()=>{
+        if(like == true)
+        {
+            setSnackbar(true)
+            setSnackbarMessage("You already liked this algorithm")
+            return;
+        }
         setLike(true)
         setDislike(false)
+        setNumberOfLikes(prev=>prev+1)
+        dispatch(userLikeAction({ id: currentAlgo.id, type: type }))
     }
     if (currentAlgo === null || currentAlgo === undefined)
     {
         return (<Loader/>)
     }
   return (
+    <>
+            <CustomizedSnackbars message={snackbarMessage} severity={"warning"}  resetData={setSnackbar} isOpen={snackbar}  />
       <Container style={{overflow:'scroll',height:'100%'}}>
           <Row style={{ borderBottom: '2px solid #000a200d' }}>
               <Container style={{  padding:'1.5rem', borderTop: '2px solid #000a200d' }} fluid>
@@ -44,7 +67,7 @@ const Description = ({currentAlgo}) => {
                       </Col>
                       <Col>
                       <div style={{display:'flex'}}>
-                              <h4 style={{ color: 'rgb(140, 140 ,140,1)' }}>{currentAlgo?.likes}</h4>
+                              <h4 style={{ color: 'rgb(140, 140 ,140,1)' }}>{numberLikes}</h4>
                               <div onClick={() => handleLike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${!like ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
                                   <Like />    
                               </div>
@@ -53,7 +76,7 @@ const Description = ({currentAlgo}) => {
                       </Col>
                       <Col>
                           <div style={{ display: 'flex' }}>
-                              <h4 style={{ cursor: 'pointer', color: 'rgb(140, 140 ,140,1)' }}>{currentAlgo?.dislikes}</h4>
+                              <h4 style={{ cursor: 'pointer', color: 'rgb(140, 140 ,140,1)' }}>{numberDislikes}</h4>
                               <div onClick={()=>handleDislike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${!dislike ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
                                   <Dislike />
                               </div>
@@ -102,6 +125,8 @@ const Description = ({currentAlgo}) => {
               </Row>
           </Container> 
       </Container>
+      
+    </>
   )
 }
 

@@ -23,7 +23,6 @@ export const getLanguagesAction = () => async (dispatch)=>{
     }
     catch(error)
     {
-        console.log("error",error)
         dispatch({
             type: GET_LANGUAGES_FAIL,
             payload: error.response.data.data

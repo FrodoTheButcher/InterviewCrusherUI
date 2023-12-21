@@ -46,14 +46,26 @@ IconContainer.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-export default function SuccessScale() {
+export default function SuccessScale({readOnly,onClick,value,setValue}) {
     return (
+
+        readOnly ? 
         <StyledRating
             name="highlight-selected-only"
             defaultValue={2}
             IconContainerComponent={IconContainer}
             getLabelText={(value) => customIcons[value].label}
             highlightSelectedOnly
-        />
+            readOnly={true}
+            />
+        :
+        <StyledRating
+            name="highlight-selected-only"
+            defaultValue={2}
+            IconContainerComponent={IconContainer}
+            getLabelText={(value) => customIcons[value].label}
+            highlightSelectedOnly
+            onChange={(e,newValue)=>{onClick(newValue)}}
+            />
     );
 }

@@ -4,12 +4,13 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore } from "@reduxjs/toolkit";
 import { roadmapGetAllAction, scheduleTimeToLearn } from "./actions/roadmapGetAllAction";
-import { ScheduleTimeToLearnReducer, getAvaialableRoadmapsReducer, roadmapGetAllReducer, roadmapGetChapterReducer } from "./reducers/roadmap";
+import { ScheduleTimeToLearnReducer, getAvaialableRoadmapsReducer, getPointsYouLoseSkippingContentReducer, handleDeletingCoinsYouMissToSkipReducer, roadmapGetAllReducer, roadmapGetChapterReducer } from "./reducers/roadmap";
 import { createNewSubmissionReducer, getAlgoQuestionsReducer, getBasicTestCasesReducer, getLanguagesReducer, getSubmissionsReducer, getTestCasesReducer, getTipsReducer } from "./reducers/algorithm";
-import { sendEmailReducer, userReducer, userSubscribeToNewsLetterReducer } from "./reducers/userReducer";
+import {  sendEmailReducer, userDifficultyReducer, userDislikeReducer, userLikeReducer, userProposeAlgorithmReducer, userReducer, userReviewReducer, userSubscribeToNewsLetterReducer } from "./reducers/userReducer";
 import { courseVideoCommentsReducer, createCourseVideoCommentsReducer } from "./reducers/courseVideoReducer";
 import { addPointsReducer as checkQuizReducer, removePointsReducer } from "./reducers/quizReducer";
 import { registerVideoSubmissionReducer } from "./reducers/videoReducer";
+import { getUserWrittenCourseReducerById, getWrittenCoursesReducer, getWrittenCoursesReducerById, runWrittenCourseReducer, updateUserCourseBackupReducer, updateUserWrittenCourseReducer } from "./reducers/writtenCourseReducer";
 const reducer = combineReducers({
     roadmapList:roadmapGetAllReducer,
     roadmapItem: roadmapGetChapterReducer,
@@ -30,6 +31,19 @@ const reducer = combineReducers({
     getBasicTestCasesReducer: getBasicTestCasesReducer,
     getAlgoQuestionsReducer : getAlgoQuestionsReducer,
     getTipsReducer: getTipsReducer,
+    userLikeReducer : userLikeReducer,
+    userDislikeReducer : userDislikeReducer,
+    userDifficultyReducer : userDifficultyReducer,
+    getPointsYouLoseSkippingContentReducer:getPointsYouLoseSkippingContentReducer,
+    handleDeletingCoinsYouMissToSkipReducer:handleDeletingCoinsYouMissToSkipReducer,
+    userReviewReducer: userReviewReducer,
+    userProposeAlgorithmReducer: userProposeAlgorithmReducer,
+    getWrittenCoursesReducer : getWrittenCoursesReducer,
+    getWrittenCourseReducerById:getWrittenCoursesReducerById,
+    getUserWrittenCourseReducerById:getUserWrittenCourseReducerById,
+    updateUserWrittenCourseReducer:updateUserWrittenCourseReducer,
+    updateUserCourseBackupReducer:updateUserCourseBackupReducer,
+    runWrittenCourseReducer:runWrittenCourseReducer
 })
 
 const userQuizFromStorage = localStorage.getItem("quiz") ? JSON.parse(localStorage.getItem('quiz')) : []

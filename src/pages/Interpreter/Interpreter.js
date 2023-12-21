@@ -14,6 +14,7 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import WhiteButton from '../../components/WhiteButton'
 import { primaryBlue } from "../../Static/Colors";
 import CustomizedSnackbars from "../../components/CustomizedSnackbars";
+import { ROADMAP_RESET } from "../../Constants/roadmap";
 function Interpreter({ setExpand }) {
   const [code, setCode] = useState(false); // State to store the code
   const [submitSampleData, setSubmitSampleData] = useState(true)
@@ -33,25 +34,18 @@ function Interpreter({ setExpand }) {
   const handleSubmit = async () => {
       const data ={
         "code":btoa(code),
-        "language":selectedLang.judge0LanguageId,
+        "language_id":selectedLang,
         "submitSampleData": submitSampleData,
-        "template": roadmapId,
-        "chapter":chapterId,
-        "algorithm":contentId
+        "template_id": roadmapId,
+        "chapter_id":chapterId,
+        "algorithm_id":contentId
       }
       dispatch(createNewSubmissionAction(data))
   }
 
-  useEffect(()=>{
-    console.log("data",data)
-    if(data=="success")
-    {
-      setOpen(true)
-    }
-  },[data])
   return (
     <>
-    {data == "success" &&
+    {data == "Success" &&
     <CustomizedSnackbars isOpen={open}  message={"success"}/>
     }
       <Row style={{ width: '100%', height: '10%' }}>
@@ -95,7 +89,7 @@ function Interpreter({ setExpand }) {
               <WhiteButton small={true} widthlen={200} marginTop={1} color={primaryBlue} text={submitSampleData ? "Submit Sample Data" : "Submit"} onClick={handleSubmit} />
           </Row>
         )}
-      <SubmissionTable setSubmitSampleData={setSubmitSampleData} />
+      <SubmissionTable submitSampleData={submitSampleData} setSubmitSampleData={setSubmitSampleData} />
       </Container>
     </>
     

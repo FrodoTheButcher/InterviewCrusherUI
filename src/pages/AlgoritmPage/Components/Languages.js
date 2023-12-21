@@ -6,19 +6,13 @@ import Loader from '../../../components/Spinner';
 import Message from '../../../components/Message';
 
 function Languages({ selectedLang, setSelectedLang }) {
-  const dispatch = useDispatch();
-  const languagesData = useSelector((state) => state.getLanguages);
-  const { error, loading, languages } = languagesData;
 
+  const roadmapItem = useSelector(state=>state.roadmapItem)
+  const {roadmap,error,loading}=roadmapItem
   useEffect(() => {
-    if (languages === undefined) {
-      dispatch(getLanguagesAction());
-    } else {
-      if (languages) {
-        setSelectedLang(languages[0]);
-      }
-    }
-  }, [dispatch, error, loading, languagesData]);
+       if (roadmap?.languages.length>0)
+       setSelectedLang(roadmap?.languages[0].judge0LanguageId);
+  }, [roadmap]);
 
   const handleLanguageChange = (e) => {
     setSelectedLang(e.target.value);
@@ -30,11 +24,10 @@ function Languages({ selectedLang, setSelectedLang }) {
         <Loader />
       ) : error ? (
         <Message>{error}</Message>
-      ) : languages && selectedLang ? (
+      ) : selectedLang ? (
         <>
-          <option value={selectedLang.judge0LanguageId}>{selectedLang.name}</option>
-          {languages.map((lang) => (
-            <option key={lang.judge0LanguageId} value={lang.judge0LanguageId}>
+          {roadmap.languages.map((lang) => (
+            <option onChange={e=>setSelectedLang(e)} key={lang.judge0LanguageId} value={lang.judge0LanguageId}>
               <strong>{lang.name}</strong>
             </option>
           ))}

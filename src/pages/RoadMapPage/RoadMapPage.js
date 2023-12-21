@@ -13,34 +13,38 @@ import { useRef } from 'react'
 import { useNavbar } from '../../Context/ContextProvider'
 import { useDispatch } from 'react-redux'
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
-import { roadmapGetAllAction } from '../../actions/roadmapGetAllAction'
+import { roadmapGetAllAction, roadmapGetCurrentChapter } from '../../actions/roadmapGetAllAction'
 import Loader from '../../components/Spinner'
 import Message from '../../components/Message'
 import ScheduleTimeToLearnCalendar from './Components/ScheduleTime'
+import ErrorPrinter from '../../actions/errorPrinter'
+import CustomizedSnackbars from '../../components/CustomizedSnackbars'
 const RoadMapPage = () => {
 
   const [openSchedule,setOpenSchedule] = useState(false)
   const [schedule,setSchedule] = useState(null)
 
   const dispatch = useDispatch()
-
+  const roadmap = useSelector(state=>state.roadmapItem)
+  const {loading:loadingRoadmap,error:errorRoadmap} = roadmap
  
   useEffect(()=>{
     dispatch(roadmapGetAllAction())
   },[dispatch])
 
-
   const targetRefs = useRef([]);
   const [textReveal, settextReveal] = useState(true);
   const [isFocused,setIsFocused] = useState(UNFOCUSED);
 
-  const handleIntersection = (index, isIntersecting) => {
-
-    settextReveal(isIntersecting);
-
-  };
+  
   const roadmapList = useSelector(state => state.roadmapList)
   const { loading, error, roadmaps } = roadmapList;
+
+  useEffect(()=>{
+    const lastRoadmapSeen = localStorage.getItem('roadmapId')
+    if(lastRoadmapSeen)
+    dispatch(roadmapGetCurrentChapter(lastRoadmapSeen))
+   },[])
 
 
   const unseen = {
@@ -55,24 +59,14 @@ const RoadMapPage = () => {
     filter: 'blur(0px)',
     transition: 'all 0.3s ease-in-out',
   }
-  const seenPair2 = {
-    transform: 'translateY(0em)',
-    opacity: '1',
-    filter: 'blur(0px)',
-    transition: 'all 0.5s ease-in-out',
-  }
   
   const { mainPageContainerProvenience, setMainPageContainerProvenience } = useNavbar();
- if(loading)
- {
-  return (
-    <Loader/>
-  )
- }
+
+ 
 
   return (
     <div  style={{ position: 'relative', top: '7rem', width: '100vw' }}>
-      {loading ? <Loader/> : error? <p>error</p>  :<>
+      {loading  || loadingRoadmap? <Loader/> : error || errorRoadmap? <CustomizedSnackbars isOpen={true} message={error ? error :errorRoadmap} severity={"danger"}/>  :<>
         <div   className='Publicity'>
           <h1 style={{ fontSize: '5em' }}>Learning Online</h1>
           <h2>Experience your own way of learning</h2>

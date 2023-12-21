@@ -16,19 +16,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { roadmapGetCurrentChapter } from '../../../actions/roadmapGetAllAction'
 const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageContainerProvenience,setIsFocused,img, MainParagraph, SecondParagraph, ButtonText, SmallText, span }) => {
   const [path,setPath]=useState(`${roadmap?.image}`)
+  const [lastRoadmapSeen,setLastRoadmapSeen] = useState(null)
   const [containerProvenience,setContainerProvenience]=useState("")
   const navigate = useNavigate();
  
   const dispatch = useDispatch()
   const handleRoadmapLoading = async ()=>{
+    localStorage.setItem('roadmapId',roadmap.id)
     dispatch(roadmapGetCurrentChapter(roadmap.id))
   }
   const roadmapItem = useSelector(state=>state.roadmapItem)
   const {loading,error,roadmap : currentChapter}=roadmapItem
+ 
+ useEffect(()=>{
+  setLastRoadmapSeen(localStorage.getItem('roadmapId'));
+ },[lastRoadmapSeen])
 
   useEffect(()=>{
  
-    if(currentChapter?.id==roadmap?.id  && currentChapter)
+    if(currentChapter?.id===roadmap?.id  && currentChapter)
     {
       setIsFocused(UNFOCUSED)
       setMainPageContainerProvenience(UNFOCUSED)

@@ -22,6 +22,9 @@ import { ErrorPrinter } from '../../../actions/errorPrinter';
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
 import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { ROADMAP_RESET } from '../../../Constants/roadmap';
+import { SUBMISSIONS } from '../../../Constants/AlgoritmPage';
+import { CREATE_NEW_SUBMISSION_RESET } from '../../../Constants/algoConstants';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,7 +70,7 @@ const fabGreenStyle = {
     },
 };
 
-export default function SubmissionTable({ setSubmitSampleData }) {
+export default function SubmissionTable({ setSubmitSampleData,submitSampleData }) {
 
     const {contentId} = useParams()
     const theme = useTheme();
@@ -116,7 +119,7 @@ export default function SubmissionTable({ setSubmitSampleData }) {
   
     function formatTextWithLineBreaks(text) {
 
-        const lines = text.split('\\n');
+        const lines = text?.split('\\n');
         return lines.map((line, index) => (
             <React.Fragment key={index}>
                 {line}
@@ -146,14 +149,24 @@ export default function SubmissionTable({ setSubmitSampleData }) {
         if (submissionResult !== undefined)
         {
             setOpen(true)
-            if (submissionResult ==="success")  
+            if (submissionResult ==="Create Success")  
             {
                 setSubmitSampleData(false)
             }
         } 
     },[submissionResult])
 
-    console.log(testcases)
+    useEffect(()=>{
+        if(!submitSampleData && submissionResult ==="Success")
+        {
+            dispatch({type:ROADMAP_RESET})
+            dispatch({type:CREATE_NEW_SUBMISSION_RESET})
+        }
+        else
+        {
+            console.log("nema",submitSampleData,submissionResult)
+        }
+    },[submitSampleData,submissionResult])
 
     return (
         <Box
@@ -184,10 +197,11 @@ export default function SubmissionTable({ setSubmitSampleData }) {
                 onChangeIndex={handleChangeIndex}
             >
                 {
+                    submissionResult=="Success" ? <>congratulations</>:
                     loading || loadingTestCases ? <Spinner/> : error ? <ErrorPrinter error={error}/> :
                     errorTestCases ? <ErrorPrinter error={errorTestCases}/>
                     :
-                            submissionResult !== "success" && submissionResult !== undefined ?
+                            submissionResult !== "Create Success" && submissionResult !== undefined ?
                     <>
                             <TabPanel value={0} index={0} dir={theme.direction}>
                                 <Row>

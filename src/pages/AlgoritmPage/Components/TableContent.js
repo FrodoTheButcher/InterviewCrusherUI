@@ -22,7 +22,7 @@ import Submissions from './Submissions';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import StarsIcon from '@mui/icons-material/Stars';
+import ProposeAlgorithmDialog from '../Components/ProposeAlgorithmDialog'
 import { primaryBlue } from '../../../Static/Colors';
 import { Tooltip } from 'react-bootstrap';
 import { IconButton } from '@mui/material';
@@ -31,6 +31,8 @@ import { useEffect } from 'react';
 import { getSubmissionsAction } from '../../../actions/algorithmAction';
 import { useDispatch, useSelector } from 'react-redux';
 import AlgoritmPage from '../AlgoritmPage';
+import { userProposeAlgorithmAction } from '../../../actions/userAction';
+import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -148,73 +150,100 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
         },
     ];
 
+    const dispatch = useDispatch()
+    const [openAlgorithmProposePopup, setOpenAlgorithmProposePopup] = React.useState(false);
+    const [algorithmInput, setAlgorithmInput] = React.useState({name:"",description:""});
+    const [error,setError]=React.useState(null)
+    const handleIconClick = (index) => {
+        if(index === 0)
+        {
+            setOpenAlgorithmProposePopup(true)
+        }
+    }
+    const handleUserProposeAlgorithm =  () => {
+        if (algorithmInput.name && algorithmInput.description)
+            dispatch(userProposeAlgorithmAction(algorithmInput))
+        else {
+            setError("You need to provide a name and a description")
+        }
+    }
+
+
     useEffect(()=>{
     }, [currentAlgo])
 
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.paper',
-                width: "100%",
-                position: 'relative',
-                height:'100%'
-            }}
-        >
-            <AppBar position="static" color="default">
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    variant="fullWidth"
-                    aria-label="action tabs example"
-                    
-                >
-                    <Tab label="Description" {...a11yProps(0)} />
-                    <Tab label="Tips" {...a11yProps(1)} />
-                    <Tab label="Feedback" {...a11yProps(2)} />
-                    <Tab label="Questions" {...a11yProps(3)} />
-                    <Tab label="Submissions" {...a11yProps(4)} />
-
-                </Tabs>
-            </AppBar>
-            <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={value}
-                onChangeIndex={handleChangeIndex}
-                style={{height:'100%'}}
+        <>
+            <ProposeAlgorithmDialog onSubmit={handleUserProposeAlgorithm} setAlgorithmInput={setAlgorithmInput} isOpen={openAlgorithmProposePopup} setIsOpen={setOpenAlgorithmProposePopup} />
+            {
+                error && <CustomizedSnackbars resetData={setError} severity={"danger"} message={error} isOpen={true} />
+            }
+            <Box
+                sx={{
+                    bgcolor: 'background.paper',
+                    width: "100%",
+                    position: 'relative',
+                    height: '100%'
+                }}
             >
-                <TabPanel style={{height:'100%'}} value={value} index={0} dir={theme.direction}>
-                    <Description label="Item One" {...a11yProps(0)} currentAlgo={currentAlgo} difficulty={HARD} />
-                </TabPanel>
-                <TabPanel style={{ height: '100%' }} value={value} index={1} dir={theme.direction}>
-                    <Overview  />
-                </TabPanel>
-                <TabPanel style={{ height: '100%' }} value={value} index={2} dir={theme.direction}>
-                    <Solutions />
-                </TabPanel>
-                <TabPanel style={{ height: '100%' }} value={value} index={3} dir={theme.direction}>
-                    <Question />
-                </TabPanel>
-                <TabPanel style={{ height: '100%' }} value={value} index={4} dir={theme.direction}>
-                    <Submissions   />
-                </TabPanel>
-            </SwipeableViews>
-            {fabs.map((fab, index) => (
-                <Zoom
-                    key={fab.color}
-                    in={value === index}
-                    timeout={transitionDuration}
-                    style={{
-                        transitionDelay: `${value === index ? transitionDuration.exit : 0}ms`,
-                    }}
-                    unmountOnExit
+                <AppBar position="static" color="default">
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="fullWidth"
+                        aria-label="action tabs example"
+
+                    >
+                        <Tab label="Description" {...a11yProps(0)} />
+                        <Tab label="Tips" {...a11yProps(1)} />
+                        <Tab label="Feedback" {...a11yProps(2)} />
+                        <Tab label="Questions" {...a11yProps(3)} />
+                        <Tab label="Submissions" {...a11yProps(4)} />
+
+                    </Tabs>
+                </AppBar>
+                <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={value}
+                    onChangeIndex={handleChangeIndex}
+                    style={{ height: '100%' }}
                 >
-                    <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-                        {fab.icon}
-                    </Fab>
-                </Zoom>
-            ))}
-        </Box>
+                    <TabPanel style={{ height: '100%' }} value={value} index={0} dir={theme.direction}>
+                        <Description label="Item One" {...a11yProps(0)} currentAlgo={currentAlgo} difficulty={HARD} />
+                    </TabPanel>
+                    <TabPanel style={{ height: '100%' }} value={value} index={1} dir={theme.direction}>
+                        <Overview />
+                    </TabPanel>
+                    <TabPanel style={{ height: '100%' }} value={value} index={2} dir={theme.direction}>
+                        <Solutions />
+                    </TabPanel>
+                    <TabPanel style={{ height: '100%' }} value={value} index={3} dir={theme.direction}>
+                        <Question />
+                    </TabPanel>
+                    <TabPanel style={{ height: '100%' }} value={value} index={4} dir={theme.direction}>
+                        <Submissions />
+                    </TabPanel>
+                </SwipeableViews>
+                {fabs.map((fab, index) => (
+                    <Zoom
+                        key={fab.color}
+                        in={value === index}
+                        timeout={transitionDuration}
+                        id={index}
+                        style={{
+                            transitionDelay: `${value === index ? transitionDuration.exit : 0}ms`,
+                        }}
+                        unmountOnExit
+                    >
+                        <Fab id={index} onClick={() => handleIconClick(index)} sx={fab.sx} aria-label={fab.label} color={fab.color}>
+                            {fab.icon}
+                        </Fab>
+                    </Zoom>
+                ))}
+            </Box>
+        </>
+      
     );
 }

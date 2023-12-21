@@ -15,31 +15,54 @@ import { useEffect } from 'react';
 import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
 import SuccessScale from '../../../components/SuccessScale';
 import RatingMUI from '../../../components/Rating';
+import { userDifficultyAction, userLikeAction } from '../../../actions/userAction';
+import Loader from '../../../components/Spinner';
+import { ROADMAP_RESET } from '../../../Constants/roadmap';
 
-function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose, userAnswers }) {
+function EndOfQuiz({ setStep, userAnswers }) {
 
 
-    const { roadmapName,roadmapId, chapterId, contentId } = useParams();
+    const { roadmapName,roadmapId, chapterId, contentId, type } = useParams();
     const [open,setOpen] = useState(false)
     const [comments,setComments]=useState([])
     const navigate = useNavigate()
     const [content, setContent] = useState("");
     const dispatch = useDispatch()
-    
 
     const checkQuizAnswer = useSelector(select => select.checkQuizReducer)
     const { loading, error, data } = checkQuizAnswer
+    const {loading:loadingLike,error:errorLike,data:dataLike} = useSelector(select=>select.userLikeReducer)
 
-  
+    const userDifficulty = useSelector(select=>select.userDifficultyReducer)
+    const {loading:loadingDifficulty,error:errorDifficulty,data:dataDifficulty} = userDifficulty
+    const handleReview = (newValue)=>{  
+        if(newValue)
+        {
+            dispatch(userLikeAction({ id: contentId, type: type, rateOutOfFive: newValue }))
+        }
+    }
+    const handleDifficulty = (newValue)=>{  
+        if(newValue)
+        {
+            dispatch(userDifficultyAction({ id: contentId, type: type, difficultyOutOfFive: 5-newValue }))
+        }
+    }
 
     useEffect(() => {
+        
         const data = {
             "quizId": contentId,
             "answerIds": userAnswers,
             "templateId":roadmapId
         }
         dispatch(checkQuizAction(data))
-    }, [])
+    }, [contentId, dispatch, roadmapId, userAnswers])
+    useEffect(()=>{
+        if(data && !error && !loading)
+        {
+            setOpen(true)
+        }
+    },[data])
 
     return (
         <Card style={{ background: 'white', width: '30%', height: '80%', borderRadius: '10px' }} className='d-flex align-items-center justify-content-center'>
@@ -58,6 +81,7 @@ function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose, userAnswers }) 
                             <CustomizedSnackbars severity={"error"} message={"unknown error occured"} isOpen={true} />
 
             }
+
             <Container style={{ width: '100%', height: '10%' }} className='d-flex flex-column align-items-center justify-content-center'>
                 <Card.Title style={{ padding: '1em', fontSize: '1em', fontWeight: 'bolder', display: 'flex', flexDirection: '', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ position: 'absolute', left: '3rem', margin: '0' }} className='backsvg'>
@@ -68,10 +92,24 @@ function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose, userAnswers }) 
             </Container>
             <Container style={{ width: '90%' }} className='d-flex flex-column align-items-center justify-content-center'>
                 <Row style={{ color: primaryGray }}><strong>Give us a feedback</strong></Row>
-                <RatingMUI editable={true} />
+                {loadingLike ? <Loader/> : errorLike ? <CustomizedSnackbars message={errorLike} severity={"error"} />
+            : dataLike  ? <CustomizedSnackbars message={"success"} severity={"success"} isOpen={true} />
+            :   
+            !dataLike && !loadingLike && !errorLike &&
+            <RatingMUI
+            onClick={handleReview}
+                        editable={true}
+                         
+                        /> 
+        }
                 <br/>
                 <Row style={{ color: primaryGray }}><strong>Rate the dificulty</strong></Row>
-                <SuccessScale />
+                {loadingDifficulty ? <Loader/> : errorDifficulty ? <CustomizedSnackbars message={errorDifficulty} isOpen={true} severity={"error"} />
+                : dataDifficulty  ? <CustomizedSnackbars message={"success"} severity={"success"} isOpen={true} />
+                :
+                !dataDifficulty && !loadingDifficulty && !errorDifficulty &&
+                <SuccessScale readOnly={false} onClick={handleDifficulty}   />
+                    }
                 <ListGroup style={{ padding: '1.5em' }}>
                     <ListGroupItem>
                         <textarea style={{ width: '100%', height: '100%', padding: '1em', outline: 'none', border: 'none' }} placeholder='Add a comment' />
@@ -85,9 +123,9 @@ function EndOfQuiz({ setStep, quiz, answerChoosed: answerChoose, userAnswers }) 
                 </div>
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
-                {open ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
+                {!open ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
                     :
-                    <Button onClick={() => {setContent("course"); navigate(`/${roadmapName}/${roadmapId}/${chapterId}/course/1`) }} className='NextBtn' >Submit</Button>
+                    <Button onClick={() => {dispatch({type:ROADMAP_RESET});navigate(`/${roadmapName}/${roadmapId}/${chapterId}/${type}/loading/`) }} className='NextBtn' >Submit</Button>
                 }
             </Card.Body>
         </Card>

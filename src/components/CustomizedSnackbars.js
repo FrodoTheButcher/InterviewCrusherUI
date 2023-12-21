@@ -5,19 +5,26 @@ import MuiAlert from '@mui/material/Alert';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import { ErrorPrinter } from '../actions/errorPrinter';
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import { Alert } from 'react-bootstrap';
 
-export default function CustomizedSnackbars({isOpen=false, message, severity}) {
+
+export default function CustomizedSnackbars({isOpen=false, message, severity,resetData}) {
     const [open,setOpen]=useState(isOpen)
     const handleClose = (event, reason) => {
         setOpen(false);
+        if(resetData)
+        {
+            resetData(null)
+        }
     };
-
+   useEffect(()=>{
+    setOpen(isOpen)
+   },[isOpen])
     return (
-        <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+        <Snackbar 
+        sx={{ position: 'fixed', top: 0, right: 0, zIndex: 9999 }}
+        open={open} autoHideDuration={1000} onClose={handleClose}>
+            <Alert  variant={severity}  sx={{ width: '100%' }}>
             {ErrorPrinter( message )}
             </Alert>
         </Snackbar>

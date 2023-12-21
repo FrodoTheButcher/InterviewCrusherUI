@@ -1,12 +1,28 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Dropdown, ListGroup, ListGroupItem, NavDropdown, Row } from 'react-bootstrap'
 import {DropdownButton} from 'react-bootstrap'
 import '../Course.css'
 import { Link, useParams } from 'react-router-dom'
 import CheckMark from '../../../components/CheckMark'
-import Unchecked from '../../../components/Unchecked'
-const Content = ({ courseContent,text, type }) => {
-  const { roadmapName, roadmapId ,chapterId} = useParams()
+import LockIcon from '@mui/icons-material/Lock';
+import ReusablePopup from '../../../components/ReusablePopup'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPointsYouLoseSkippingContent } from '../../../actions/roadmapGetAllAction'
+import SchoolIcon from '@mui/icons-material/School';
+const Content = ({ courseContent,text ,isMainCourseContent , type, setUserAcceptsToSkipContentData}) => {
+
+  const { roadmapName ,roadmapId ,chapterId } = useParams()
+  const dispatch = useDispatch()
+  const handleInvalidPopup = (exerciseToSkip)=>{
+    dispatch(getPointsYouLoseSkippingContent(roadmapId,type,exerciseToSkip))
+    setUserAcceptsToSkipContentData({
+      "roadmapId":roadmapId,
+      "contentType":type,
+      "exerciseToSkipId":exerciseToSkip,
+    })
+  }
+
+ 
   return (
     
     <ListGroup>
@@ -29,25 +45,51 @@ const Content = ({ courseContent,text, type }) => {
                   </Link>
                 </ListGroup.Item>
               )}
+
+              {
+                isMainCourseContent && courseContent?.unfinished?.length>0 &&
+                <ListGroup.Item variant="primary" >
+                <Link style={{ textDecoration: 'none', color: 'black' }} >
+                <Col>
+                  <Row><strong> Section {0}:{courseContent.unfinished[0]?.name}</strong></Row>
+                  <Row><small> {courseContent.unfinished[0]?.time}</small></Row>
+                </Col>
+                <Col>
+                  <small>{courseContent?.unfinished[0]?.description}</small>
+                  <SchoolIcon />
+                </Col>
+              </Link>
+            </ListGroup.Item>
+              }
           {courseContent?.unfinished?.map((course ,index)=>
-          <ListGroup.Item variant='secondary' >
-              <Link to={`/${roadmapName}/${roadmapId}/${chapterId}/${type}/${course?.id}/`} style={{ textDecoration: 'none', color: 'black' }} >
+          {
+
+            if(index===0 && isMainCourseContent)  
+              return (<></>
+              )
+            else
+              return (
+              <ListGroup.Item variant='secondary' >
+              <Link onClick={()=>handleInvalidPopup(course?.id)} style={{ textDecoration: 'none', color: 'black' }} >
               <Col>
                 <Row><strong> Section {index}:{course.name}</strong></Row>
                 <Row><small> {course?.time}</small></Row>
               </Col>
               <Col>
                 <small>{course.description}</small>
-                <Unchecked />
+                <LockIcon />
               </Col>
             </Link>
           </ListGroup.Item>
+              )
+              
+          }
+         
               )}
         </ListGroup>
 
           </NavDropdown>
           
-        
       </ListGroup>
   )
 }

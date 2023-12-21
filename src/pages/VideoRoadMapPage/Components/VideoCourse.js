@@ -46,25 +46,7 @@ const VideoCourse = ({videos}) => {
             setFinishedVideos(videos.finishedVideos)
             setUnFinishedVideos(videos.unfinishedVideos)
 
-        }
-        return () => {
-            const videoElement = videoRef?.current;
-            if (videoElement) {
-
-              const currentTime = videoElement?.currentTime;
-
-              setCurrentTime(currentTime);
-             // if(currentTime > video?.videoLength - 1)
-            //  {
-                const data ={
-                    "videoId":contentId,
-                    "templateId": roadmapId
-                }
-                dispatch(registerVideoSubmissionAction(data))
-              //}
-            }
-          };
-
+        }       
     },[dispatch,videos,contentId])
 
     
@@ -74,17 +56,28 @@ const VideoCourse = ({videos}) => {
         return (
             <Loader/>
         )
+
+        
     }
+
     
   return (
-      <Col style={{ background: `${secondaryGray}`, height: '', width: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <Container style={{ width: '100%', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} fluid>
-              <Row md={12} style={{ width: '100%' }}>
-                  <video controls width="100%"      ref={videoRef} >
-                      <source src={video?.videoFile} type="video/mp4" />
-                      Your browser does not support the video tag.
-                  </video>
-              </Row>
+      <Col style={{ background: `${secondaryGray}`, height: '100vh', width: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Container style={{ width: '100%', height:"100%",position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} fluid>
+              <iframe style={{height:'100%', width:'100%'}} src={video.url} 
+              allowfullscreen="allowfullscreen"
+              mozallowfullscreen="mozallowfullscreen" 
+              msallowfullscreen="msallowfullscreen" 
+              oallowfullscreen="oallowfullscreen" 
+              webkitallowfullscreen="webkitallowfullscreen"
+              onEnded={()=>{
+                const data ={
+                    "videoId":contentId,
+                    "templateId": roadmapId
+                }
+                dispatch(registerVideoSubmissionAction(data))
+              }}
+              ></iframe>          
               <Row md={2} style={{ width: '100%' }}>
                   <ListGroup style={{ width: '100%', overflowY: 'scroll', height: '' }}>
                       {comments?.map(comment =>

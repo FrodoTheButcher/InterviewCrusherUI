@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import './WhiteButton.css'
-const WhiteButton = ({ marginBottom, marginTop, onClick, text, widthlen, heightlen ,small,color}) => {
+const WhiteButton = ({ marginBottom, marginTop, onClick, text, widthlen, heightlen ,small,color,extraSmall}) => {
   return (
     <Button
       onClick={onClick}
@@ -9,7 +9,7 @@ const WhiteButton = ({ marginBottom, marginTop, onClick, text, widthlen, heightl
       style={{
         height: heightlen,
         marginTop: '1em',
-        fontSize: `${small ? "0.8rem" : "1.5rem"}`, // Corrected line
+        fontSize: `${ extraSmall ? "0.6rem"  : small ? "0.8rem" :  "1.5rem"}`, // Corrected line
         background: 'white',
         width: widthlen,
         fontWeight: 'bold',
