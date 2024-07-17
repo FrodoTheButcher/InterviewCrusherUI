@@ -64,6 +64,7 @@ const Screen3 = ({ isIntersecting }) => {
 
     const handleListingTemplates = async ()=>{
         dispatch({type:ROADMAP_RESET})
+        localStorage.removeItem("roadmapId")
         navigate("/RoadMapPage")
     }
   return (

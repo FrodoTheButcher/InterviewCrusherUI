@@ -1,5 +1,5 @@
 export function CalculateTimeAgo(targetDateString) {
-    // Convert the target date string to a Date object
+    //  the target date string to a Date object
     const targetDate = new Date(targetDateString);
 
     // Current date

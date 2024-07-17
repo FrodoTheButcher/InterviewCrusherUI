@@ -5,7 +5,6 @@ import './WrittenCourse.css'
 import { TypeAnimation } from 'react-type-animation';
 import Contents from './Components/Contents';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import WhiteButton from '../../components/WhiteButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserWrittenCourse, updateAndRetreiveUserWrittenCourse } from '../../actions/writtenCourse';
 import Loader from '../../components/Spinner';
@@ -26,7 +25,7 @@ const WrittenCourse = () => {
      else
        dispatch(getUserWrittenCourse(roadmap))
   }
-
+  
   useEffect(()=>{
     if(updatedWrittenCourse)
     {
@@ -64,7 +63,6 @@ const WrittenCourse = () => {
                     <h3 style={{opacity:'0.9'}}>Interview<span style={{color:primaryBlue}}>Crusher</span></h3>
                     <TypeAnimation
                     sequence={[
-                      // Same substring at the start will only be typed once, initially
                       'HandsOn Learning',
                       1000,
                       'HandsOn Studying',

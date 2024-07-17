@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter ,Route, Routes } from 'react-router-dom';
+import { HashRouter ,Route, Routes } from 'react-router-dom';
 import {ContextProvider} from './Context/ContextProvider';
 import {CustomAuthProvider } from './Context/LoginContext';
 import IntroductionPage from './pages/MainPage/IntroductionPage';
@@ -12,18 +12,26 @@ import Interpreter from './pages/Interpreter/Interpreter';
 import TemplatePage from './pages/AdminPage/Template/Components/TemplatePage';
 import WrittenCourse from './pages/WrittenCoursePage/WrittenCourse';
 import ContentPage from './pages/WrittenCoursePage/Components/ContentPage';
+import DocumentationPage from './pages/DocumentationPage/DocumentationPage';
+import NotImplementedFeature from './pages/NotImplementedFeature/NotImplementedFeature';
+import Redirect from './pages/RedirectPage/Redirect';
+import Index from './pages/UserProfile';
 
 function App() {
   return (
     <CustomAuthProvider>
     <ContextProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Header />
         <Routes>
+          <Route path='/profile_data/' Component={Index} />
+          <Route path='/redirect/:chapterid/:templateid/:exercise_type' Component={Redirect} />
+          <Route path='/notFound' Component={NotImplementedFeature} src />
+          <Route path='/documentation/:pk' Component={DocumentationPage} src />
           <Route path='/' Component={IntroductionPage} src />
           <Route path='/RoadMapPage' Component={RoadMapPage} src />
           <Route path='/login' Component={LoginPage} src />
-          <Route path='/login/signUp/' Component={SignUp} src />
+          <Route path='/login/signUp/:type?' Component={SignUp} src />
           <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
           <Route path='/interpreter' Component={Interpreter} />
           <Route path='/admin/template' Component={TemplatePage} />
@@ -32,9 +40,8 @@ function App() {
           <Route path='/admin/quiz' Component={TemplatePage} />
           <Route path="/writtenCourse/:roadmapName/:roadmap/:chapter/" Component={WrittenCourse} />
           <Route path="/writtenCourseLecture/:roadmap/:chapter/:coursePk/:page?" Component={ContentPage} />
-
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </ContextProvider>
     </CustomAuthProvider>
    

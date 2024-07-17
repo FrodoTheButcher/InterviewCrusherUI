@@ -10,13 +10,12 @@ import { HARD } from '../../../Constants/DifficultyConstants'
 import Difficulty from '../../../components/Difficulty'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../../../components/Spinner'
-import { userDislikeAction, userLikeAction } from '../../../actions/userAction'
+import { handleEntitieUndoDisLike, handleEntitieUndoLike, userDislikeAction, userLikeAction, userUnlikeAction } from '../../../actions/userAction'
 import CustomizedSnackbars from '../../../components/CustomizedSnackbars'
-const Description = ({currentAlgo}) => {
-
+const Description = ({currentAlgo:algo}) => {
   
-    const [sectionActive,setSectionActive]=useState(1)
     const [like,setLike]=useState(false)
+    const [currentAlgo,setCurrentAlgo]=useState(algo)
     const [dislike, setDislike] = useState(false)
     const dispatch = useDispatch()
     const {type} = useParams()
@@ -26,14 +25,50 @@ const Description = ({currentAlgo}) => {
     const [buttonClicked,setButtonClicked]=useState(0)
 
     useEffect(()=>{
-        setNumberOfLikes(currentAlgo?.likes)
-      },[currentAlgo])
+        console.log(algo?.liked_or_disliked)
+        setCurrentAlgo(algo)
+        setNumberOfLikes(algo?.likes)
+        setNumberOfDislikes(algo?.dislikes)
+        if(algo && algo.liked_or_disliked)
+        {
+            if(algo.liked_or_disliked.liked)
+            {
+                setLike(true)
+                setDislike(false)
+            }
+            else if(algo.liked_or_disliked.disliked)
+            {
+                setLike(false)
+                setDislike(true)
+            }
+        }
+      
+      },[algo])
     
     const handleDislike = ()=>{
+        if(dislike == true)
+        {
+            dispatch(handleEntitieUndoDisLike(currentAlgo.id, type))
+            setDislike(false)
+            setNumberOfDislikes(prev=>prev-1)
+            let newAlgoData = currentAlgo
+            newAlgoData.liked_or_disliked = {
+                liked:false,
+                disliked:false
+            }
+            setCurrentAlgo(newAlgoData)
+            return;
+        }
+        let newAlgoData = currentAlgo
+            newAlgoData.liked_or_disliked = {
+                liked:false,
+                disliked:true
+            }
+            setCurrentAlgo(newAlgoData)
         setLike(false)
         setDislike(true)
-        dispatch(userDislikeAction({id:currentAlgo.id}))
-        setNumberOfDislikes(prev=>prev+1);
+        setNumberOfDislikes(prev=>prev+1)
+        dispatch(userDislikeAction({id:currentAlgo.id , type: type}))
     }
 
     const [snackbar,setSnackbar]=useState(false)
@@ -41,10 +76,23 @@ const Description = ({currentAlgo}) => {
     const handleLike = ()=>{
         if(like == true)
         {
-            setSnackbar(true)
-            setSnackbarMessage("You already liked this algorithm")
+            dispatch(handleEntitieUndoLike(currentAlgo.id, type))
+            setLike(false)
+            setNumberOfLikes(prev=>prev-1)
+            let newAlgoData = currentAlgo
+            newAlgoData.liked_or_disliked = {
+                liked:false,
+                disliked:false
+            }
+            setCurrentAlgo(newAlgoData)
             return;
         }
+        let newAlgoData = currentAlgo
+            newAlgoData.liked_or_disliked = {
+                liked:true,
+                disliked:false
+            }
+            setCurrentAlgo(newAlgoData)
         setLike(true)
         setDislike(false)
         setNumberOfLikes(prev=>prev+1)
@@ -67,8 +115,8 @@ const Description = ({currentAlgo}) => {
                       </Col>
                       <Col>
                       <div style={{display:'flex'}}>
-                              <h4 style={{ color: 'rgb(140, 140 ,140,1)' }}>{numberLikes}</h4>
-                              <div onClick={() => handleLike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${!like ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
+                              <h4 style={{ color: "black" ,opacity:currentAlgo.liked_or_disliked.liked ? 1 : 0.6 }}>{numberLikes}</h4>
+                              <div onClick={() => handleLike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${ !currentAlgo.liked_or_disliked?.liked? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
                                   <Like />    
                               </div>
                       </div>
@@ -76,8 +124,8 @@ const Description = ({currentAlgo}) => {
                       </Col>
                       <Col>
                           <div style={{ display: 'flex' }}>
-                              <h4 style={{ cursor: 'pointer', color: 'rgb(140, 140 ,140,1)' }}>{numberDislikes}</h4>
-                              <div onClick={()=>handleDislike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${!dislike ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
+                              <h4 style={{ cursor: 'pointer', color: "black",opacity:currentAlgo.liked_or_disliked.disliked ? 1 : 0.6 }}>{numberDislikes}</h4>
+                              <div onClick={()=>handleDislike()} style={{ cursor: 'pointer', left: '0.2rem', position: 'relative', color: `${ !currentAlgo.liked_or_disliked?.disliked ? 'rgb(140, 140 ,140,1)' : 'black'}` }}>
                                   <Dislike />
                               </div>
                           </div>                     

@@ -10,6 +10,7 @@ import WhiteButton from '../../../components/WhiteButton'
 import PaginationLink from './Pagination'
 import Editor from './Editor'
 import CodeComponent from './CodeComponent'
+import { addBlueColorToUppercase } from './AddColor'
 
 const ContentPage = () => {
     const {coursePk : pk,roadmap,page} = useParams()
@@ -29,27 +30,7 @@ const ContentPage = () => {
       }
     }
 
-    function addBlueColorToUppercase(text, color) {
-      const words = text.split(/\s+/);
-    
-      const coloredText = words.map((word, index) => {
-        const isUppercase = word === word.toUpperCase();
-        const separator = index === words.length - 1 ? '' : ' ';
-    
-        if (isUppercase) {
-          return (
-            <span key={index} style={{ color,fontWeight:'bolder'}}>
-              {word}
-              {separator}
-            </span>
-          );
-        } else {
-          return word + separator;
-        }
-      });
-    
-      return coloredText;
-    }
+   
     const [firstPart,setFirstPart]=useState("")
     const [secondPart, setSecondPart]=useState("")
     const [clickedComponentToRunCode,setClickedComponentToRunCode] = useState(null)
@@ -88,7 +69,7 @@ const ContentPage = () => {
       <h2><strong style={{color:primaryGray}}>{firstPart}</strong> <strong style={{color:primaryBlue}}> {secondPart}</strong></h2>
       <p>{writtenCourse.description}</p>
       {writtenCourse.summaryCodes?.map(code =>
-       <CodeComponent clickedComponentToRunCode={clickedComponentToRunCode} setClickedComponentToRunCode={setClickedComponentToRunCode} code={code} writtenCourseId={writtenCourse.id}/>
+       <CodeComponent runnableCode={code.runnableCode} clickedComponentToRunCode={clickedComponentToRunCode} setClickedComponentToRunCode={setClickedComponentToRunCode} code={code} writtenCourseId={writtenCourse.id}/>
       )}
       <Container style={{color:secondaryGray,marginTop:'5em'}}>
         <h1 style={{textDecoration:'underline'}} >At the end...</h1>

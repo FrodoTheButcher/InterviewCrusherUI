@@ -5,11 +5,13 @@ import { useRef } from 'react';
 import { ReactComponent as Video } from '../../../images/video.svg'
 import { ReactComponent as Video2 } from '../../../images/video2.svg'
 import { ReactComponent as Video3 } from '../../../images/video3.svg'
+import { useNavigate } from 'react-router-dom';
 
 
 const Screen2 = () => {
     const targetRefs = useRef([]);
     const [textReveal, settextReveal] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         console.log(textReveal)
@@ -66,13 +68,13 @@ const Screen2 = () => {
                 <Row>
                     <Col>
                         <div className={`Cart ${textReveal? "CartUp" : ""}`}>
-                            <Container>
+                            <Container onClick={()=>navigate("/login/signUp/premium")}>
                                 <h3>Buy Premium</h3>
                                 <h4>Start right now with a premium account!</h4>
                             </Container>
                         </div>
                         <div className={`Cart2 ${textReveal ? "CartUp" : ""}`}>
-                            <Container>
+                            <Container onClick={()=>navigate("/login/signUp/regular")}>
                                 <h3>Stick with regular account</h3>
                                 <h4>Start right now with a free, but still amazing plan!</h4>
                             </Container>

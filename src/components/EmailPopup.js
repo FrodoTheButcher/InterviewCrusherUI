@@ -17,13 +17,23 @@ import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerToNewsLetter } from '../actions/userAction';
 import CustomizedSnackbars from './CustomizedSnackbars';
+import WhiteButton from './WhiteButton';
 
 
-const user = JSON.parse(localStorage.getItem("user"))
 
-const emails = [user?.email];
 function SimpleDialog(props) {
-    const { onClose, selectedValue, open } = props;
+    const [emails, setEmail] = React.useState();
+        React.useEffect(()=>{
+            if(!localStorage.getItem("emails"))
+            {
+                localStorage.setItem("emails",JSON.stringify([JSON.parse(localStorage.getItem("user")).email]))
+            }
+            setEmail([
+                ...JSON.parse(localStorage.getItem("emails") || "[]"),
+              ])
+        },[])  
+
+          const { onClose, selectedValue, open } = props;
     const dispatch  = useDispatch()
 
     const handleClose = () => {
@@ -31,42 +41,22 @@ function SimpleDialog(props) {
     };
 
 
-    const {loading,error,message} = useSelector(state => state.userSubscribeToNewsLetterReducer)
-
     const [newEmail,setNewEmail]=React.useState("")
     const handleRegisterToNewsLetter = () => {
         const data ={
             "email":newEmail
         }
         dispatch(registerToNewsLetter(data))
+        handleClose()
     }
-
-
-    if(loading)
-    {
-        return (
-            <Spinner/>
-        )
-    }
-    if(error)
-    {
-        return (
-            <CustomizedSnackbars severity={"error"} isOpen={true}  message={error}/>
-        )
-    }
-    if(message && !loading && !error)
-    {
-        return (
-            <CustomizedSnackbars severity={"success"} isOpen={true}  message={message}/>
-        )
-    }
+   
 
     return (
         <Dialog onClose={handleClose} open={open}>
             <DialogTitle>Add an email for the subscription</DialogTitle>
             <List sx={{ pt: 0 }}>
-                {emails.map((email) => (
-                    <ListItem disableGutters key={email}>
+                { emails && emails?.map((email) => (
+                    <ListItem  disableGutters key={email}>
                         <ListItemButton onClick={() => setNewEmail(email)}>
                             <ListItemAvatar>
                                 <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
@@ -81,15 +71,26 @@ function SimpleDialog(props) {
                     <ListItemButton
                         autoFocus
                     >
-                        <ListItemAvatar onClick={handleRegisterToNewsLetter}>
-                            <Avatar>
+                        <ListItemAvatar >
+                            <Avatar >
+                            <Button onClick={() => {
+                            setEmail(prev => ([...prev, newEmail]));
+                            localStorage.setItem("emails", JSON.stringify([
+                                ...JSON.parse(localStorage.getItem("emails") || "[]"),
+                                newEmail
+                            ]));
+                            }}>
                                 <AddIcon />
+                                </Button>
                             </Avatar>
                         </ListItemAvatar>
-                        <TextField onChange={(e)=>setNewEmail(e.target.value)} placeholder="Add account" />
+                        <TextField value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} placeholder={newEmail ? newEmail : "Add account"} />
                     </ListItemButton>
                 </ListItem>
             </List>
+            <div style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <WhiteButton small={true} text={'subscribe'} onClick={handleRegisterToNewsLetter} />
+            </div>
         </Dialog>
     );
 }
@@ -103,7 +104,6 @@ SimpleDialog.propTypes = {
 export default function EmailPopup() {
 
     const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -111,7 +111,6 @@ export default function EmailPopup() {
 
     const handleClose = (value) => {
         setOpen(false);
-        setSelectedValue(value);
     };
 
     return (
@@ -122,7 +121,6 @@ export default function EmailPopup() {
                 Subcribe to news...
             </Button>
             <SimpleDialog
-                selectedValue={selectedValue}
                 open={open}
                 onClose={handleClose}
             />

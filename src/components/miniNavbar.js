@@ -2,6 +2,7 @@ import React from 'react'
 import { Row,Col,Container } from 'react-bootstrap'
 import { useEffect,useState } from 'react'
 import { WorkToOurCompany,WebDevelopment,MachineLearning,ArtificialIntelligence,DevOps,DataStructure,Interviews,GetHiredNow,WorkWithUs } from '../Constants/MiniNavbarConstants'
+import { Link } from 'react-router-dom'
 const MiniNavbar = () => {
     const [handleFocus, setHandleFocus] = useState(false)
     const [navData, setNavData] = useState([])
@@ -52,10 +53,10 @@ const MiniNavbar = () => {
                     <p className="miniTitle" style={{ margin: '0' }} onMouseEnter={() => setNavData(WorkWithUs)}>Work with Us</p>
                 </Col>
             </Row>
-            <Row fluid style={{ opacity: handleFocus ? '1' : '0',display:!handleFocus && 'none', border: '1px solid black', backgroundColor: 'rgba(28, 29, 31)', zIndex: '2', width: '100vw', position: 'relative' }}>
+            <Row onMouseLeave={()=>handleFocusChange(false)}   onMouseEnter={() => handleFocusChange(true)} fluid style={{ opacity: handleFocus ? '1' : '0',display:!handleFocus && 'none', border: '1px solid black', backgroundColor: 'rgba(28, 29, 31)', zIndex: '2', width: '100vw', position: 'relative' }}>
                 {
                     navData.map(e => <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-                        <p className="miniTitle" style={{ margin: '0', color: 'white' }}>{e}</p>
+                        <Link to={'/notFound'} className="miniTitle" style={{ margin: '0', color: 'white' }}>{e}</Link>
                     </Col>)
                 }
 

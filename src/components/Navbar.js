@@ -41,10 +41,10 @@ import { ROADMAP_RESET } from '../Constants/roadmap';
                           </NavDropdown>
                         }
                             <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "home" ? "#1CABFC" : "black" }} onClick={() => setSelected("home")} to="/" >Home</Link>
-                            <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "profile" ? "#1CABFC" : "black" }} onClick={() => setSelected("profile")} href="#home">Profile</Link>
+                            <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "profile" ? "#1CABFC" : "black" }} onClick={() => setSelected("profile")} to="/profile_data">Profile</Link>
                             <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "explore" ? "#1CABFC" : "black" }} onClick={() => setSelected("explore")} href="#link">Explore</Link>
                             {user === null ?
-                                <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "signin" ? "#1CABFC" : "black" }} onClick={() => setSelected("signin")} to="/login">Sign In</Link>
+                                <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "signin" ? "#1CABFC" : "black" }} onClick={() => setSelected("signin")} href="/login">Sign In</Link>
                                 :
                                 <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "signin" ? "#1CABFC" : "black" }} onClick={() => logout()} to="#">Sign out</Link>
                             }

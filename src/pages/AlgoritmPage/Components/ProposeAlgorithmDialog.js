@@ -28,21 +28,21 @@ export default function ProposeAlgorithmDialog({isOpen=false,setIsOpen,setAlgori
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <strong style={{ color: secondaryGray }}>Here you can propose an algorithm with <strong style={{ color: primaryBlue }}>name</strong> and <strong style={{ color: primaryBlue }}>description</strong></strong>
-                <DialogTitle>
-                    <TextField onChange={(e)=>setAlgorithmInput(e=>({...e,"name":e.target.value}))} placeholder='Algorithm Name'/>
+                <strong style={{ color: secondaryGray ,padding:'1em'}}>Here you can propose an algorithm with <strong style={{ color: primaryBlue }}>name</strong> and <strong style={{ color: primaryBlue }}>description</strong></strong>
+                <DialogTitle style={{textAlign:'center'}}>
+                    <TextField style={{width:'100%'}} onChange={(e)=>setAlgorithmInput(prev=>({...prev,"name":e.target.value}))} placeholder='Algorithm Name'/>
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        <TextField onChange={(e) => setAlgorithmInput(e => ({ ...e, "description": e.target.value }))} placeholder='Algorithm Description'/>                            
+                    <DialogContentText style={{textAlign:'center'}} id="alert-dialog-slide-description">
+                        <TextField multiline rows={5} style={{width:'100%'}} onChange={(e) => setAlgorithmInput(prev => ({ ...prev, "description": e.target.value }))} placeholder='Algorithm Description'/>                            
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleClose}>Close</Button>
                     <Button onClick={()=>{
                         onSubmit()
                         handleClose()
-                    }}>Agree</Button>
+                    }}>Send</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>

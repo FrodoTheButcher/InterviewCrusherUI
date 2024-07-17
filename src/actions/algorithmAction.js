@@ -1,4 +1,4 @@
-import { CREATE_NEW_SUBMISSION_FAIL, CREATE_NEW_SUBMISSION_REQUEST, CREATE_NEW_SUBMISSION_SUCCESS, GET_ALGO_QUESTIONS, GET_BASIC_TESTCASE_FAIL, GET_BASIC_TESTCASE_REQUEST, GET_BASIC_TESTCASE_SUCCESS, GET_LANGUAGES_FAIL, GET_LANGUAGES_REQUEST, GET_LANGUAGES_SUCCESS, GET_SUBMISSIONS_FAIL, GET_SUBMISSIONS_REQUEST, GET_SUBMISSIONS_SUCCESS, GET_TESTCASES_FAIL, GET_TESTCASES_REQUEST, GET_TESTCASES_SUCCESS, GET_TIPS } from "../Constants/algoConstants"
+import { CREATE_NEW_SUBMISSION_FAIL, CREATE_NEW_SUBMISSION_REDIRECT_REQUIRED, CREATE_NEW_SUBMISSION_REQUEST, CREATE_NEW_SUBMISSION_SUCCESS, GET_ALGO_QUESTIONS, GET_ALGO_SOLUTIONS, GET_BASIC_TESTCASE_FAIL, GET_BASIC_TESTCASE_REQUEST, GET_BASIC_TESTCASE_SUCCESS, GET_LANGUAGES_FAIL, GET_LANGUAGES_REQUEST, GET_LANGUAGES_SUCCESS, GET_SUBMISSIONS_FAIL, GET_SUBMISSIONS_REQUEST, GET_SUBMISSIONS_SUCCESS, GET_TESTCASES_FAIL, GET_TESTCASES_REQUEST, GET_TESTCASES_SUCCESS, GET_TIPS, UPDATE_ALGO_QUESTION, UPDATE_ALGO_QUESTION_COMMENT } from "../Constants/algoConstants"
 import axios from "axios"
 import { AccessConfig } from "./AccessConfig"
 import { DecodeError } from "./errorHandling"
@@ -35,7 +35,7 @@ export const getAlgoQuestionAction = (contentId) => async (dispatch) => {
         const config = AccessConfig()
         dispatch({ type: GET_ALGO_QUESTIONS.REQUEST })
 
-        const response = await axios.get(`/api/algorithm/algo/question/${contentId}/`,config);
+        const response = await axios.get(`/api/algorithm/algo/get_all_questions/${contentId}/`,config);
         dispatch({
             type: GET_ALGO_QUESTIONS.SUCCESS,
             payload: response.data.data
@@ -139,8 +139,78 @@ export const createNewSubmissionAction = (data) => async (dispatch) => {
         })
     }
     catch (error) {
+        if(error.response.status === 307)
+        {        
+            dispatch({
+                type: CREATE_NEW_SUBMISSION_REDIRECT_REQUIRED,
+                payload: DecodeError(error)
+            })
+            return;
+        }
         dispatch({
             type: CREATE_NEW_SUBMISSION_FAIL,
+            payload: DecodeError(error)
+        })
+    }
+}
+
+export const updateAlgoQuestionComment = (description,id) => async (dispatch) => {
+    try {
+        const date = {
+            "description":description,
+        }
+        const config = AccessConfig()
+        dispatch({ type: UPDATE_ALGO_QUESTION_COMMENT.REQUEST })
+        const response = await axios.put(`/api/algorithm/algo/question/answer/${id}/`,date, config)
+        dispatch({
+            type: UPDATE_ALGO_QUESTION_COMMENT.SUCCESS,
+            payload: response.data.data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: UPDATE_ALGO_QUESTION_COMMENT.FAIL,
+            payload: DecodeError(error)
+        })
+    }
+}
+
+export const updateAlgoQuestion = (name,id) => async (dispatch) => {
+    try {
+        const date = {
+            "name":name,
+        }
+        const config = AccessConfig()
+        dispatch({ type: UPDATE_ALGO_QUESTION.REQUEST })
+        const response = await axios.put(`/api/algorithm/algo/question/${id}/`,date, config)
+        dispatch({
+            type: UPDATE_ALGO_QUESTION.SUCCESS,
+            payload: response.data.data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: UPDATE_ALGO_QUESTION.FAIL,
+            payload: DecodeError(error)
+        })
+    }
+}
+
+export const getAlgoSolutions = (template_id) => async (dispatch) => {
+    try{
+      
+            const config = AccessConfig()
+            dispatch({ type: GET_ALGO_SOLUTIONS.REQUEST })
+            const response = await axios.get(`api/submission/algo/getSolution/${template_id}/`, config)
+            dispatch({
+                type: GET_ALGO_SOLUTIONS.SUCCESS,
+                payload: response.data.data
+            })
+    }
+    catch(error)
+    {
+        dispatch({
+            type: GET_ALGO_SOLUTIONS.FAIL,
             payload: DecodeError(error)
         })
     }

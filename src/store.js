@@ -5,12 +5,15 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { createStore } from "@reduxjs/toolkit";
 import { roadmapGetAllAction, scheduleTimeToLearn } from "./actions/roadmapGetAllAction";
 import { ScheduleTimeToLearnReducer, getAvaialableRoadmapsReducer, getPointsYouLoseSkippingContentReducer, handleDeletingCoinsYouMissToSkipReducer, roadmapGetAllReducer, roadmapGetChapterReducer } from "./reducers/roadmap";
-import { createNewSubmissionReducer, getAlgoQuestionsReducer, getBasicTestCasesReducer, getLanguagesReducer, getSubmissionsReducer, getTestCasesReducer, getTipsReducer } from "./reducers/algorithm";
-import {  sendEmailReducer, userDifficultyReducer, userDislikeReducer, userLikeReducer, userProposeAlgorithmReducer, userReducer, userReviewReducer, userSubscribeToNewsLetterReducer } from "./reducers/userReducer";
+import { createNewSubmissionReducer, getAlgoQuestionCommentsReducer, getAlgoQuestionsReducer, getAlgoSolutionsReducer, getBasicTestCasesReducer, getLanguagesReducer, getSubmissionsReducer, getTestCasesReducer, getTipsReducer, updateAlgoQuestion, updateAlgoQuestionComment } from "./reducers/algorithm";
+import {  getUserAlgorithmSubmissionResultById, getUserProfileDataReducer, getUserProfileReducer, getUserProfileRoadmapChaptersDataReducer, handleUserCommentsToAlgoQuestion, handleUserEntitieDislikeReducer, handleUserProposeSolutionToAlgoReducer, handleUserRegisterAlgorithmQuestionReducer, sendEmailReducer, userDifficultyReducer, userDislikeReducer, userLikeReducer, userProposeAlgorithmReducer, userReducer, userReviewReducer, userSubscribeToNewsLetterReducer } from "./reducers/userReducer";
 import { courseVideoCommentsReducer, createCourseVideoCommentsReducer } from "./reducers/courseVideoReducer";
-import { addPointsReducer as checkQuizReducer, removePointsReducer } from "./reducers/quizReducer";
+import { checkQuizReducer, getUserCurrentQuizBadAnswersReducer, removePointsReducer } from "./reducers/quizReducer";
 import { registerVideoSubmissionReducer } from "./reducers/videoReducer";
 import { getUserWrittenCourseReducerById, getWrittenCoursesReducer, getWrittenCoursesReducerById, runWrittenCourseReducer, updateUserCourseBackupReducer, updateUserWrittenCourseReducer } from "./reducers/writtenCourseReducer";
+import { getChattingQuestionAnswerReducer, getChattingQuestionsReducer, getDocumentationByIdReducer } from "./reducers/documentation";
+import { handleEntitieUndoDisLike, handleEntitieUndoLike } from "./actions/userAction";
+import { getAlgoSolutions } from "./actions/algorithmAction";
 const reducer = combineReducers({
     roadmapList:roadmapGetAllReducer,
     roadmapItem: roadmapGetChapterReducer,
@@ -43,7 +46,25 @@ const reducer = combineReducers({
     getUserWrittenCourseReducerById:getUserWrittenCourseReducerById,
     updateUserWrittenCourseReducer:updateUserWrittenCourseReducer,
     updateUserCourseBackupReducer:updateUserCourseBackupReducer,
-    runWrittenCourseReducer:runWrittenCourseReducer
+    runWrittenCourseReducer:runWrittenCourseReducer,
+    getDocumentationByIdReducer:getDocumentationByIdReducer,
+    getChattingQuestionsReducer:getChattingQuestionsReducer,
+    getChattingQuestionAnswerReducer:getChattingQuestionAnswerReducer,
+    getUserAlgorithmSubmissionResultById:getUserAlgorithmSubmissionResultById,
+    handleUserRegisterAlgorithmQuestionReducer:handleUserRegisterAlgorithmQuestionReducer,
+    handleUserEntitieDislikeReducer:handleUserEntitieDislikeReducer,
+    handleEntitieUndoLike:handleEntitieUndoLike,
+    handleEntitieUndoDisLike:handleEntitieUndoDisLike,
+    handleUserCommentsToAlgoQuestion:handleUserCommentsToAlgoQuestion,
+    getAlgoQuestionCommentsReducer:getAlgoQuestionCommentsReducer,
+    updateAlgoQuestionComment:updateAlgoQuestionComment,
+    updateAlgoQuestion:updateAlgoQuestion,
+    getUserCurrentQuizBadAnswersReducer:getUserCurrentQuizBadAnswersReducer,
+    getAlgoSolutionsReducer:getAlgoSolutionsReducer,
+    handleUserProposeSolutionToAlgoReducer:handleUserProposeSolutionToAlgoReducer,
+    getUserProfileReducer:getUserProfileReducer,
+    getUserProfileRoadmapChaptersDataReducer:getUserProfileRoadmapChaptersDataReducer,
+    getUserProfileDataReducer:getUserProfileDataReducer
 })
 
 const userQuizFromStorage = localStorage.getItem("quiz") ? JSON.parse(localStorage.getItem('quiz')) : []

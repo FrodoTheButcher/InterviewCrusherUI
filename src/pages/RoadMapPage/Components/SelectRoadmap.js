@@ -19,15 +19,15 @@ export default function SelectRoadmaps({setSchedule}) {
   const [roadmap,setRoadmap] = React.useState(null)
   const [roadmapSelected,setRoadmapSelected] = React.useState({
     roadmapId:null,
-    name:"Select a roadmap"
+    name:"Select a roadmap",
+    avarageTimeToFinish:"avarageTimeToFinish"
   })
   const handleChange = (event) => {
 
     const isScheduleAvailable = roadmap.find((roadmap)=>roadmap.id === event.target.value.id)
-console.log("isScheduleAvailable",isScheduleAvailable)
     if(isScheduleAvailable.available)
     {
-      setSchedule((prev)=>({...prev,roadmapId:event.target.value.id}))
+      setSchedule((prev)=>({...prev,roadmapId:event.target.value.id,avarageTimeToFinish:event.target.value.avarageTimeToFinish}))
       setRoadmapSelected(event.target.value)
     }
     else
@@ -44,7 +44,6 @@ console.log("isScheduleAvailable",isScheduleAvailable)
 
   useEffect(() => {
     if (roadmaps) {
-      console.log("roadmaps", roadmaps);
       let roadmapsArray = [];
       if (roadmaps.available) {
         roadmapsArray.push(...roadmaps.available.map((roadmap) => ({ ...roadmap, available: true })));

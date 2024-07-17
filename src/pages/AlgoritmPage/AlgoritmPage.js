@@ -6,6 +6,9 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import FloatingActionButtonZoom from './Components/TableContent'
 import Interpreter from '../Interpreter/Interpreter'
+import SubmissionResult from './Components/SubmissionResult'
+import RegisterQuestion from './Components/RegisterQuestion'
+import CommentSection from './Components/CommentSection'
 
 const AlgoritmPage = ({ algorithms }) => {
   const getCurrentAlgo = ()=>{
@@ -23,6 +26,9 @@ const AlgoritmPage = ({ algorithms }) => {
           getCurrentAlgo();
    }, [contentId])
 
+   const [submissionResultRequested,setSubmissionResultRequested]=useState(false)
+   const [addQuestionRequested,setAddQuestionRequested] = useState(false)
+   const [commentSection,setCommentSection] = useState(false)
    const [expand,setExpand]=useState(false)
    const nonExpanded ={
      width:"100%",
@@ -39,10 +45,21 @@ const AlgoritmPage = ({ algorithms }) => {
   return (
     <Row style={{ position: 'relative', width: '100vw', height: 'calc(100vh - 10rem)', background: 'rgb(240 240 240)' }}>
           <Col style={{height:'100%'}}> 
-              <FloatingActionButtonZoom  currentAlgo={currentAlgo} />
+              <FloatingActionButtonZoom setCommentSection={setCommentSection} setAddQuestionRequested={setAddQuestionRequested} setSubmissionResultRequested={setSubmissionResultRequested}   currentAlgo={currentAlgo} />
           </Col>
           <Col style={{ height: '100%' }}>
-              <Interpreter setExpand={setExpand}  />
+            {
+              addQuestionRequested ? 
+              <RegisterQuestion/>
+              :
+              submissionResultRequested ? 
+              <SubmissionResult/>
+              :
+
+              commentSection ? <CommentSection/>
+              :
+              <Interpreter  setExpand={setExpand}  />
+            }
           </Col>
      </Row>
   )

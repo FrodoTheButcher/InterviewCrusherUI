@@ -40,7 +40,7 @@ export default function SendEmailPopup({message,title}) {
       "body":body,
       "title":title
     }
-    dispatch(sendEmail(email))
+    dispatch(sendEmail(data))
   }
   const emailSend = useSelector(state => state.sendEmailReducer)
   const {loading,error,message : response} = emailSend
@@ -78,9 +78,14 @@ export default function SendEmailPopup({message,title}) {
         </Col>
         <Col className='d-flex align-items-center justify-content-center'>
           <ListGroup>
-          <Avatar sx={{position:'absolute',top:'1em',right:'1em',background:primaryGray}}>
+            
+            {
+              user && user.email &&
+              <Avatar sx={{position:'absolute',top:'1em',right:'1em',background:primaryGray}}>
               {user.email[0].toUpperCase()}
             </Avatar>
+            }
+    
         <AttachEmailIcon style={{fontSize:'10em',color:primaryGray}}/>
           </ListGroup>
         </Col>

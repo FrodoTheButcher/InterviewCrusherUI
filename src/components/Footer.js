@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container,Row,Col, Button, FormControl } from 'react-bootstrap'
+import { Container,Row,Col, Button, FormControl, Spinner } from 'react-bootstrap'
 import './Footer.css'
 import {ReactComponent as Information} from '../svg/Information.svg'
 import { ReactComponent as Explore } from '../svg/Explore.svg'
@@ -9,9 +9,19 @@ import { AccountCircle } from '@mui/icons-material'
 import EmailPopup from './EmailPopup'
 import SendEmailPopup from './SendEmailPopup'
 import { Link } from 'react-router-dom'
+import CustomizedSnackbars from './CustomizedSnackbars'
+import { useSelector } from 'react-redux'
+import Loader from './Spinner'
 const Footer = () => {
+    const {loading,error,data} = useSelector(state => state.userSubscribeToNewsLetterReducer)
 
+   
+   
   return (
+    <>
+     {loading ? <Loader/> : error ?             <CustomizedSnackbars severity={"error"} isOpen={true}  message={error}/>
+     : data && !loading && !error ? <CustomizedSnackbars severity={"success"} isOpen={true}  message={data}/> : null
+    }
       <Container fluid style={{ width: '100vw', height: '50vh', padding:'20px',background:'rgb(28, 29, 31)'}}>
       <Row >
         <Col>
@@ -130,6 +140,8 @@ const Footer = () => {
                     </Col>          
           </Row>
     </Container>
+    </>
+   
   )
 }
 

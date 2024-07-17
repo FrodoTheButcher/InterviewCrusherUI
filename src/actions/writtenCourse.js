@@ -66,12 +66,12 @@ export const updateUserCourseBackupAction = (roadmapId,page,contentId) => async 
     }
 }
 
-export const runWrittenCourseCode = (summary_id,summary_code_id) => async (dispatch) => {
+export const runWrittenCourseCode = (summary_id,summary_code_id,code=null) => async (dispatch) => {
     try{
        
         dispatch({type:RUN_WRITTEN_COURSE_CODE.REQUEST})
 
-        const {data} = await axios.post(`/api/userWrittenCourse/runCode/${summary_id}/${summary_code_id}/`,{},AccessConfig())
+        const {data} = await axios.post(`/api/userWrittenCourse/runCode/${summary_id}/${summary_code_id}/`,{"code":code},AccessConfig())
         dispatch({type:RUN_WRITTEN_COURSE_CODE.SUCCESS,payload:data.data})
     }
     catch(error)

@@ -19,6 +19,7 @@ import Message from '../../components/Message'
 import ScheduleTimeToLearnCalendar from './Components/ScheduleTime'
 import ErrorPrinter from '../../actions/errorPrinter'
 import CustomizedSnackbars from '../../components/CustomizedSnackbars'
+import { Box } from '@mui/material'
 const RoadMapPage = () => {
 
   const [openSchedule,setOpenSchedule] = useState(false)
@@ -66,15 +67,15 @@ const RoadMapPage = () => {
 
   return (
     <div  style={{ position: 'relative', top: '7rem', width: '100vw' }}>
-      {loading  || loadingRoadmap? <Loader/> : error || errorRoadmap? <CustomizedSnackbars isOpen={true} message={error ? error :errorRoadmap} severity={"danger"}/>  :<>
+      {loading  || loadingRoadmap? <Container style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}><Loader/></Container> : error || errorRoadmap? <CustomizedSnackbars isOpen={true} message={error ? error :errorRoadmap} severity={"danger"}/>  :<>
         <div   className='Publicity'>
           <h1 style={{ fontSize: '5em' }}>Learning Online</h1>
           <h2>Experience your own way of learning</h2>
         </div>
         <Container style={isFocused != UNFOCUSED ? { width: '100vw', margin: '0' } : { width: '100vw' }}>
           <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {openSchedule && <ScheduleTimeToLearnCalendar setSchedule={setSchedule} />}
-            <CourseComponentPopup  schedule={schedule} openSchedule={openSchedule} setOpenSchedule={setOpenSchedule} />
+            {openSchedule && <ScheduleTimeToLearnCalendar schedule={schedule} setSchedule={setSchedule} />}
+          <CourseComponentPopup  schedule={schedule} openSchedule={openSchedule} setSchedule={setSchedule} setOpenSchedule={setOpenSchedule} />
           </div>
           <Container  fluid>
             {roadmaps && roadmaps.map((roadmap, index) => (
@@ -90,7 +91,7 @@ const RoadMapPage = () => {
                       SecondParagraph={roadmap[0].description}
                       span={" with " + roadmap[0].title}
                       ButtonText={"Start Learning"}
-                      SmallText={`Become a programmer in ${roadmap[0].avarageTimeToFinish}`}
+                      SmallText={`Become a programmer in ${roadmap[0].avarageTimeToFinish} months`}
                     />
                   </div>
                 </Col>

@@ -86,7 +86,6 @@ const TextIntroduction = () => {
                           </Container>
                     </Row>
        </Container>
-
     </Container>
   )
 }

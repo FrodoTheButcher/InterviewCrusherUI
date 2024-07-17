@@ -7,22 +7,16 @@ import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
 import { ErrorPrinter } from '../../../actions/errorPrinter';
 import Loader from '../../../components/Spinner';
 
-const CourseComponentPopup = ({ setOpenSchedule,openSchedule,schedule }) => {
+const CourseComponentPopup = ({ setOpenSchedule,openSchedule,schedule,setSchedule }) => {
 
 
   const [printError,setPrintError]=useState(false)
   const [open,setOpen]=useState(false)
   const dispatch = useDispatch();
   const scheduleTime = useSelector(state => state.scheduleTimeToLearnReducer)
-  console.log("schedule",scheduleTime)
   const {loading,error,message} = scheduleTime
   const handleSave = () => {
     setOpenSchedule(state => false)
-    const data ={
-      "roadmapId":schedule.roadmapId,
-      "date":schedule.date
-    }    
-    console.log("data",data)
     if(schedule.roadmapId === null || schedule.roadmapId === undefined)
     {
       console.log("wtf")
@@ -32,6 +26,8 @@ const CourseComponentPopup = ({ setOpenSchedule,openSchedule,schedule }) => {
     else
     {
       dispatch(scheduleTimeToLearn(schedule))
+      setSchedule(null)
+      setOpen(false)
     }
   }
   useEffect(()=>{ 
@@ -47,12 +43,12 @@ const CourseComponentPopup = ({ setOpenSchedule,openSchedule,schedule }) => {
         
         {loading ? <Loader /> : error ? 
         <>
-              <CustomizedSnackbars severity={"error"} isOpen={open} message={error} />
+              <CustomizedSnackbars resetData={setOpen} severity={"error"} isOpen={open} message={error} />
         </>
       : message ?
-      <CustomizedSnackbars severity={"success"} isOpen={open} message={message} />  
+      <CustomizedSnackbars resetData={setOpen}  severity={"success"} isOpen={open} message={message} />  
       : printError &&
-      <CustomizedSnackbars severity={"error"}  isOpen={open} message={printError} />
+      <CustomizedSnackbars resetData={setOpen}  severity={"error"}  isOpen={open} message={printError} />
       }
         <Col style={{ position: 'relative' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" /><rect width="2" height="7" x="11" y="6" fill="currentColor" rx="1"><animateTransform attributeName="transform" dur="30s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></rect><rect width="2" height="9" x="11" y="11" fill="currentColor" rx="1"><animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12" /></rect></svg>        </Col>

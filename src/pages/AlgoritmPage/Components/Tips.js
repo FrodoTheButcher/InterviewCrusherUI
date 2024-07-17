@@ -4,7 +4,7 @@ import './Submission.css'
 const Tips = ({ name , index }) => {
   return (
     <div className='SubmissionHover'>
-      <Accordion.Header>#{index} {name}</Accordion.Header>
+      {index} {name}
     </div>
     
   )

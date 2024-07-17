@@ -4,19 +4,14 @@ import './IntroductionPage.css'
 import Screen3 from './Components/Screen3'
 import TextIntroduction from './Components/TextIntroduction'
 import Screen2 from './Components/Screen2'
+import FloatingButtons from '../../ChattingSystem/Components/FloatingButtons'
+import Chat from '../../ChattingSystem/Chatting/Chat'
 const IntroductionPage = () => {
-
-  const [handleFocus, setHandleFocus]  = useState(false)
-  const [navData,setNavData]=useState([])
-  const handleFocusChange = (value) => {
-    setHandleFocus(value);
-  };
-  useEffect(()=>{
-    console.log(handleFocus)
-  },[handleFocus])
 
   return (
     <>
+    <FloatingButtons/>
+    <Chat/>
       <Container className='ContainerPage d-flex flex-column align-items-center justify-content-center' fluid style={{ width: '100vw', height: '100vh', flexDirection: 'column' }}>
         <TextIntroduction />
       </Container>

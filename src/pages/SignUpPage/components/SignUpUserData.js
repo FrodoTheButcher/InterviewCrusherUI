@@ -9,7 +9,8 @@ import Message from "../../../components/Message";
 import { CustomAuthProvider, useAuth } from "../../../Context/LoginContext";
 import CustomizedSnackbars from "../../../components/CustomizedSnackbars";
 import { ErrorPrinter } from "../../../actions/errorPrinter";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { USER_REGISTER_TYPE_URL } from "../../../constants";
 
 const SignUpUserData = ({ progressParam, setProgressParam }) => {
   const [userData, setUserData] = useState({
@@ -35,7 +36,10 @@ const SignUpUserData = ({ progressParam, setProgressParam }) => {
     setProgressParam((prev) => prev + 1);
   };
 
+  const {type}=useParams()
+
   const handleSubmit = () => {
+    userData[USER_REGISTER_TYPE_URL]=type
     dispatch(userRegisterAction(userData));
   };
 
@@ -45,7 +49,6 @@ const SignUpUserData = ({ progressParam, setProgressParam }) => {
 
   useEffect(() => {
     if (user !== null && user !== undefined) {
-      console.log("intraaa");
       login(userData.email, userData.password);
       navigate("/");
     }

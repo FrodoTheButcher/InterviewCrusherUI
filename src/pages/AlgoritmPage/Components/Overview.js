@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import { Alert, Container, FormGroup, ListGroupItem } from 'react-bootstrap';
+import { Alert, Container, FormGroup, ListGroup, ListGroupItem } from 'react-bootstrap';
 import Tips from './Tips';
 import './Submission.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,11 +34,14 @@ const Overview = () => {
     }
     return (
         <Container style={{ borderLeft: '1rem solid rgb(240, 240, 240)', height: '100vh', background: 'white' }}>
+            <ListGroup>
             {tips?.map((e,index) =>
-                <Accordion className='SubmissionHover' style={{ border: '0.2rem solid rgb(240, 240, 240)' }} defaultActiveKey={index} key={index}>
+                <ListGroupItem className='SubmissionHover' style={{ border: '0.2rem solid rgb(240, 240, 240)' }} defaultActiveKey={index} key={index}>
                         <Tips name={e.tip} index={index}/>
-                    </Accordion>                
+                    </ListGroupItem>                
             )}
+            </ListGroup>
+           
         </Container>
     );
 }

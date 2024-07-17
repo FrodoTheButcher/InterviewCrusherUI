@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AlgoritmPage from '../AlgoritmPage';
 import { userProposeAlgorithmAction } from '../../../actions/userAction';
 import CustomizedSnackbars from '../../../components/CustomizedSnackbars';
+import Loader from '../../../components/Spinner';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -95,7 +96,7 @@ const fabGoldStyle = {
 };
 
 
-export default function FloatingActionButtonZoom({ currentAlgo}) {
+export default function FloatingActionButtonZoom({setAddQuestionRequested, currentAlgo, setSubmissionResultRequested , setCommentSection}) {
    
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -159,6 +160,10 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
         {
             setOpenAlgorithmProposePopup(true)
         }
+        else if(index === 3)
+        {
+            setAddQuestionRequested(true)   
+        }
     }
     const handleUserProposeAlgorithm =  () => {
         if (algorithmInput.name && algorithmInput.description)
@@ -167,6 +172,8 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
             setError("You need to provide a name and a description")
         }
     }
+    const {error:errorProposingAlgorithm,loading,data} = useSelector(state=>state.userProposeAlgorithmReducer)
+    const {data:dataEmail,error:errorEmail,loading:loadingEmailSent} = useSelector(state=>state.sendEmailReducer)
 
 
     useEffect(()=>{
@@ -174,9 +181,15 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
 
     return (
         <>
+        {loadingEmailSent && <Loader/>}
+        {errorEmail && <CustomizedSnackbars isOpen={true} severity={"danger"} message={errorEmail} />}
+        {dataEmail && <CustomizedSnackbars isOpen={true} severity={"success"} message={dataEmail} />}
+        {data && <CustomizedSnackbars resetData={data} severity={"success"} message={data} isOpen={true} />}
             <ProposeAlgorithmDialog onSubmit={handleUserProposeAlgorithm} setAlgorithmInput={setAlgorithmInput} isOpen={openAlgorithmProposePopup} setIsOpen={setOpenAlgorithmProposePopup} />
             {
-                error && <CustomizedSnackbars resetData={setError} severity={"danger"} message={error} isOpen={true} />
+                error ? <CustomizedSnackbars resetData={setError} severity={"danger"} message={error} isOpen={true} /> :
+                errorProposingAlgorithm ? <CustomizedSnackbars resetData={setError} severity={"danger"} message={errorProposingAlgorithm} isOpen={true} />
+                : loading && <Loader/>
             }
             <Box
                 sx={{
@@ -196,11 +209,11 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
                         aria-label="action tabs example"
 
                     >
-                        <Tab label="Description" {...a11yProps(0)} />
-                        <Tab label="Tips" {...a11yProps(1)} />
-                        <Tab label="Feedback" {...a11yProps(2)} />
-                        <Tab label="Questions" {...a11yProps(3)} />
-                        <Tab label="Submissions" {...a11yProps(4)} />
+                        <Tab onClick={()=>{setSubmissionResultRequested(false);setAddQuestionRequested(false);setCommentSection(false)}} label="Description" {...a11yProps(0)} />
+                        <Tab onClick={()=>{setSubmissionResultRequested(false);setAddQuestionRequested(false);setCommentSection(false)}} label="Tips" {...a11yProps(1)} />
+                        <Tab onClick={()=>{setSubmissionResultRequested(false);setAddQuestionRequested(false);setCommentSection(false)}} label="Feedback" {...a11yProps(2)} />
+                        <Tab onClick={()=>{setSubmissionResultRequested(false);setAddQuestionRequested(false);setCommentSection(false)}} label="Questions" {...a11yProps(3)} />
+                        <Tab onClick={()=>{setSubmissionResultRequested(false);setAddQuestionRequested(false);setCommentSection(false)}} label="Submissions" {...a11yProps(4)} />
 
                     </Tabs>
                 </AppBar>
@@ -211,7 +224,7 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
                     style={{ height: '100%' }}
                 >
                     <TabPanel style={{ height: '100%' }} value={value} index={0} dir={theme.direction}>
-                        <Description label="Item One" {...a11yProps(0)} currentAlgo={currentAlgo} difficulty={HARD} />
+                        <Description  label="Item One" {...a11yProps(0)} currentAlgo={currentAlgo} difficulty={HARD} />
                     </TabPanel>
                     <TabPanel style={{ height: '100%' }} value={value} index={1} dir={theme.direction}>
                         <Overview />
@@ -220,10 +233,10 @@ export default function FloatingActionButtonZoom({ currentAlgo}) {
                         <Solutions />
                     </TabPanel>
                     <TabPanel style={{ height: '100%' }} value={value} index={3} dir={theme.direction}>
-                        <Question />
+                        <Question setCommentSection={setCommentSection} />
                     </TabPanel>
                     <TabPanel style={{ height: '100%' }} value={value} index={4} dir={theme.direction}>
-                        <Submissions />
+                        <Submissions setSubmissionResultRequested={setSubmissionResultRequested} />
                     </TabPanel>
                 </SwipeableViews>
                 {fabs.map((fab, index) => (

@@ -10,7 +10,7 @@ const QuizPage = ({ quizes}) => {
   const [step,setStep]=useState(1)
   const [quiz,setQuiz] = useState(null)
   const {contentId} = useParams()
-  const [answerChoosed, setAnswerChoosed] = useState("")
+  const [answerChoosed, setAnswerChoosed] = useState([])
   const [userAnswers, setUserAnswers] = useState([])
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const QuizPage = ({ quizes}) => {
     }
       setQuiz(quizData)
     }
-  }, [quizes, contentId, answerChoosed])
+  }, [quizes, contentId])
 
 
   return (
@@ -30,7 +30,7 @@ const QuizPage = ({ quizes}) => {
       {step === 1 && <Info quiz={quiz} setStep={setStep}/> }
       {step === 2 && <Exercise  quiz={quiz}  setStep={setStep} />}
       {step === 3 && <AnswersQuiz setUserAnswers={setUserAnswers} answerChoosed={answerChoosed} quiz={quiz}  setAnswerChoosed={setAnswerChoosed} setStep={setStep}/>}
-      {step === 4 && <EndOfQuiz  userAnswers={userAnswers} quiz={quiz} answerChoosed={answerChoosed} setStep={setStep} />}
+      {step === 4 && <EndOfQuiz  setUserAnswers={setUserAnswers} userAnswers={userAnswers} quiz={quiz} answerChoosed={answerChoosed} setStep={setStep} />}
 
 
     </section>

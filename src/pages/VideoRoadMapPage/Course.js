@@ -80,11 +80,14 @@ useEffect(()=>{
  
 const getPointsYouLoseSkippingContentState = useSelector(state=>state.getPointsYouLoseSkippingContentReducer)
 const {loading:loadingPointsToLose,error:errorPointsToLose,data} = getPointsYouLoseSkippingContentState
-
+if(loading)
+return (
+  <Container style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}><Loader/></Container>
+)
   return (
 
     <section style={{width:'100vw',display:'flex'}}>
-      {loadingPointsToLose || loadingReview ? <Loader/> : errorPointsToLose ?
+      {loadingPointsToLose || loadingReview ?  <Container style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}><Loader/></Container> : errorPointsToLose ?
       <CustomizedSnackbars severity={"danger"} message={errorPointsToLose} isOpen={true} />:
       errorReview ?
       <CustomizedSnackbars severity={"danger"} message={errorReview} isOpen={true} />:
@@ -99,14 +102,14 @@ const {loading:loadingPointsToLose,error:errorPointsToLose,data} = getPointsYouL
       </ReusablePopup>      :
       <></>
     }
-    {loadingUserAgreesToSkipContent ? <Loader/> : errorUserAgreesToSkipContent ?
+    {loadingUserAgreesToSkipContent ?  <Container style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}><Loader/></Container> : errorUserAgreesToSkipContent ?
   <CustomizedSnackbars severity={"danger"} message={errorUserAgreesToSkipContent} isOpen={true} />:
   (dataUserAgreesToSkipContent !== undefined && dataUserAgreesToSkipContent !== null) ?
   <CustomizedSnackbars severity={"success"} message={dataUserAgreesToSkipContent} isOpen={true} />:  
   <></>
   }
       <PopupReview isOpen={showReviewType} onClick={handleReview} />
-      {loading ? <Loader/> : error? <Message variant={'danger'}>{error}</Message> :
+      {loading ? <Container style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}><Loader/></Container> : error? <Message variant={'danger'}>{error}</Message> :
       roadmap && 
       <>
           {type === "Video" ? 

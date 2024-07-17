@@ -3,7 +3,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-eclipse";
 import axios from "axios";
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import SubmissionTable from "../AlgoritmPage/Components/SubmissionTable";
 import { useDispatch, useSelector } from 'react-redux'
 import {  createNewSubmissionAction } from "../../actions/algorithmAction";
@@ -15,6 +15,8 @@ import WhiteButton from '../../components/WhiteButton'
 import { primaryBlue } from "../../Static/Colors";
 import CustomizedSnackbars from "../../components/CustomizedSnackbars";
 import { ROADMAP_RESET } from "../../Constants/roadmap";
+import { Typography } from "@mui/material";
+import { EntitiesChoices } from "../../constants";
 function Interpreter({ setExpand }) {
   const [code, setCode] = useState(false); // State to store the code
   const [submitSampleData, setSubmitSampleData] = useState(true)
@@ -30,7 +32,7 @@ function Interpreter({ setExpand }) {
 
   const createNewSubmission = useSelector(state => state.createNewSubmissionReducer)
 
-  const { loading: loadingTestCases,data } = createNewSubmission
+  const { loading: loadingTestCases,data , redirect } = createNewSubmission
   const handleSubmit = async () => {
       const data ={
         "code":btoa(code),
@@ -42,7 +44,16 @@ function Interpreter({ setExpand }) {
       }
       dispatch(createNewSubmissionAction(data))
   }
+  const navigate = useNavigate()
 
+  useEffect(()=>{
+    if(redirect)
+    {
+      navigate(`/redirect/${chapterId}/${roadmapId}/${EntitiesChoices.ALGORITHM}`)
+    }
+  },[redirect])
+  const roadmapItem = useSelector(state=>state.roadmapItem)
+  const {roadmap,error,loading}=roadmapItem
   return (
     <>
     {data == "Success" &&
@@ -50,8 +61,12 @@ function Interpreter({ setExpand }) {
     }
       <Row style={{ width: '100%', height: '10%' }}>
         <Col style={{ paddingTop: '0.5em' }} md={4}>
-          <Languages selectedLang={selectedLang} setSelectedLang={setSelectedLang} />
-          <small>Paste your code</small>
+          {
+              roadmap?.languages.length !== 0 ?
+              <Languages selectedLang={selectedLang} setSelectedLang={setSelectedLang} />
+              :
+              <Typography style={{background:'white',color:primaryBlue,width:'10em',fontWeight:'bolder',textAlign:'center'}}>Paste your code below</Typography>
+          }
         </Col>
         <Col style={{ marginLeft: 'auto', paddingTop: '0.5em' }} className='CompilerSvgs' md={6}>
           <Button onClick={()=>setCode("")} variant="none" >

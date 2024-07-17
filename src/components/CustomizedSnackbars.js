@@ -9,6 +9,7 @@ import { Alert } from 'react-bootstrap';
 
 
 export default function CustomizedSnackbars({isOpen=false, message, severity,resetData}) {
+    
     const [open,setOpen]=useState(isOpen)
     const handleClose = (event, reason) => {
         setOpen(false);
@@ -18,11 +19,12 @@ export default function CustomizedSnackbars({isOpen=false, message, severity,res
         }
     };
    useEffect(()=>{
+    console.log(message + isOpen)
     setOpen(isOpen)
    },[isOpen])
     return (
         <Snackbar 
-        sx={{ position: 'fixed', top: 0, right: 0, zIndex: 9999 }}
+        sx={{ position: 'fixed', zIndex: 9999 }}
         open={open} autoHideDuration={1000} onClose={handleClose}>
             <Alert  variant={severity}  sx={{ width: '100%' }}>
             {ErrorPrinter( message )}

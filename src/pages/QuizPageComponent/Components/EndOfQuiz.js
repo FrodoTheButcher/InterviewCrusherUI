@@ -19,7 +19,7 @@ import { userDifficultyAction, userLikeAction } from '../../../actions/userActio
 import Loader from '../../../components/Spinner';
 import { ROADMAP_RESET } from '../../../Constants/roadmap';
 
-function EndOfQuiz({ setStep, userAnswers }) {
+function EndOfQuiz({ setStep, userAnswers ,setUserAnswers}) {
 
 
     const { roadmapName,roadmapId, chapterId, contentId, type } = useParams();
@@ -30,7 +30,7 @@ function EndOfQuiz({ setStep, userAnswers }) {
     const dispatch = useDispatch()
 
     const checkQuizAnswer = useSelector(select => select.checkQuizReducer)
-    const { loading, error, data } = checkQuizAnswer
+    const { loading, error, data , redirect } = checkQuizAnswer
     const {loading:loadingLike,error:errorLike,data:dataLike} = useSelector(select=>select.userLikeReducer)
 
     const userDifficulty = useSelector(select=>select.userDifficultyReducer)
@@ -63,6 +63,12 @@ function EndOfQuiz({ setStep, userAnswers }) {
             setOpen(true)
         }
     },[data])
+    useEffect(()=>{
+        if(redirect===true)
+        {
+            navigate(`/redirect/${chapterId}/${roadmapId}/${data}`)
+        }
+    },[checkQuizAnswer])
 
     return (
         <Card style={{ background: 'white', width: '30%', height: '80%', borderRadius: '10px' }} className='d-flex align-items-center justify-content-center'>
@@ -123,7 +129,7 @@ function EndOfQuiz({ setStep, userAnswers }) {
                 </div>
             </Container>
             <Card.Body className='d-flex align-items-center justify-content-center'>
-                {!open ? <Button onClick={() => setStep(prev => prev - 1)} className='PreviousBtn'>Try again</Button>
+                {!open ? <Button onClick={() => {setUserAnswers([]);setStep(prev => prev - 1)}} className='PreviousBtn'>Try again</Button>
                     :
                     <Button onClick={() => {dispatch({type:ROADMAP_RESET});navigate(`/${roadmapName}/${roadmapId}/${chapterId}/${type}/loading/`) }} className='NextBtn' >Submit</Button>
                 }

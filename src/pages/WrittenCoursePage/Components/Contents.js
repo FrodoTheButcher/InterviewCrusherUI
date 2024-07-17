@@ -48,11 +48,11 @@ export default function Contents() {
              <Typography>{course?.name}</Typography>
            </AccordionSummary>
            <AccordionDetails>
-             <Typography>
+             <Typography >
                {course?.description}
              </Typography>
              <Tooltip title="Start reading">
-             <Button onClick={()=>navigate(`/writtenCourseLecture/${pk}/${course?.id}/`)}>
+             <Button onClick={()=>navigate(`/writtenCourseLecture/${roadmap}/${pk}/${course?.id}/1`)}>
                 <NotStartedIcon/>
              </Button>
              </Tooltip>
