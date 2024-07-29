@@ -27,7 +27,9 @@ const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageCon
   }
   const roadmapItem = useSelector(state=>state.roadmapItem)
   const {loading,error,roadmap : currentChapter}=roadmapItem
- 
+  const sanitizeTitle = (title) => {
+    return title.replace(/#/g, ''); // Replace all instances of '#' with an empty string
+  };
  useEffect(()=>{
   setLastRoadmapSeen(localStorage.getItem('roadmapId'));
  },[lastRoadmapSeen])
@@ -38,7 +40,7 @@ const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageCon
     {
       setIsFocused(UNFOCUSED)
       setMainPageContainerProvenience(UNFOCUSED)
-      navigate(`/${roadmap.title}/${roadmap.id}/${currentChapter?.chapter?.chapterId}/${currentChapter?.chapter?.contentType}/${currentChapter?.chapter?.currentId}`)
+      navigate(`/${sanitizeTitle(roadmap.title)}/${roadmap.id}/${currentChapter?.chapter?.chapterId}/${currentChapter?.chapter?.contentType}/${currentChapter?.chapter?.currentId}`)
     }
   },[loading,error,currentChapter])
   return (
@@ -59,7 +61,7 @@ const RoadMapComponent = ({ roadmap,mainPageContainerProvenience, setMainPageCon
         <ListGroupItem  style={{width:'60%'}}>
          
             <video controls width="100%" >
-                <source src={roadmap.video} type="video/mp4" />
+                <source src={roadmap?.video} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             <Button onClick={() => handleRoadmapLoading()} className='ButtonHover' style={{ marginTop:'1em',background: 'white', width: '10rem', fontWeight: 'bold', borderColor: '#B2C0CF', color: 'black' }}>Continue</Button>

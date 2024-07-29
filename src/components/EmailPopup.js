@@ -26,7 +26,7 @@ function SimpleDialog(props) {
         React.useEffect(()=>{
             if(!localStorage.getItem("emails"))
             {
-                localStorage.setItem("emails",JSON.stringify([JSON.parse(localStorage.getItem("user")).email]))
+                localStorage.setItem("emails",JSON.stringify([JSON.parse(localStorage.getItem("user"))?.email]))
             }
             setEmail([
                 ...JSON.parse(localStorage.getItem("emails") || "[]"),

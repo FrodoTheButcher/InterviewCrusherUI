@@ -24,6 +24,7 @@ const AlgoritmPage = ({ algorithms }) => {
 
   useEffect(()=>{
           getCurrentAlgo();
+
    }, [contentId])
 
    const [submissionResultRequested,setSubmissionResultRequested]=useState(false)
@@ -58,7 +59,7 @@ const AlgoritmPage = ({ algorithms }) => {
 
               commentSection ? <CommentSection/>
               :
-              <Interpreter  setExpand={setExpand}  />
+              <Interpreter completed_code={currentAlgo?.completed_code}  setExpand={setExpand}  />
             }
           </Col>
      </Row>

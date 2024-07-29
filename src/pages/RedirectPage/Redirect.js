@@ -23,7 +23,7 @@ const Redirect = () => {
     dispatch(getCurrentQuizBadAnswers(chapterid,templateid))
   else if(exercise_type == EntitiesChoices.ALGORITHM)
   {
-    dispatch(getAlgoSolutions(chapterid))
+    dispatch(getAlgoSolutions(templateid))
   }
   },[])
 const obj = useSelector(state=>state.getUserCurrentQuizBadAnswersReducer)

@@ -79,7 +79,7 @@ const RoadMapPage = () => {
           </div>
           <Container  fluid>
             {roadmaps && roadmaps.map((roadmap, index) => (
-              <Row key={roadmap[0].id} >
+              <Row key={roadmap[0]?.id} >
                 <Col style={isFocused !== UNFOCUSED ? seenPair1 : textReveal ? seenPair1 : unseen}>
                   <div className={isFocused === (roadmap[0]?.id) ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>
                     <RoadMapComponent
@@ -97,17 +97,17 @@ const RoadMapPage = () => {
                 </Col>
                 {roadmap.length >= 1 && (
                   <Col key={roadmap[1]?.id} style={isFocused !== UNFOCUSED ? seenPair1 : textReveal ? seenPair1 : unseen}>
-                    <div className={isFocused === roadmap[1].id ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>
+                    <div className={isFocused === roadmap[1]?.id ? "ComponentIsFocused" : isFocused !== UNFOCUSED ? "ComponentUnfocused" : ""} style={{ height: '15em', width: '35em' }}>
                       <RoadMapComponent
                         roadmap={roadmap[1]}
                         mainPageContainerProvenience={mainPageContainerProvenience}
                         setMainPageContainerProvenience={setMainPageContainerProvenience}
                         setIsFocused={setIsFocused}
                         MainParagraph={"Interview's Crusher RoadMap"}
-                        SecondParagraph={roadmap[1].description}
-                        span={" with " + roadmap[1].title}
+                        SecondParagraph={roadmap[1]?.description}
+                        span={" with " + roadmap[1]?.title}
                         ButtonText={"Start Learning"}
-                        SmallText={`Become a programmer in ${roadmap[1].avarageTimeToFinish}`}
+                        SmallText={`Become a programmer in ${roadmap[1]?.avarageTimeToFinish}`}
                       />
                     </div>
                   </Col>

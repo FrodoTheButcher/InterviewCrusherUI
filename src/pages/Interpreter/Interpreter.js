@@ -17,8 +17,8 @@ import CustomizedSnackbars from "../../components/CustomizedSnackbars";
 import { ROADMAP_RESET } from "../../Constants/roadmap";
 import { Typography } from "@mui/material";
 import { EntitiesChoices } from "../../constants";
-function Interpreter({ setExpand }) {
-  const [code, setCode] = useState(false); // State to store the code
+function Interpreter({ setExpand ,completed_code}) {
+  const [code, setCode] = useState(completed_code); // State to store the code
   const [submitSampleData, setSubmitSampleData] = useState(true)
   const [selectedLang, setSelectedLang] = useState(null)
   const [open,setOpen]=useState(false)
@@ -54,6 +54,9 @@ function Interpreter({ setExpand }) {
   },[redirect])
   const roadmapItem = useSelector(state=>state.roadmapItem)
   const {roadmap,error,loading}=roadmapItem
+  useEffect(()=>{
+    setCode(completed_code)
+  },[completed_code])
   return (
     <>
     {data == "Success" &&
@@ -69,7 +72,7 @@ function Interpreter({ setExpand }) {
           }
         </Col>
         <Col style={{ marginLeft: 'auto', paddingTop: '0.5em' }} className='CompilerSvgs' md={6}>
-          <Button onClick={()=>setCode("")} variant="none" >
+          <Button onClick={()=>setCode(completed_code)} variant="none" >
             <RestartAltIcon />
           </Button>
           <Button variant="none" >
@@ -95,6 +98,7 @@ function Interpreter({ setExpand }) {
           focus={true}
           fontSize={"1rem"}
           height="60%"
+          defaultValue={completed_code}
         />
         {loadingTestCases ? (
           <>

@@ -1,5 +1,5 @@
 import './App.css';
-import { HashRouter ,Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import {ContextProvider} from './Context/ContextProvider';
 import {CustomAuthProvider } from './Context/LoginContext';
 import IntroductionPage from './pages/MainPage/IntroductionPage';
@@ -21,7 +21,7 @@ function App() {
   return (
     <CustomAuthProvider>
     <ContextProvider>
-      <HashRouter>
+      <Router>
         <Header />
         <Routes>
           <Route path='/profile_data/' Component={Index} />
@@ -41,7 +41,7 @@ function App() {
           <Route path="/writtenCourse/:roadmapName/:roadmap/:chapter/" Component={WrittenCourse} />
           <Route path="/writtenCourseLecture/:roadmap/:chapter/:coursePk/:page?" Component={ContentPage} />
         </Routes>
-      </HashRouter>
+      </Router>
     </ContextProvider>
     </CustomAuthProvider>
    

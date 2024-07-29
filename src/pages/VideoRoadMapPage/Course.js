@@ -39,15 +39,19 @@ const Course = () => {
   const { loading:loadingUserAgreesToSkipContent, error:errorUserAgreesToSkipContent, data:dataUserAgreesToSkipContent } = userAgreesToSkipContent;
   const {loading:loadingReview,error:errorReview,data:dataReview} = useSelector(state=>state.userReviewReducer)
 
-
+  const sanitizeTitle = (title) => {
+    return title.replace(/#/g, ''); // Replace all instances of '#' with an empty string
+  };
   useEffect(() => {
     if(!roadmap)
-    dispatch(roadmapGetCurrentChapter(roadmapId));
+    {
+      dispatch(roadmapGetCurrentChapter(roadmapId));
+    }
   }, [roadmapId,chapterId,type,roadmapName,contentId,dispatch,roadmap]);
  
   useEffect(()=>{
     if(roadmap)
-    navigate(`/${roadmap.title}/${roadmap.id}/${currentChapter?.chapter?.chapterId}/${currentChapter?.chapter?.contentType}/${currentChapter?.chapter?.currentId}`)
+    navigate(`/${sanitizeTitle(roadmap.title)}/${roadmap.id}/${currentChapter?.chapter?.chapterId}/${currentChapter?.chapter?.contentType}/${currentChapter?.chapter?.currentId}`)
   },[roadmap])
 
   const handleReview = async (rate)=>{
@@ -55,7 +59,6 @@ const Course = () => {
     setShowReviewType(false)
   }
   useEffect(() => {
-    console.log("type",type,"time",firstTimeLoading)
     if (type && firstTimeLoading === false) {
         let timeoutId = setTimeout(() => {
             setShowReviewType(true);
@@ -77,7 +80,7 @@ const handleUserAcceptsToSkipContent = async (e)=>{
 useEffect(()=>{
   dispatch({type:ROADMAP_RESET})
 },[dataUserAgreesToSkipContent])
- 
+
 const getPointsYouLoseSkippingContentState = useSelector(state=>state.getPointsYouLoseSkippingContentReducer)
 const {loading:loadingPointsToLose,error:errorPointsToLose,data} = getPointsYouLoseSkippingContentState
 if(loading)
