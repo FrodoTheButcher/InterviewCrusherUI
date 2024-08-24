@@ -120,7 +120,7 @@ export default function SubmissionTable({ setSubmitSampleData,submitSampleData }
     function formatTextWithLineBreaks(text) {
 
         const lines = text?.split('\\n');
-        return lines.map((line, index) => (
+        return lines?.map((line, index) => (
             <React.Fragment key={index}>
                 {line}
                 {index < lines.length - 1 && <br />}

@@ -18,7 +18,10 @@ import { ROADMAP_RESET } from "../../Constants/roadmap";
 import { Typography } from "@mui/material";
 import { EntitiesChoices } from "../../constants";
 function Interpreter({ setExpand ,completed_code}) {
-  const [code, setCode] = useState(completed_code); // State to store the code
+  function convertLiteralNewlines(text) {
+    return text?.replace(/\\n/g, '\n');
+  }
+  const [code, setCode] = useState(convertLiteralNewlines(completed_code));
   const [submitSampleData, setSubmitSampleData] = useState(true)
   const [selectedLang, setSelectedLang] = useState(null)
   const [open,setOpen]=useState(false)
@@ -49,13 +52,13 @@ function Interpreter({ setExpand ,completed_code}) {
   useEffect(()=>{
     if(redirect)
     {
-      navigate(`/redirect/${chapterId}/${roadmapId}/${EntitiesChoices.ALGORITHM}`)
+      navigate(`/redirect/${chapterId}/${roadmapId}/${EntitiesChoices.ALGORITHM}/${contentId}`)
     }
   },[redirect])
   const roadmapItem = useSelector(state=>state.roadmapItem)
   const {roadmap,error,loading}=roadmapItem
   useEffect(()=>{
-    setCode(completed_code)
+    setCode(convertLiteralNewlines(completed_code))
   },[completed_code])
   return (
     <>

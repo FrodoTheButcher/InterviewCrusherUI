@@ -44,7 +44,7 @@ const Description = ({currentAlgo:algo}) => {
         }
       
       },[algo])
-    
+   
     const handleDislike = ()=>{
         if(dislike == true)
         {

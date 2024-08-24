@@ -196,12 +196,12 @@ export const updateAlgoQuestion = (name,id) => async (dispatch) => {
     }
 }
 
-export const getAlgoSolutions = (template_id) => async (dispatch) => {
+export const getAlgoSolutions = (template_id,algo_id) => async (dispatch) => {
     try{
       
             const config = AccessConfig()
             dispatch({ type: GET_ALGO_SOLUTIONS.REQUEST })
-            const response = await axios.get(`api/submission/algo/getSolution/${template_id}/`, config)
+            const response = await axios.get(`api/submission/algo/getSolution/${template_id}/${algo_id}`, config)
             dispatch({
                 type: GET_ALGO_SOLUTIONS.SUCCESS,
                 payload: response.data.data

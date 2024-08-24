@@ -2,6 +2,9 @@ import React from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
 
 const Example = ({example,index}) => {
+    function convertLiteralNewlines(text) {
+        return text?.replace(/\\n/g, '\n');
+      }
   return (
           <Container >
               <h3 style={{fontWeight:'bolder'}} >Example {index}:</h3>
@@ -20,7 +23,7 @@ const Example = ({example,index}) => {
                       <h5 style={{ fontWeight: '550', opacity: '0.8', color: 'black' }}>Output:</h5>
                       </Col>
                   <Col style={{ display: 'flex', justifyContent: '', alignItems: 'center' }}>
-                      <h6 style={{ fontWeight: '550', opacity: '0.8', color: 'black' }}>{example.expected_output}</h6>
+                      <textarea readOnly style={{ fontWeight: '550', opacity: '0.8', color: 'black' }}>{convertLiteralNewlines(example.expected_output)}</textarea>
                       </Col>
                   </Row>
               <Row style={{ marginTop: '1rem', color: '#262626bf', fontSize: '1.2rem'}}>

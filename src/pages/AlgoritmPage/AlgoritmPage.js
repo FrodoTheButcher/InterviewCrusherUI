@@ -24,7 +24,7 @@ const AlgoritmPage = ({ algorithms }) => {
 
   useEffect(()=>{
           getCurrentAlgo();
-
+    console.log("currentAlgo",currentAlgo)
    }, [contentId])
 
    const [submissionResultRequested,setSubmissionResultRequested]=useState(false)

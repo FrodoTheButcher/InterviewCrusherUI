@@ -34,10 +34,10 @@ import { ROADMAP_RESET } from '../Constants/roadmap';
                             user &&
                             user.isPremium &&
                             <NavDropdown style={{zIndex:"30",color:'black'}} title="admin" id="basic-nav-dropdown">
-                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/quiz" >quiz</Link>
-                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/algo" >algo</Link>
-                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/video" >video</Link>
-                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/template" >template</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/QuizEdit" >quiz</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/AlgorithmEdit" >algo</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/VideoEdit" >video</Link>
+                            <Link  style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color:  "black" }} onClick={() => setSelected("home")} to="/admin/ChapterEdit" >chapter</Link>
                           </NavDropdown>
                         }
                             <Link className={selected ? "" : "Navlink"} style={{ textDecoration: 'none', position: 'relative', fontWeight: '400', marginLeft: '2rem', fontSize: '1.6rem', color: selected === "home" ? "#1CABFC" : "black" }} onClick={() => setSelected("home")} to="/" >Home</Link>

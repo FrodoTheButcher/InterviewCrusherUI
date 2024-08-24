@@ -16,14 +16,14 @@ import { userProposeAlgoSolution } from '../../actions/userAction'
 import CustomizedSnackbars from '../../components/CustomizedSnackbars'
 import UserProposedSolutionAlgo from '../AlgoritmPage/Components/UserProposedSolutionAlgo'
 const Redirect = () => {
-  const {chapterid,templateid,exercise_type} = useParams()
+  const {chapterid,templateid,exercise_type,algo_id} = useParams()
   const dispatch = useDispatch();
   useEffect(()=>{
     if(exercise_type==EntitiesChoices.QUIZ)
     dispatch(getCurrentQuizBadAnswers(chapterid,templateid))
   else if(exercise_type == EntitiesChoices.ALGORITHM)
   {
-    dispatch(getAlgoSolutions(templateid))
+    dispatch(getAlgoSolutions(templateid,algo_id))
   }
   },[])
 const obj = useSelector(state=>state.getUserCurrentQuizBadAnswersReducer)
@@ -36,11 +36,12 @@ const obj = useSelector(state=>state.getUserCurrentQuizBadAnswersReducer)
   const [displaySnack,setDisplaySnack]=useState(true)
 
   const navigate = useNavigate()
-
-
-  useEffect(()=>{
-    console.log("obj",obj2)
-  },[obj2])
+  function convertLiteralNewlines(text) {
+    return text?.replace(/\\n/g, '\n');
+  }
+  function convertToStringFromB64(text) {
+    return decodeURIComponent(escape(atob(text)));
+}
   if(loading || loadingAlgo || loadingPropose)
   return (
 <Loader/>)
@@ -88,7 +89,7 @@ const obj = useSelector(state=>state.getUserCurrentQuizBadAnswersReducer)
             mode="c_cpp"
             theme="eclipse"
             editorProps={{ $blockScrolling: true }}
-            value={e.solutionB64}
+            value={convertLiteralNewlines(convertToStringFromB64(e.solutionB64))}
             highlightActiveLine={true}
             enableBasicAutocompletion={true}
             focus={true}
