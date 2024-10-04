@@ -13,21 +13,17 @@ function CreateTemplate() {
     chapters: [],
   });
 
-  // Function to handle changes in input fields
   const handleInputChange = (event, section = null, index = null) => {
     const { name, value } = event.target;
     if (section === null) {
-      // Update main fields
       setTemplateData((prev) => ({ ...prev, [name]: value }));
     } else {
-      // Update dynamic fields (algorithms, chapters)
       const updatedSection = [...templateData[section]];
       updatedSection[index] = { ...updatedSection[index], [name]: value };
       setTemplateData((prev) => ({ ...prev, [section]: updatedSection }));
     }
   };
 
-  // Add a new algorithm or chapter
   const addNewItem = (section) => {
     const newItem =
       section === 'algorithms'
@@ -36,7 +32,6 @@ function CreateTemplate() {
     setTemplateData((prev) => ({ ...prev, [section]: [...prev[section], newItem] }));
   };
 
-  // Render the dynamic form fields
   const renderAlgorithms = () => {
     return templateData.algorithms.map((algorithm, index) => (
       <Accordion key={index}>
@@ -63,7 +58,6 @@ function CreateTemplate() {
                 onChange={(e) => handleInputChange(e, 'algorithms', index)}
               />
             </Grid>
-            {/* Add other algorithm fields similarly */}
           </Grid>
         </AccordionDetails>
       </Accordion>
@@ -87,7 +81,6 @@ function CreateTemplate() {
                 onChange={(e) => handleInputChange(e, 'chapters', index)}
               />
             </Grid>
-            {/* Add fields for videos, quizes similarly */}
           </Grid>
         </AccordionDetails>
       </Accordion>
@@ -118,7 +111,6 @@ function CreateTemplate() {
             onChange={handleInputChange}
           />
         </Grid>
-        {/* Add more input fields for other top-level attributes like avarageTimeToFinish, video */}
       </Grid>
 
       <Box mt={4}>

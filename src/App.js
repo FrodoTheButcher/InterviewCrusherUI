@@ -16,6 +16,7 @@ import NotImplementedFeature from './pages/NotImplementedFeature/NotImplementedF
 import Redirect from './pages/RedirectPage/Redirect';
 import Index from './pages/UserProfile';
 import CreateTemplate from './pages/AdminPage/CreateTemplate';
+import GenerateTemplate from './pages/AdminPage/GenerateTemplate/GenerateTemplate';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path='/' Component={IntroductionPage} src />
           <Route path='/admin/template' Component={CreateTemplate} />
           <Route path='/RoadMapPage' Component={RoadMapPage} src />
+          <Route path='/admin/GenerateTemplate' Component={GenerateTemplate} />
           <Route path='/login' Component={LoginPage} src />
           <Route path='/login/signUp/:type?' Component={SignUp} src />
           <Route path='/:roadmapName/:roadmapId/:chapterId/:type?/:contentId?' Component={Course}/>
